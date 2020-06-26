@@ -75,14 +75,13 @@ const string& Program::inToPost(string exp) { // da bism ose otarasili mogucih z
 		if (exp[i] == '+') { //on je slabiji od svih
 			if ( (s.empty()) |( s.top()=='(')) 
 				s.push(exp[i]);
-			
-			while ((!s.empty()) | (s.top() != '('))
-			{
-				postfix[j++] = s.top();
-				s.pop();
+			else {
+				while ((!s.empty()) | (s.top() != '(')){
+					postfix[j++] = s.top();
+					s.pop();
+				}
+				s.push(exp[i]);
 			}
-			s.push(exp[i]);
-
 
 		}
 	}
