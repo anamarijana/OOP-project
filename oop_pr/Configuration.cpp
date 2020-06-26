@@ -5,7 +5,7 @@
 #include"Configuration.h"
 using namespace std;
 
-
+/// provera
 Konfiguracija::Konfiguracija(string filename) {
 	// Otvaramo fajl u 'in' rezimu rada (samo citanje)
 	fstream inputFile(filename, ios::in);
