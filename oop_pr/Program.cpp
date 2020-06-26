@@ -12,10 +12,9 @@ Program::Program(string inputFile) {
 
 
 	// Metoda 'peek()' dohvata sledeci karakter koji bi se procitao ali ga ne cita
-	i = 0;
+	int i = 0;
 	while (inputFile.peek() != EOF) {
-		// Na kraju je bitno da zatvorimo fajl kako bismo izbrisali sve res
-
+		
 
 		char var;
 		var << inputFile;
