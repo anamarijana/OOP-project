@@ -1,7 +1,7 @@
 #include"ElemenT.h"
 
 
-
+/// proveravam komitovanje
 Element::~Element() {
 
 	for (Element* element : in_) {      // U svakoj iteraciji iz vektora 'in_' dohvata se jedan element (Element*) i dodeljuje iteratoru petlje 'element'
