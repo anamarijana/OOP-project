@@ -20,8 +20,9 @@ Program::Program(string inputFile) {
 		var << inputFile;
 		variables[i++] = var;
 		char buffer;
-		buffer << inputFile;
-		//DOVRSITI OVO
+		buffer<<inputFile;
+		
+		//sadrzi sve posle znaka = 
 		j = 0;
 		while (inputFile.peek() != '\n') {
 			char c;
@@ -34,12 +35,10 @@ Program::Program(string inputFile) {
 	}
 	inputFile.close();
 }
-//treba srediti
-//desna asocijativnost operatora ^
 // izraz a^b^c cita se kao a^(b^c)
 const string& Program::inToPost(string exp) { // da bism ose otarasili mogucih zagrada i lakse sastavili sintaksno stablo
 	string postfix;
-	stack <char> s; //na teku ce biti samo operacije i zagrade
+	stack <char> s; //na steku ce biti samo operacije i zagrade
 	int j = 0;
 	for (int i = 0; i < sizeof(exp); i++) {
 
@@ -55,16 +54,17 @@ const string& Program::inToPost(string exp) { // da bism ose otarasili mogucih z
 			s.pop();
 		}
 
-		if (exp[i] == '^') //desno asocijativna ako naidje na ^ svakako se gura na stek
+		if (exp[i] == '^') //jaca je od svih ostalih operacija, desno asocijativna ako naidje na ^ svakako se gura na stek
 			s.push(exp[i]);
-
+		
+// empty() daje tacno ako je stek prazan
 
 		if (exp[i] == '*') {
-			if ((s.top() != '^') | (s.top() != '*') | (!s.empty())) //ako operator ima vecu prednost od onog na vrhu ili je na vrhu otovrena zagrada
+			if ((s.top() == '+') | (s.empty()) |( s.top()=='(')) //ako operator ima vecu prednost od onog na vrhu ili je na vrhu otovrena zagrada
 				s.push(exp[i]);
 
-			else { //ovde ulece jedino ako je na topu ^
-				while ((s.top() != '+') | (!s.empty()) | (s.top() != '('))  // ako usput naleti na * tj na sebi istog 
+			else { //ovde ulece ako je na topu ^ , * levo asocijativna operacija
+				while ((s.top() != '+') | (!s.empty()) | (s.top() != '('))  
 				{
 					postfix[j++] = s.top();
 					s.pop();
@@ -72,7 +72,10 @@ const string& Program::inToPost(string exp) { // da bism ose otarasili mogucih z
 				s.push(exp[i]);
 			}
 		}
-		if (exp[i] == '+') {
+		if (exp[i] == '+') { //on je slabiji od svih
+			if ( (s.empty()) |( s.top()=='(')) 
+				s.push(exp[i]);
+			
 			while ((!s.empty()) | (s.top() != '('))
 			{
 				postfix[j++] = s.top();
