@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tsslib", "tsslib\tsslib.vcxproj", "{4FE85830-CD54-43AC-B3E0-B474F3EC517D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimulationEngine", "SimulationEngine\SimulationEngine.vcxproj", "{78C16009-D62D-4075-BA76-ACD25EFFD1F3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oop_pr", "oop_pr\oop_pr.vcxproj", "{48E4B2ED-13A9-4109-9970-245408164D21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FE85830-CD54-43AC-B3E0-B474F3EC517D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4FE85830-CD54-43AC-B3E0-B474F3EC517D}.Debug|Win32.Build.0 = Debug|Win32
+		{4FE85830-CD54-43AC-B3E0-B474F3EC517D}.Release|Win32.ActiveCfg = Release|Win32
+		{4FE85830-CD54-43AC-B3E0-B474F3EC517D}.Release|Win32.Build.0 = Release|Win32
+		{78C16009-D62D-4075-BA76-ACD25EFFD1F3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{78C16009-D62D-4075-BA76-ACD25EFFD1F3}.Debug|Win32.Build.0 = Debug|Win32
+		{78C16009-D62D-4075-BA76-ACD25EFFD1F3}.Release|Win32.ActiveCfg = Release|Win32
+		{78C16009-D62D-4075-BA76-ACD25EFFD1F3}.Release|Win32.Build.0 = Release|Win32
+		{48E4B2ED-13A9-4109-9970-245408164D21}.Debug|Win32.ActiveCfg = Debug|Win32
+		{48E4B2ED-13A9-4109-9970-245408164D21}.Debug|Win32.Build.0 = Debug|Win32
+		{48E4B2ED-13A9-4109-9970-245408164D21}.Release|Win32.ActiveCfg = Release|Win32
+		{48E4B2ED-13A9-4109-9970-245408164D21}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
