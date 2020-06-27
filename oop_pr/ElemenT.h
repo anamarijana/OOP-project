@@ -32,6 +32,9 @@ public:
 	void setDestination(char);
 	vector<bool> getInReady();
 	int getDuration();
+	int getId();
+	void setReady(bool);
+
 
 protected:
 	Element_Type type_;
@@ -48,6 +51,7 @@ protected:
 	int number_inputs_; //broj priljucaka
 	
 	int duration;
+	bool ready_;
 	//bool no_children_ = true; //govori nam da li je obradjen cvor
 };
 

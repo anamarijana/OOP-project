@@ -30,6 +30,13 @@ vector<bool> Element::getInReady() {
 int Element::getDuration() {
 	return this->duration;
 }
+int Element::getId()
+{
+	return this->id_;
+}
+void Element::setReady(bool ready){
+	this->ready_ = ready;
+}
 void Element ::setDestination(char d) {
 	this->destination = d;
 }

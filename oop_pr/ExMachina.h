@@ -13,7 +13,7 @@ public:
 	void dealWithProcessing();
 	void writeOutput(int cur_shed_time);
 	void availableElement(int Id);
-	void elementOccured(int Id, int cur_shed_time);
+	void eventOccured(int Id, int cur_shed_time);
 	void readCompilerFile(string);
 protected:
 	ExMachina();

@@ -32,14 +32,7 @@ class ITimedElement {
     // Additional Private Declarations
 };
 
-class Tattletale :ITimedElement {
-public:
-	virtual void notify(ID id) override;
-protected:
 
-private:
-
-};
 
 // Class IFlowSource 
 

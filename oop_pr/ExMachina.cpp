@@ -3,15 +3,25 @@
 #include "Sched.h"
 #include <fstream>
 #include<iostream>
+#include"Tattletale.h"
 
-void ExMachina::elementOccured(int Id, int cur_shed_time){ //slusa vesti od notify
+void ExMachina::availableElement(int Id){
+	for (int i = 0; i < processing_.size(); i++) {
+		if (processing_[i]->getId() == Id)
+			processing_[i]->setReady(1);
+	}
+}
+
+void ExMachina::eventOccured(int Id, int cur_shed_time){ //slusa vesti od notify
 	
 	writeOutput(cur_shed_time);
 	availableElement(Id);
-	elementOccured(Id, cur_shed_time);
+	eventOccured(Id, cur_shed_time);
 	waitingtToProcessing();
 }
 
+
+/// OVO SMARA ODRADI POSLE
 void ExMachina::readCompilerFile(string filename){
 	fstream inputFile(filename, ios::in);
 	char buffer;
@@ -95,17 +105,10 @@ void ExMachina::waitingtToProcessing(){ //ovde cemo zasigurno imati binarno stab
 
 }
 //CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT
-void ExMachina::dealWithProcessing(){
-	ITimedElement* targetElement;
+void ExMachina::dealWithProcessing(){ // pravimo eventove za clanove processinga
+	Tattletale* targetElement;
 	for (int i = 0; i < processing_.size(); i++) {
-		//prodjemo kroz elemente u processingu i utvrdjujemo kog su tipa
-		switch (processing_[i]->getType())
-			case CONSTANT :{
-
-
-		}
-		
-		create(targetElement, processing_[i]->getDuration(), i+1);
+		Event::create(targetElement, processing_[i]->getDuration(), processing_[i]->getId());
 	}
 }
 
