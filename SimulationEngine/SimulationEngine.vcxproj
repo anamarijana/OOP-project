@@ -92,6 +92,7 @@
     <ClCompile Include="..\source\implementation\concepts\RndGen.cpp" />
     <ClCompile Include="..\source\implementation\concepts\SimEng.cpp" />
     <ClCompile Include="..\source\implementation\concepts\Visitor.cpp" />
+    <ClCompile Include="..\source\include\concepts\Interfaces.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

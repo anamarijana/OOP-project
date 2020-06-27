@@ -11,12 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Calculator.h" />
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="ElemenT.h" />
     <ClInclude Include="ExMachina.h" />
     <ClInclude Include="ExpressionTree.h" />
-    <ClInclude Include="ForestGump.h" />
+    <ClInclude Include="Memory.h" />
     <ClInclude Include="Program.h" />
   </ItemGroup>
   <ItemGroup>
@@ -25,7 +26,9 @@
     <ClCompile Include="ElemenT.cpp" />
     <ClCompile Include="ExMachina.cpp" />
     <ClCompile Include="ExpressionTree.cpp" />
-    <ClCompile Include="ForestGump.cpp" />
+    <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

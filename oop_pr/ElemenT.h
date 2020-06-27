@@ -30,6 +30,7 @@ public:
 	Element_Type getType();
 	void setDestination(char);
 	vector<bool> getInReady();
+	int getDuration();
 
 protected:
 	Element_Type type_;
@@ -44,6 +45,8 @@ protected:
 	int out_value_ = 0;
 
 	int number_inputs_; //broj priljucaka
+	
+	int duration;
 	//bool no_children_ = true; //govori nam da li je obradjen cvor
 };
 

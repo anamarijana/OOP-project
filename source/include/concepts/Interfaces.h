@@ -28,9 +28,17 @@ class ITimedElement {
 	  //or the time-scheduled Event has	occurred.
       virtual void notify (ID id) = 0;	// Auxiliary identification of the Event.
   protected:
-    // Additional Protected Declarations
   private:
     // Additional Private Declarations
+};
+
+class Final :ITimedElement {
+public:
+	virtual void notify(ID id) override;
+protected:
+
+private:
+
 };
 
 // Class IFlowSource 

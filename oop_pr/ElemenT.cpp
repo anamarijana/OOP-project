@@ -27,6 +27,9 @@ vector<bool> Element::getInReady() {
 	return this->in_ready_;
 }
 
+int Element::getDuration() {
+	return this->duration;
+}
 void Element ::setDestination(char d) {
 	this->destination = d;
 }

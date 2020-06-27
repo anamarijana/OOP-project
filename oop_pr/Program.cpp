@@ -6,7 +6,7 @@
 #include "Program.h"
 
 using namespace std;
-Program::Program(string inputFile) {
+Program::Program(string filename) {
 	// Otvaramo fajl u 'in' rezimu rada (samo citanje)
 	fstream inputFile(filename, ios::in);
 
@@ -17,19 +17,19 @@ Program::Program(string inputFile) {
 		
 
 		char var;
-		var << inputFile;
+		inputFile >>var;
 		variables[i++] = var;
 		char buffer;
-		buffer<<inputFile;
+		inputFile>>buffer;
 		
 		//sadrzi sve posle znaka = 
 		j = 0;
 		while (inputFile.peek() != '\n') {
 			char c;
-			c << inputFile;
+			inputFile>>c;
 			this->var_exp[i][j++] = c;
 		}
-		buffer << inputFile; // da bi pokupio znak za novi red
+		inputFile>>buffer; // da bi pokupio znak za novi red
 
 
 	}

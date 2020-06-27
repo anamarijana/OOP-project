@@ -24,10 +24,24 @@ void ExMachina::waitingtToProcessing(){ //ovde cemo zasigurno imati binarno stab
 	}
 
 }
-
+//CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT
 void ExMachina::dealWithProcessing(){
+	ITimedElement* targetElement;
 	for (int i = 0; i < processing_.size(); i++) {
+		//prodjemo kroz elemente u processingu i utvrdjujemo kog su tipa
+		switch (processing_[i]->getType())
+			case CONSTANT :{
+
+
+		}
 		
+		Event* ev  = Event(targetElement, processing_[i]->getDuration(), i+1);
 	}
+}
+
+void ExMachina::processingToCompleted(int id) {
+	this->completed_.push_back(processing_[id]);
+	this->processing_.erase(processing_.begin() + id);
+
 }
 

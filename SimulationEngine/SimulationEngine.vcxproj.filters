@@ -65,5 +65,8 @@
     <ClCompile Include="..\source\implementation\concepts\Visitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\include\concepts\Interfaces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
