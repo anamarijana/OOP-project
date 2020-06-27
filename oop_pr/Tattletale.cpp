@@ -6,5 +6,5 @@
 void Tattletale::notify(ID id) {
 	int Id = id;
 
-	ExMachina::Instance()->eventOccured(Id, Scheduler::Instance()->getCurTime());
+	
 }

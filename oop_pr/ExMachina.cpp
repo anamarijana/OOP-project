@@ -4,13 +4,13 @@
 #include <fstream>
 #include<iostream>
 #include"Tattletale.h"
-
+/*
 void ExMachina::availableElement(int Id){
 	for (int i = 0; i < processing_.size(); i++) {
 		if (processing_[i]->getId() == Id)
 			processing_[i]->setReady(1);
 	}
-}
+}*/
 
 void ExMachina::eventOccured(int Id, int cur_shed_time){ //slusa vesti od notify
 	
@@ -105,10 +105,10 @@ void ExMachina::waitingtToProcessing(){ //ovde cemo zasigurno imati binarno stab
 
 }
 //CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT
-void ExMachina::dealWithProcessing(){ // pravimo eventove za clanove processinga
+void ExMachina::dealWithProcessing(){ 
 	Tattletale* targetElement;
 	for (int i = 0; i < processing_.size(); i++) {
-		Event::create(targetElement, processing_[i]->getDuration(), processing_[i]->getId());
+		Event::create(processing_[i], processing_[i]->getDuration(), processing_[i]->getId());
 	}
 }
 

@@ -14,7 +14,7 @@ enum Element_Type { CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION
 //operaciju koju izvrsava +*^ = 
 // ulazne portove portove
 
-class Element {
+class Element : public ITimedElement {
 
 public:
 
@@ -34,6 +34,8 @@ public:
 	int getDuration();
 	int getId();
 	void setReady(bool);
+
+	virtual void notify(ID id) override;
 
 
 protected:

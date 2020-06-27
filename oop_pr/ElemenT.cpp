@@ -37,6 +37,10 @@ int Element::getId()
 void Element::setReady(bool ready){
 	this->ready_ = ready;
 }
+void Element::notify(ID id){
+	this->ready_ = 1;
+	ExMachina::Instance()->eventOccured(Id, Scheduler::Instance()->getCurTime());
+}
 void Element ::setDestination(char d) {
 	this->destination = d;
 }

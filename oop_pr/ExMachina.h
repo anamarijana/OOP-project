@@ -12,7 +12,7 @@ public:
 	void processingToCompleted(int id);
 	void dealWithProcessing();
 	void writeOutput(int cur_shed_time);
-	void availableElement(int Id);
+	//void availableElement(int Id);
 	void eventOccured(int Id, int cur_shed_time);
 	void readCompilerFile(string);
 protected:
