@@ -1,9 +1,9 @@
 #include "Interfaces.h"
 #include "../../../oop_pr/ExMachina.h"
+#include "Sched.h"
 
-
-void Final::notify(ID id){
+void Tattletale ::notify(ID id){
 	int Id = id;
-	getMachina()->processingToCompleted(Id);
-
-}
+	
+	ExMachina::Instance()->elementOccured(Id,Scheduler::Instance()->getCurTime());
+	}

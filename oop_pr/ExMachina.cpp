@@ -1,9 +1,79 @@
 #include "ExMachina.h"
 #include "Event.h"
+#include "Sched.h"
+#include <fstream>
+#include<iostream>
+
+void ExMachina::elementOccured(int Id, int cur_shed_time){ //slusa vesti od notify
+	
+	writeOutput(cur_shed_time);
+	availableElement(Id);
+	elementOccured(Id, cur_shed_time);
+	waitingtToProcessing();
+}
+
+void ExMachina::readCompilerFile(string filename){
+	fstream inputFile(filename, ios::in);
+	char buffer;
+	Element* curr;
+	while (inputFile.peek() != EOF) {
+		int id;
+		char operation;
+		string operand1;
+		string operand2;
+		string destination;
+
+		
+		inputFile >> buffer;
+		inputFile >> id;
+		inputFile >> buffer;
+		while (inputFile.peek() != '=') {
+			char c;
+			inputFile >> c;
+			destination += c;
+		}
+		inputFile >> buffer;
+		while (isalpha(inputFile.peek()) | isdigit(inputFile.peek())) {
+			char c;
+			inputFile >> c;
+			destination += c;
+		}
+		inputFile >> operation;
+		while (isalpha(inputFile.peek()) | isdigit(inputFile.peek())) {
+			char c;
+			inputFile >> c;
+			destination += c;
+		}
+		inputFile >> buffer;
+		if (operation == '+')
+			curr = new Addition(ADDITION);
+		else if (operation == '*')
+			curr = new Multiplication(MULTIPLICATION);
+		else if (operation == '^')
+			curr = new Exponentiation(EXPONENTIATION);
+		else
+			curr = new Assignment(ASSIGNMENT);
+
+
+		
+		
+	
+	
+	
+	}
+
+
+	inputFile.close();
+}
 
 ExMachina::ExMachina(){
 
 }
+ExMachina* ExMachina::Instance(){
+		static ExMachina instance;
+		return &instance;
+	}
+
 //smestamo sve operacije u bazen za cekanje
 void ExMachina::setWaiting(const vector<Element*>& operations_){
 	this->waiting_ = operations_;
@@ -35,7 +105,7 @@ void ExMachina::dealWithProcessing(){
 
 		}
 		
-		Event* ev  = Event(targetElement, processing_[i]->getDuration(), i+1);
+		create(targetElement, processing_[i]->getDuration(), i+1);
 	}
 }
 
@@ -44,4 +114,3 @@ void ExMachina::processingToCompleted(int id) {
 	this->processing_.erase(processing_.begin() + id);
 
 }
-

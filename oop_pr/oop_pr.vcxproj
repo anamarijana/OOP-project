@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Calculator.h" />
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="ElemenT.h" />
@@ -26,7 +25,6 @@
     <ClCompile Include="ElemenT.cpp" />
     <ClCompile Include="ExMachina.cpp" />
     <ClCompile Include="ExpressionTree.cpp" />
-    <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Program.cpp" />

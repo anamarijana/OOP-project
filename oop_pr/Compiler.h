@@ -4,11 +4,15 @@
 #include"ElemenT.h"
 class Compiler {
 public:
-	Compiler();
+	static Compiler* Instance();
 	~Compiler();
 
 protected:
+	Compiler();
 private:
+
+
+
 	vector <Element*> roots_;
 	vector <Element*> operations_; //odavde saljemo masini
 

@@ -19,6 +19,7 @@ class Element {
 public:
 
 	Element(const Element_Type& type) : type_(type){}
+	Element(int id, const Element_Type& type) : type_(type) , id_(id) {};
 	~Element();
 
 
@@ -34,7 +35,7 @@ public:
 
 protected:
 	Element_Type type_;
-
+	int id_;
 	char destination = '\0'; //gde ce da se upise rezultat operacije ili token ili memorija
 	vector<Element*> in_; // deca 
 	
