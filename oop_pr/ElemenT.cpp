@@ -1,6 +1,7 @@
 #include"ElemenT.h"
 #include"ExMachina.h"
 #include"Memory.h"
+#include<Sched.h>
 
 
 /// proveravam komitovanje
@@ -41,7 +42,11 @@ string Element::getDestination(){
 }
 void Element::notify(ID id){
 	this->ready_ = 1;
-	ExMachina::Instance()->eventOccured(Id, Scheduler::Instance()->getCurTime());
+	ExMachina::Instance()->eventOccured(id, Scheduler::Instance()->getCurTime());
+	if(isdigit(this->destination_[1])){
+		// napraviti mozda templejt za tokene pa ispitivati da li ispunjava
+
+	}
 }
 void Element ::setDestination(string d) {
 	this->destination_ = d;

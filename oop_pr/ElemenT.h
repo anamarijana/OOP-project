@@ -2,7 +2,7 @@
 #define ELEMENT_H
 #include <vector>
 #include<string>
-
+#include<Interfaces.h>
 //	AKO U SKEDZULERU POSTOJI VESI IVENTOVA I NEKI DUZE TRAJE OD OSTALIH OSTACE U SKEDZULERU NAKON PROCESS NOW
 
 

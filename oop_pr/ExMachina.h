@@ -1,6 +1,7 @@
 #ifndef EXMACHINA_H
 #define EXMACHINA_H
 #include<vector>
+#include<map>
 #include "ElemenT.h"
 class ExMachina {
 public:
@@ -14,6 +15,7 @@ public:
 	void processingToCompleted(int id);
 	void writeOutput(int cur_shed_time);
 	void eventOccured(int Id, int cur_shed_time);
+	void saveTokens(int, int);
 	
 protected:
 	ExMachina() {};
@@ -22,7 +24,7 @@ private:
 	vector <Element*> processing_; //odavde saljemo masini
 	vector <Element*> completed_;
 	vector <Element*> everyone_;
-
+	map <int, int> way_station_; //pamti tokene
 };
 
 

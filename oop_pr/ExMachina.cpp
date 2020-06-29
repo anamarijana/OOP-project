@@ -19,8 +19,11 @@ void ExMachina::eventOccured(int Id, int cur_shed_time){ //slusa vesti od notify
 	waitingtToProcessing();
 }
 
+void ExMachina::saveTokens(int token_id, int token_value){
+	this->way_station_.insert(pair<int, int>(token_id, token_value));
+}
 
-/// OVO SMARA ODRADI POSLE
+
 void ExMachina::readCompilerFile(string filename){
 	fstream inputFile(filename, ios::in);
 	char buffer;
