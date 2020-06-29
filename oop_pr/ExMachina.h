@@ -16,7 +16,7 @@ public:
 	void writeOutput(int cur_shed_time);
 	void eventOccured(int Id, int cur_shed_time);
 	void saveTokens(int, int);
-	
+	//void setWayStation(int, int);
 protected:
 	ExMachina() {};
 private:

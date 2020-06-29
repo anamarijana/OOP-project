@@ -15,25 +15,29 @@ Program::Program(string filename) {
 	int i = 0;
 	while (inputFile.peek() != EOF) {
 		
-
-		char var;
-		inputFile >>var;
-		variables[i++] = var;
+		string var;
 		char buffer;
+
+		inputFile >>buffer;
+		var = buffer;
 		inputFile>>buffer;
 		
 		//sadrzi sve posle znaka = 
-		j = 0;
+		int j = 0;
+		string expression;
 		while (inputFile.peek() != '\n') {
 			char c;
 			inputFile>>c;
-			this->var_exp[i][j++] = c;
+			expression += c;
 		}
+		(*var_name_expression).insert(var, expression);
 		inputFile>>buffer; // da bi pokupio znak za novi red
 
 
 	}
 	inputFile.close();
+}
+Program::~Program(){
 }
 // izraz a^b^c cita se kao a^(b^c)
 const string& Program::inToPost(string exp) { // da bism ose otarasili mogucih zagrada i lakse sastavili sintaksno stablo

@@ -5,11 +5,12 @@
 
 using namespace std;
 
-class Konfiguracija {
+class Configuration {
 public:
 
-	Konfiguracija(string);
-
+	static Configuration* Instance(const string& filepath);
+protected:
+	Configuration(const string& filepath);
 private:
 	int Ta = 0;
 	int Tm = 0;

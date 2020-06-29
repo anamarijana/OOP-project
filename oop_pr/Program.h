@@ -2,19 +2,20 @@
 #define PROGRAM_H
 
 #include <iostream>
-
+#include<map>
 using namespace std;
 
 class Program {
 public:
 
 	Program(string);
+	~Program();
 
 	const string& inToPost(string);
 
 private:
-	string variables; // cuva imena promenljivima
-	string* var_exp; // cuva njihove izraze
+	map<string, string>* var_name_expression; //varijable i njihovi izrazi
+	
 };
 
 #endif

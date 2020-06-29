@@ -5,10 +5,17 @@
 #include"Configuration.h"
 using namespace std;
 
+Configuration* Configuration::Instance(const string& filepath){
+
+	static Configuration instance;
+	return &instance;
+	
+}
+
 /// provera
-Konfiguracija::Konfiguracija(string filename) {
+Configuration::Configuration(const string& filepath) {
 	// Otvaramo fajl u 'in' rezimu rada (samo citanje)
-	fstream inputFile(filename, ios::in);
+	fstream inputFile(filepath, ios::in);
 
 
 	// Metoda 'peek()' dohvata sledeci karakter koji bi se procitao ali ga ne cita
@@ -18,7 +25,7 @@ Konfiguracija::Konfiguracija(string filename) {
 		char buffer;
 		// Fajl tokove koristimo isto kao i ulaz/izlaz tokove
 		int i = 0;
-		string var_name = " ";
+		string var_name;
 		while (inputFile.peek() != '=') {
 			inputFile >> var_name[i++];
 		}

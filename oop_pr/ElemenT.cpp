@@ -4,7 +4,6 @@
 #include<Sched.h>
 
 
-/// proveravam komitovanje
 Element::~Element() {
 
 	for (Element* element : in_) {      // U svakoj iteraciji iz vektora 'in_' dohvata se jedan element (Element*) i dodeljuje iteratoru petlje 'element'
@@ -43,9 +42,14 @@ string Element::getDestination(){
 void Element::notify(ID id){
 	this->ready_ = 1;
 	ExMachina::Instance()->eventOccured(id, Scheduler::Instance()->getCurTime());
+	in_from_childred_out();
+	in_to_out();
 	if(isdigit(this->destination_[1])){
 		// napraviti mozda templejt za tokene pa ispitivati da li ispunjava
-
+		ExMachina::Instance()->saveTokens(destination_[1], this->out_value_);
+	}
+	else {
+		Memory::Instance()->enterFinalDestination(destination_[1], out_value_);
 	}
 }
 void Element ::setDestination(string d) {
@@ -78,7 +82,6 @@ void Exponentiation::in_to_out() {
 
 void Assignment::in_to_out() {
 	this->out_value_ = in_values_.front(); // samo ima jedno dete koje prisvaja
-
 }
 
 

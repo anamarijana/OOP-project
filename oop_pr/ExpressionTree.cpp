@@ -2,7 +2,7 @@
 #include <stack>
 
 
-ExpressionTree::ExpressionTree(const string& postfix, char final_destination) {
+ExpressionTree::ExpressionTree(const map<string, string>& var_name_expression) {
 	this->final_destitantion_ = final_destination;
 	//pravimo jednostavno binarno stablo uz pomoc steka // simple compilation
 	stack <Element*> s;

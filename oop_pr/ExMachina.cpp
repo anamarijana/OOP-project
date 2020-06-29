@@ -24,6 +24,8 @@ void ExMachina::saveTokens(int token_id, int token_value){
 }
 
 
+
+
 void ExMachina::readCompilerFile(string filename){
 	fstream inputFile(filename, ios::in);
 	char buffer;
