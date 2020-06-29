@@ -1,5 +1,9 @@
 #include "Memory.h"
 
-Memory Memory::Instance(){
-static Memory instance = Memory()
+Memory* Memory::Instance(){
+	
+	static Memory instance;
+	return &instance;
 }
+
+

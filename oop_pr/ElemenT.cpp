@@ -1,4 +1,6 @@
 #include"ElemenT.h"
+#include"ExMachina.h"
+#include"Memory.h"
 
 
 /// proveravam komitovanje
@@ -9,7 +11,7 @@ Element::~Element() {
 	} // vector<bool> in_values ima automatski destruktor
 }
 
-vector<Element*> Element::getIn() {
+vector<Element*> Element::getIn(){
 	return this->in_;
 }
 
@@ -34,12 +36,15 @@ int Element::getId(){
 void Element::setReady(bool ready){
 	this->ready_ = ready;
 }
+string Element::getDestination(){
+	return this->destination_;
+}
 void Element::notify(ID id){
 	this->ready_ = 1;
 	ExMachina::Instance()->eventOccured(Id, Scheduler::Instance()->getCurTime());
 }
-void Element ::setDestination(char d) {
-	this->destination = d;
+void Element ::setDestination(string d) {
+	this->destination_ = d;
 }
 
 void Operation::in_from_childred_out() {

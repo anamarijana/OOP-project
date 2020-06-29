@@ -29,11 +29,12 @@ public:
 	int getOutValue();
 	
 	Element_Type getType();
-	void setDestination(char);
+	void setDestination(string);
 	vector<bool> getInReady();
 	int getDuration();
 	int getId();
 	void setReady(bool);
+	string getDestination();
 
 	virtual void notify(ID id) override;
 
@@ -41,7 +42,7 @@ public:
 protected:
 	Element_Type type_;
 	int id_;
-	char destination = '\0'; //gde ce da se upise rezultat operacije ili token ili memorija
+	string destination_; //gde ce da se upise rezultat operacije ili token ili memorija
 	vector<Element*> in_; // deca 
 	
 	vector<bool> in_ready_; // spremnost ulaza za operisanje njima 

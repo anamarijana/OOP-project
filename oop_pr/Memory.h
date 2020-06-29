@@ -1,14 +1,17 @@
 #ifndef MEMORY_H
 #define MEMORY_H
-class Memory{
+
+
+class Memory {
 public:
-  
-  Memory Instace();  
+
+	static Memory* Instance();
 protected:
-  Memory();
+	Memory() {};
+	
 private:
 
-}
+};
 
 
 #endif
