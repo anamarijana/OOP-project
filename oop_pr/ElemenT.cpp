@@ -13,13 +13,11 @@ vector<Element*> Element::getIn() {
 	return this->in_;
 }
 
-int Element::getOutValue()
-{
+int Element::getOutValue(){
 	return this->out_value_;
 }
 
-Element_Type Element::getType()
-{
+Element_Type Element::getType(){
 	return this->type_;
 }
 
@@ -30,8 +28,7 @@ vector<bool> Element::getInReady() {
 int Element::getDuration() {
 	return this->duration;
 }
-int Element::getId()
-{
+int Element::getId(){
 	return this->id_;
 }
 void Element::setReady(bool ready){
