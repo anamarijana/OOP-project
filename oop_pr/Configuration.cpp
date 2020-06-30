@@ -57,19 +57,20 @@ Configuration::Configuration(const string& filepath ) {
 		while (inputFile.peek() != '=') {
 			inputFile >> var_name[i++];
 		}
-		inputFile >> buffer;
+		inputFile >> buffer; //=
 		inputFile >> var_value;
-		if (!var_name.compare(Ta))
+		
+		if (!(var_name.compare("Ta")))
 			this->Ta = var_value;
-		else if (!var_name.compare(Tm))
+		else if (!var_name.compare("Tm"))
 			this->Tm = var_value;
-		else if (!var_name.compare(Te))
+		else if (!var_name.compare("Te"))
 			this->Te = var_value;
-		else if (!var_name.compare(Tw))
+		else if (!var_name.compare("Tw"))
 			this->Tw = var_value;
-		else if (!var_name.compare(Nw))
+		else if (!var_name.compare("Nw"))
 			this->Nw = var_value;
-		else if (!var_name.compare(compilation))
+		else if (!var_name.compare("compilation"))
 			this->compilation = var_value;
 
 		inputFile >> buffer; //da bi presao u novi red
