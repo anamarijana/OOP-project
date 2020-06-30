@@ -40,6 +40,7 @@ public:
 	void setDestination(string);
 	void setReady(bool);
 	void setDuration(int);
+	void setOutValue(int);// ispraviti sve na double
 	virtual void notify(ID id) override;
 
 

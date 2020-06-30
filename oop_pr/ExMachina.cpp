@@ -5,18 +5,18 @@
 #include<iostream>
 
 
-void ExMachina::eventOccured(int Id, int cur_shed_time){ //slusa vesti od notify
-	
-	writeOutput(cur_shed_time);
-	eventOccured(Id, cur_shed_time);
+void ExMachina::eventOccured(int Id,int op_duration, int cur_shed_time){ //slusa vesti od notify
+	writeOutput(Id, op_duration, cur_shed_time);
 	waitingtToProcessing();
+	processingToCompleted(Id);
 }
 
-void ExMachina::saveTokens(int token_id, int token_value){
-	this->way_station_.insert(pair<int, int>(token_id, token_value));
+const string& ExMachina::getCompFilename()
+{
+	return this->compiler_filename;
 }
 
-void ExMachina::readCompilerFile(string filename){
+void ExMachina::readCompilerFile(const string& filename){
 	fstream inputFile(filename, ios::in);
 	char buffer;
 	Element* curr;
@@ -25,7 +25,7 @@ void ExMachina::readCompilerFile(string filename){
 	//[23]r = t1*t2
 
 	while (inputFile.peek() != EOF) {
-		int id;
+		string id;
 		char operation;
 		string operand1;
 		string operand2;
@@ -55,24 +55,35 @@ void ExMachina::readCompilerFile(string filename){
 		}
 		inputFile >> buffer;
 		if (buffer == '\n') {
-			operation = buffer;
+			operation = assignment;
 			continue;
 		}
-		inputFile >> operation;
+		operation = buffer;
 		while (isalpha(inputFile.peek()) | isdigit(inputFile.peek())) {
 			char c;
 			inputFile >> c;
 			destination += c;
 		}
 		inputFile >> buffer; //novi red
-		if (operation == '+')
+		if (operation == '+') {
 			curr = new Addition(ADDITION);
-		else if (operation == '*')
+			curr->setDuration(Configuration::returnInstance()->getAddTime());
+		}
+		else if (operation == '*') {
 			curr = new Multiplication(MULTIPLICATION);
-		else if (operation == '^')
+			curr->setDuration(Configuration::returnInstance()->getMultiTime());
+
+		}
+		else if (operation == '^') {
 			curr = new Exponentiation(EXPONENTIATION);
-		else
+			curr->setDuration(Configuration::returnInstance()->getExpTime());
+
+		}
+		else {
 			curr = new Assignment(ASSIGNMENT);
+			curr->setDuration(Configuration::returnInstance()->getExpTime());
+
+		}
 		if (curr) curr->setDestination(destination);
 		
 		this->everyone_.push_back(curr);
@@ -91,18 +102,26 @@ void ExMachina::readCompilerFile(string filename){
 		}
 
 		if (!operand2.empty() && has_operand2 == 0) {
-			if (isdigit(operand2[0]))
+			if (isdigit(operand2[0])) {
 				curr = new Constant(CONSTANT);
-			else
+				curr->setOutValue(stoi(operand2));
+			}
+			else {
 				curr = new Variable(VARIABLE);
+				curr->setDestination(operand2);
+			}
 			this->waiting_.back()->getIn().push_back(curr);
 			this->everyone_.push_back(curr);
 		}
 		if (has_operand1 == 0) {
-			if (isdigit(operand2[0]))
+			if (isdigit(operand2[0])) {
 				curr = new Constant(CONSTANT);
-			else
+				curr->setOutValue(stoi(operand2));
+			}
+			else {
 				curr = new Variable(VARIABLE);
+				curr->setDestination(operand2);
+			}
 			this->waiting_.back()->getIn().push_back(curr);
 			this->everyone_.push_back(curr);
 		}
@@ -113,17 +132,27 @@ void ExMachina::readCompilerFile(string filename){
 }
 
 
-ExMachina* ExMachina::Instance(){
-		static ExMachina instance;
+ExMachina* ExMachina::Instance(const string& filename){
+		static ExMachina instance(filename);
+		compiler_filename = filename;
 		return &instance;
+		
 	}
+
+ExMachina* ExMachina::returnInstance(){
+	
+	return Instance(compiler_filename);
+}
 
 ExMachina::~ExMachina(){
 }
 
-//smestamo sve operacije u bazen za cekanje
-void ExMachina::setWaiting(const vector<Element*>& operations_){
-	this->waiting_ = operations_;
+ExMachina::ExMachina(const string& filename){
+	readCompilerFile(filename);
+	waitingtToProcessing();
+	while (!(waiting_.empty())) {
+		dealWithProcessing();
+	}
 }
 
 //ispituje da li su nekoj operaciji obezbedjeni operandi
@@ -141,15 +170,22 @@ void ExMachina::waitingtToProcessing(){ //ovde cemo zasigurno imati binarno stab
 	}
 
 }
-//CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT
+
 void ExMachina::dealWithProcessing(){ 
-	Tattletale* targetElement;
+
 	for (int i = 0; i < processing_.size(); i++) {
 		Event::create(processing_[i], processing_[i]->getDuration(), processing_[i]->getId());
 	}
+	//kada se napuni skedzuler pokrenuti ga
+	Scheduler::Instance()->processNow();
+	
 }
 
-void ExMachina::writeOutput(int cur_shed_time){
+void ExMachina::writeOutput(int id, int op_duration, int cur_shed_time){
+	string ex_m_filename = compiler_filename;
+	fstream outputFile(ex_m_filename, ios::out);
+	outputFile << "[" << id << "]" << " " << "(" << cur_shed_time - op_duration << ":" << cur_shed_time << ")" << endl;
+	outputFile.close();
 }
 
 void ExMachina::processingToCompleted(int id) {

@@ -7,7 +7,7 @@ class ExpressionTree {
 public:
 
 
-	ExpressionTree(string *var_name_expression,const Configuration&);
+	ExpressionTree(string *var_name_expression);
 	~ExpressionTree();
 	void binaryToNary();
 	void birth(Element*); //cvor sa vise od dvoje dece se deli radja novi cvor istog znaka

@@ -10,6 +10,17 @@ using namespace std;
 
 Program::~Program() {
 }
+
+Program* Program::Instance(const string& filename) {
+	static Program instance(filename);
+	filename_ = filename;
+	return &instance;
+}
+
+Program* Program::returnInstance() {
+	return Instance(filename_);
+}
+
 Program::Program(const string &filename) {
 	// Otvaramo fajl u 'in' rezimu rada (samo citanje)
 	fstream inputFile(filename, ios::in);

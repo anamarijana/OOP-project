@@ -2,23 +2,24 @@
 #include <stack>
 
 
-ExpressionTree::ExpressionTree(string *expression,const Configuration& Conf) {
+ExpressionTree::ExpressionTree(string *expression) {
 	//pravimo jednostavno binarno stablo od postorder izraza // simple compilation
 	stack <Element*> s;
 	Element* curr = 0;
 	int children_number;
 	string exp = *expression;
-	Configuration* pConf;
+	
 	string final_destination;
 	string destination;
-	*pConf = Conf;
+	int constant;
+
 	for (int i = 0; i < exp.size(); i++) {
 
 		if (isdigit(exp[i])) {
 			curr = new Constant(CONSTANT);
 			s.push(curr);
-			destination = exp[i];
-			curr->setDestination(destination);
+			constant = exp[i];
+			curr->setOutValue(constant);
 		}
 		else if (isalpha(exp[i])) {
 			curr = new Variable(VARIABLE);
@@ -30,20 +31,21 @@ ExpressionTree::ExpressionTree(string *expression,const Configuration& Conf) {
 		else {
 			if (exp[i] == '+') {
 				curr = new Addition(ADDITION);
-				curr->setDuration(pConf->getAddTime());
+				curr->setDuration(Configuration::returnInstance()->getAddTime());
 			}
 			else if (exp[i] == '*') {
 				curr = new Multiplication(MULTIPLICATION);
-				curr->setDuration(pConf->getMultiTime());
+				curr->setDuration(Configuration::returnInstance()->getMultiTime());
 			}
 			else if (exp[i] == '^') {
 				curr = new Exponentiation(EXPONENTIATION);
-				curr->setDuration(pConf->getExpTime());
+				curr->setDuration(Configuration::returnInstance()->getExpTime());
 			}
 			else {
 				curr = new Assignment(ASSIGNMENT);
-				curr->setDuration(pConf->getAssTime());
+				curr->setDuration(Configuration::returnInstance()->getAssTime());
 				final_destination = exp[++i];//posle jednako ide var za nju ne pravimo node
+				
 			}
 			Element* child = 0;
 

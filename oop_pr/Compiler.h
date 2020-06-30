@@ -19,8 +19,6 @@ protected:
 	Compiler(const string& filepath1,const string filepath2);
 private:
 	string filename;
-	Configuration* Config;
-	Program* Prog;
 	vector <ExpressionTree*> forest_gump_;
 	vector<Element*> all_operations;
 	bool roots_ready = 0;

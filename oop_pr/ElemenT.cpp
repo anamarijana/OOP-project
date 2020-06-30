@@ -39,6 +39,9 @@ void Element::setReady(bool ready){
 void Element::setDuration(int dur){
 	this->duration = dur;
 }
+void Element::setOutValue(int value){
+	this->out_value_ = value;
+}
 string Element::getDestination(){
 	return this->destination_;
 }
@@ -50,15 +53,12 @@ char Element::getOp(){
 }
 void Element::notify(ID id){
 	this->ready_ = 1;
-	ExMachina::Instance()->eventOccured(id, Scheduler::Instance()->getCurTime());
+	ExMachina::returnInstance()->eventOccured(id,duration, Scheduler::Instance()->getCurTime());
 	in_from_childred_out();
 	in_to_out();
-	if(isdigit(this->destination_[1])){
-		// napraviti mozda templejt za tokene pa ispitivati da li ispunjava
-		ExMachina::Instance()->saveTokens(destination_[1], this->out_value_);
-	}
-	else {
-		Memory::Instance()->enterFinalDestination(destination_[1], out_value_);
+	if(!isdigit(this->destination_[1])){
+		Memory::Instance()->set(destination_, out_value_);
+		
 	}
 }
 void Element ::setDestination(string d) {

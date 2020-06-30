@@ -54,11 +54,11 @@ void Compiler::setRootsReady(){
 }
 
 Compiler::Compiler(const string& filepath1, const string filepath2){
-	this->Config = new Configuration(filepath1);
-	this->Prog = new Program(filepath2);
+	Configuration::Instance(filepath1);
+	Program::Instance(filepath2);
 	this->filename = filepath2;
-	for (int i = 0; i < this->Prog->getExpNum(); i++) {
-		this->forest_gump_[i] = new ExpressionTree(this->Prog->getVarNameExp()[i],*(this->Config));
+	for (int i = 0; i < Program::returnInstance()->getExpNum(); i++) {
+		this->forest_gump_[i] = new ExpressionTree(Program::returnInstance()->getVarNameExp()[i]);
 	}
 	catchOperation();
 }

@@ -7,6 +7,17 @@ using namespace std;
 
 
 
+Configuration* Configuration::Instance(const string& filepath){
+	static Configuration instance(filepath);
+	config_file_name = filepath;
+	return &instance;
+	
+}
+
+Configuration* Configuration::returnInstance(){
+	return Instance(config_file_name);
+}
+
 int Configuration::getMultiTime(){
 	return this->Tm;
 }

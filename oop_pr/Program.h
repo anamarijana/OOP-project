@@ -7,8 +7,9 @@ using namespace std;
 
 class Program {
 public:
-
-	Program(const string&);
+	static Program* Instance(const string&);
+	static Program* returnInstance();
+	
 	~Program();
 
 	const string& inToPost(string*);
@@ -17,6 +18,8 @@ public:
 protected:
 	
 private:
+	static string filename_;
+	Program(const string&);
 	int expression_num;
 	string **var_name_expression; //varijable i njihovi izrazi
 	

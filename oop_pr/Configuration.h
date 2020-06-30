@@ -7,8 +7,8 @@ using namespace std;
 
 class Configuration {
 public:
-	Configuration(const string& filepath);
-	
+	static Configuration* Instance(const string& filepath);
+	static Configuration* returnInstance();
 	int getMultiTime();
 	int getAddTime();
 	int getExpTime();
@@ -16,8 +16,9 @@ public:
 	int getMemoTime();
 	bool getCompTime();
 protected:
-	
+	Configuration(const string& filepath);
 private:
+	static string config_file_name;
 	int Ta = 0;
 	int Tm = 0;
 	int Tw = 0;
