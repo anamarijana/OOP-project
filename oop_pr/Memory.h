@@ -1,17 +1,18 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 #include <map>
-
+#include <string>
 class Memory {
 public:
 
 	static Memory* Instance();
-	void enterFinalDestination(char, int); //promenljiva moze biti samo char // promeniti posle za string
+	void set(string varName, double val); 
+	double get(string varName);
 protected:
 	Memory() {};
 	
 private:
-	map<char, int> final_destination_;
+	map<string, int> final_destination_;
 };
 
 

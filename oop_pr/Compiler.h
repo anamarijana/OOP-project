@@ -1,6 +1,9 @@
 #ifndef COMPILER_H
 #define COMPILER_H
 #include<vector>
+#include <fstream>
+#include <iostream>
+
 #include"ElemenT.h"
 #include"Configuration.h"
 #include"Program.h"
@@ -9,16 +12,18 @@ class Compiler {
 public:
 	static Compiler* Instance(const string& filepath1, const string filepath2);
 	~Compiler();
-
+	void catchOperation();
+	void compile();
+	void setRootsReady();
 protected:
 	Compiler(const string& filepath1,const string filepath2);
 private:
-
+	string filename;
 	Configuration* Config;
 	Program* Prog;
-	
 	vector <ExpressionTree*> forest_gump_;
-	vector <Element*> operations_; 
+	vector<Element*> all_operations;
+	bool roots_ready = 0;
 
 
 

@@ -9,16 +9,23 @@ ExpressionTree::ExpressionTree(string *expression,const Configuration& Conf) {
 	int children_number;
 	string exp = *expression;
 	Configuration* pConf;
+	string final_destination;
+	string destination;
 	*pConf = Conf;
 	for (int i = 0; i < exp.size(); i++) {
 
 		if (isdigit(exp[i])) {
 			curr = new Constant(CONSTANT);
 			s.push(curr);
+			destination = exp[i];
+			curr->setDestination(destination);
 		}
 		else if (isalpha(exp[i])) {
 			curr = new Variable(VARIABLE);
 			s.push(curr);
+			destination = exp[i];
+			curr->setDestination(destination);
+
 		}
 		else {
 			if (exp[i] == '+') {
@@ -36,25 +43,22 @@ ExpressionTree::ExpressionTree(string *expression,const Configuration& Conf) {
 			else {
 				curr = new Assignment(ASSIGNMENT);
 				curr->setDuration(pConf->getAssTime());
+				final_destination = exp[++i];//posle jednako ide var za nju ne pravimo node
 			}
 			Element* child = 0;
 
 			if (exp[i] == '=') children_number = 1;
 			else children_number = 2;
 			for (int j = 0; j < children_number; j++) {
-				if (s.top()->getType() == CONSTANT) {
-					child = s.top();
-					curr->getIn().push_back(child);
-					s.pop();
-				}
-				else {
-					child = s.top();
-					curr->getIn().push_back(child);
-					s.pop();
-
-				}
+				
+				child = s.top();
+				curr->getIn().push_back(child);
+				s.pop();
+				
 			}
-
+			s.push(curr);
+		
+			this->operations_.push_back(curr);
 		}
 
 	}
@@ -62,8 +66,7 @@ ExpressionTree::ExpressionTree(string *expression,const Configuration& Conf) {
 	this->root_ = s.top(); //na kraju na steku ostaje samo koreni cvor
 	this->root_->setDestination(final_destination);
 }
-ExpressionTree::~ExpressionTree()
-{
+ExpressionTree::~ExpressionTree(){
 }
 //distributivnost
 //samo operacije koje imaju asocijativnost +* smemo da grupisemo u narno stablo
@@ -76,7 +79,12 @@ void ExpressionTree::binaryToNary(){
 void ExpressionTree::birth(Element*){
 }
 
+
 void ExpressionTree::calculate(const string& filepath){
+}
+
+vector<Element*> ExpressionTree::getOp(){
+	return this->operations_;
 }
 
 Element* ExpressionTree::getRoot(){

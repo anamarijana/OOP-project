@@ -6,9 +6,14 @@ Memory* Memory::Instance(){
 	return &instance;
 }
 
-void Memory::enterFinalDestination(char var_name, int var_value ){
-	this->final_destination_.insert(var_name, var_value);
-
+void Memory::set(string varName, double val){
+	this->final_destination_.insert(varName, val);
 }
+
+double Memory::get(string varName)
+{
+	return this->final_destination_[varName];
+}
+
 
 

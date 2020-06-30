@@ -42,6 +42,12 @@ void Element::setDuration(int dur){
 string Element::getDestination(){
 	return this->destination_;
 }
+bool Element::getReady(){
+	return this->ready_;
+}
+char Element::getOp(){
+	return this->operation;
+}
 void Element::notify(ID id){
 	this->ready_ = 1;
 	ExMachina::Instance()->eventOccured(id, Scheduler::Instance()->getCurTime());

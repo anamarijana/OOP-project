@@ -4,13 +4,6 @@
 #include <fstream>
 #include<iostream>
 
-/*
-void ExMachina::availableElement(int Id){
-	for (int i = 0; i < processing_.size(); i++) {
-		if (processing_[i]->getId() == Id)
-			processing_[i]->setReady(1);
-	}
-}*/
 
 void ExMachina::eventOccured(int Id, int cur_shed_time){ //slusa vesti od notify
 	
@@ -22,9 +15,6 @@ void ExMachina::eventOccured(int Id, int cur_shed_time){ //slusa vesti od notify
 void ExMachina::saveTokens(int token_id, int token_value){
 	this->way_station_.insert(pair<int, int>(token_id, token_value));
 }
-
-
-
 
 void ExMachina::readCompilerFile(string filename){
 	fstream inputFile(filename, ios::in);
