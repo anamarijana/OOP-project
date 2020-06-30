@@ -2,34 +2,44 @@
 #include <stack>
 
 
-ExpressionTree::ExpressionTree(const map<string, string>& var_name_expression) {
-	this->final_destitantion_ = final_destination;
-	//pravimo jednostavno binarno stablo uz pomoc steka // simple compilation
+ExpressionTree::ExpressionTree(string *expression,const Configuration& Conf) {
+	//pravimo jednostavno binarno stablo od postorder izraza // simple compilation
 	stack <Element*> s;
 	Element* curr = 0;
 	int children_number;
-	for (int i = 0; i < postfix.size(); i++) {
+	string exp = *expression;
+	Configuration* pConf;
+	*pConf = Conf;
+	for (int i = 0; i < exp.size(); i++) {
 
-		if (isdigit(postfix[i])) {
+		if (isdigit(exp[i])) {
 			curr = new Constant(CONSTANT);
 			s.push(curr);
 		}
-		else if (isalpha(postfix[i])) {
+		else if (isalpha(exp[i])) {
 			curr = new Variable(VARIABLE);
 			s.push(curr);
 		}
 		else {
-			if (postfix[i] == '+')
+			if (exp[i] == '+') {
 				curr = new Addition(ADDITION);
-			else if (postfix[i] == '*')
+				curr->setDuration(pConf->getAddTime());
+			}
+			else if (exp[i] == '*') {
 				curr = new Multiplication(MULTIPLICATION);
-			else if (postfix[i] == '^')
+				curr->setDuration(pConf->getMultiTime());
+			}
+			else if (exp[i] == '^') {
 				curr = new Exponentiation(EXPONENTIATION);
-			else
+				curr->setDuration(pConf->getExpTime());
+			}
+			else {
 				curr = new Assignment(ASSIGNMENT);
+				curr->setDuration(pConf->getAssTime());
+			}
 			Element* child = 0;
 
-			if (postfix[i] == '=') children_number = 1;
+			if (exp[i] == '=') children_number = 1;
 			else children_number = 2;
 			for (int j = 0; j < children_number; j++) {
 				if (s.top()->getType() == CONSTANT) {
@@ -67,4 +77,8 @@ void ExpressionTree::birth(Element*){
 }
 
 void ExpressionTree::calculate(const string& filepath){
+}
+
+Element* ExpressionTree::getRoot(){
+	return this->root_;
 }

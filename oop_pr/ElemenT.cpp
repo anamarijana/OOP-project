@@ -36,6 +36,9 @@ int Element::getId(){
 void Element::setReady(bool ready){
 	this->ready_ = ready;
 }
+void Element::setDuration(int dur){
+	this->duration = dur;
+}
 string Element::getDestination(){
 	return this->destination_;
 }

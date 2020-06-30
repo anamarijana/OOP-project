@@ -2,19 +2,23 @@
 #define PROGRAM_H
 
 #include <iostream>
-#include<map>
+
 using namespace std;
 
 class Program {
 public:
 
-	Program(string);
+	Program(const string&);
 	~Program();
 
-	const string& inToPost(string);
-
+	const string& inToPost(string*);
+	int getExpNum();
+	string** getVarNameExp();
+protected:
+	
 private:
-	map<string, string>* var_name_expression; //varijable i njihovi izrazi
+	int expression_num;
+	string **var_name_expression; //varijable i njihovi izrazi
 	
 };
 

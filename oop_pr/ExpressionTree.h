@@ -2,19 +2,19 @@
 #define CALC_TREE_H
 #include "ElemenT.h"
 #include <vector>
-#include<map>
-
+#include"Configuration.h"
 class ExpressionTree {
 public:
 
 
-	ExpressionTree(const map<string,string> &var_name_expression);
+	ExpressionTree(string *var_name_expression,const Configuration&);
 	~ExpressionTree();
 	void binaryToNary();
 	void birth(Element*); //cvor sa vise od dvoje dece se deli radja novi cvor istog znaka
 	
 	void calculate(const string& filepath);
 	
+	Element* getRoot();
 
 protected:
 

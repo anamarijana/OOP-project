@@ -37,7 +37,7 @@ public:
 
 	void setDestination(string);
 	void setReady(bool);
-	
+	void setDuration(int);
 	virtual void notify(ID id) override;
 
 

@@ -7,10 +7,16 @@ using namespace std;
 
 class Configuration {
 public:
-
-	static Configuration* Instance(const string& filepath);
-protected:
 	Configuration(const string& filepath);
+	
+	int getMultiTime();
+	int getAddTime();
+	int getExpTime();
+	int getAssTime();
+	int getMemoTime();
+	bool getCompTime();
+protected:
+	
 private:
 	int Ta = 0;
 	int Tm = 0;

@@ -5,15 +5,32 @@
 #include"Configuration.h"
 using namespace std;
 
-Configuration* Configuration::Instance(const string& filepath){
 
-	static Configuration instance;
-	return &instance;
-	
+
+int Configuration::getMultiTime(){
+	return this->Tm;
+}
+int Configuration::getAddTime() {
+	return this->Ta;
+}
+int Configuration::getExpTime() {
+	return this->Te;
+}
+int Configuration::getAssTime() {
+	return this->Tw;
+}
+int Configuration::getMemoTime() {
+	return this->Nw;
+}
+bool Configuration::getCompTime() {
+	return this->compilation;
 }
 
+
+
+
 /// provera
-Configuration::Configuration(const string& filepath) {
+Configuration::Configuration(const string& filepath ) {
 	// Otvaramo fajl u 'in' rezimu rada (samo citanje)
 	fstream inputFile(filepath, ios::in);
 
