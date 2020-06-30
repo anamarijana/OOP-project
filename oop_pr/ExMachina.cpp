@@ -131,7 +131,7 @@ void ExMachina::readCompilerFile(const string& filename){
 	inputFile.close();
 }
 
-string ExMachina::compiler_filename = 0;
+string ExMachina::compiler_filename;
 
 ExMachina* ExMachina::Instance(const string& filename){
 		static ExMachina instance(filename);

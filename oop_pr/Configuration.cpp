@@ -6,7 +6,7 @@
 using namespace std;
 
 
-string Configuration::config_file_name = 0;//deklarisemo staticku varijablu
+string Configuration::config_file_name;//deklarisemo staticku varijablu
 Configuration* Configuration::Instance(const string& filepath){
 	static Configuration instance(filepath);
 	config_file_name = filepath;
@@ -38,42 +38,60 @@ bool Configuration::getCompTime() {
 }
 
 
-
-
-/// provera
 Configuration::Configuration(const string& filepath ) {
-	// Otvaramo fajl u 'in' rezimu rada (samo citanje)
 	fstream inputFile(filepath, ios::in);
-
-
-	// Metoda 'peek()' dohvata sledeci karakter koji bi se procitao ali ga ne cita
-
+	
 	while (inputFile.peek() != EOF) {
 		int var_value = 0;
 		char buffer;
-		// Fajl tokove koristimo isto kao i ulaz/izlaz tokove
 		int i = 0;
 		string var_name;
-		while (inputFile.peek() != '=') {
-			inputFile >> var_name[i++];
+		char help;
+		string comp_value;
+		while (1) {
+			inputFile >> help;
+			if (help == '=') break;
+			var_name += help;
 		}
-		inputFile >> buffer; //=
-		inputFile >> var_value;
-		
-		if (!(var_name.compare("Ta")))
-			this->Ta = var_value;
-		else if (!var_name.compare("Tm"))
-			this->Tm = var_value;
-		else if (!var_name.compare("Te"))
-			this->Te = var_value;
-		else if (!var_name.compare("Tw"))
-			this->Tw = var_value;
-		else if (!var_name.compare("Nw"))
-			this->Nw = var_value;
-		else if (!var_name.compare("compilation"))
-			this->compilation = var_value;
 
-		inputFile >> buffer; //da bi presao u novi red
+		
+		
+		if (!(var_name.compare("Ta"))) {
+			inputFile >> var_value;
+			this->Ta = var_value;
+		}
+		else if (!var_name.compare("Tm")) {
+			inputFile >> var_value;
+			this->Tm = var_value;
+		}
+		else if (!var_name.compare("Te")) {
+			inputFile >> var_value;
+			this->Te = var_value;
+		}
+		else if (!var_name.compare("Tw")) {
+			inputFile >> var_value;
+			this->Tw = var_value;
+		}
+		else if (!var_name.compare("Nw")) {
+			inputFile >> var_value;
+			this->Nw = var_value;
+		}
+		else if (!var_name.compare("compilation")) {
+			while (inputFile.peek()!=EOF) {
+				inputFile >> help;
+				comp_value += help;
+			}
+			
+			if (!comp_value.compare("simple")) {
+				this->compilation = 0;
+			}
+			else
+				this->compilation = 1;
+
+			
+		}
+
+		
 
 
 	}

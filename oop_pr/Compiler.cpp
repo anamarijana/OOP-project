@@ -7,8 +7,10 @@ Compiler* Compiler::Instance(const string& filepath1, const string filepath2){
 
 void Compiler::catchOperation(){
 	for (int i = 0; i < forest_gump_.size(); i++) {
-		all_operations.insert(all_operations.end(), forest_gump_[i]->getOp().begin(), forest_gump_[i]->getOp().end());
-
+		
+		for (int j = 0; j < forest_gump_[i]->getOp().size(); j++) {
+			all_operations.push_back(forest_gump_[i]->getOp()[j]);
+		}
 	}
 }
 
@@ -61,8 +63,12 @@ Compiler::Compiler(const string& filepath1, const string filepath2){
 	Configuration::Instance(filepath1);
 	Program::Instance(filepath2);
 	this->filename = filepath2;
-	for (int i = 0; i < Program::returnInstance()->getExpNum(); i++) {
-		this->forest_gump_[i] = new ExpressionTree(Program::returnInstance()->getVarNameExp()[i]);
+	int j = 0;
+	map<int, string> help = Program::returnInstance()->getVarNameExp();
+	for (auto i = help.begin(); i != help.end(); i++) {
+		string* expres = &(i->second);
+		 ExpressionTree* tree = new ExpressionTree(expres);
+		 this->forest_gump_.push_back(tree);
 	}
 	catchOperation();
 }

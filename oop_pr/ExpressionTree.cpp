@@ -9,11 +9,12 @@ ExpressionTree::ExpressionTree(string *expression) {
 	int children_number;
 	string exp = *expression;
 	
-	string final_destination;
+	string final_destination ;
 	string destination;
 	int constant;
 
-	for (int i = 0; i < exp.size(); i++) {
+	final_destination += exp[0];//za prvog ne pravimo node
+	for (int i = 1; i < exp.size(); i++) {
 
 		if (isdigit(exp[i])) {
 			curr = new Constant(CONSTANT);
@@ -44,7 +45,7 @@ ExpressionTree::ExpressionTree(string *expression) {
 			else {
 				curr = new Assignment(ASSIGNMENT);
 				curr->setDuration(Configuration::returnInstance()->getAssTime());
-				final_destination = exp[++i];//posle jednako ide var za nju ne pravimo node
+
 				
 			}
 			Element* child = 0;
@@ -54,7 +55,7 @@ ExpressionTree::ExpressionTree(string *expression) {
 			for (int j = 0; j < children_number; j++) {
 				
 				child = s.top();
-				curr->getIn().push_back(child);
+				curr->setIn(child);
 				s.pop();
 				
 			}
@@ -63,9 +64,11 @@ ExpressionTree::ExpressionTree(string *expression) {
 			this->operations_.push_back(curr);
 		}
 
+
 	}
 
 	this->root_ = s.top(); //na kraju na steku ostaje samo koreni cvor
+
 	this->root_->setDestination(final_destination);
 }
 ExpressionTree::~ExpressionTree(){

@@ -42,6 +42,9 @@ void Element::setDuration(int dur){
 void Element::setOutValue(int value){
 	this->out_value_ = value;
 }
+void Element::setIn(Element* child){
+	this->in_.push_back(child);
+}
 string Element::getDestination(){
 	return this->destination_;
 }

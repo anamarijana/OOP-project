@@ -10,7 +10,7 @@ using namespace std;
 
 Program::~Program() {
 }
-string Program::filename_ = 0;
+string Program::filename_;
 Program* Program::Instance(const string& filename) {
 	static Program instance(filename);
 	filename_ = filename;
@@ -22,52 +22,40 @@ Program* Program::returnInstance() {
 }
 
 Program::Program(const string &filename) {
-	// Otvaramo fajl u 'in' rezimu rada (samo citanje)
+	
 	fstream inputFile(filename, ios::in);
-
-
-	// Metoda 'peek()' dohvata sledeci karakter koji bi se procitao ali ga ne cita
-
-	while (inputFile.peek() != EOF) {
+	int row_num = 0;
+	
+	string expression;
 		
-		char buffer;
-		int j = 0;
-		string expression;
-		while (inputFile.peek() != '\n') {
-			char c;
-			inputFile>>c;
-			expression += c;
-
-		}
-
-		*var_name_expression[j++] = expression ;
-		inputFile>>buffer; // da bi pokupio znak za novi red
-
-
+	while (getline(inputFile, expression)) {
+		row_num++;
+		var_name_expression.insert({ row_num, expression });
 	}
+		
 	inputFile.close();
+	
 	//prebacujemo sve izraze y postfiks
-	int count = 0;
-	string* curr = var_name_expression[0];
-	while ( curr!=nullptr) {
-			inToPost(curr);
-			curr++;
-			count++;
-
-	}
-	this->expression_num = count + 1;
+	for (auto i = var_name_expression.begin(); i != var_name_expression.end(); i++) {
+		string* express;
+		express = &(i->second);
+		inToPost(express,i->first);
+	}	
+	
 }
 
 // izraz a^b^c cita se kao a^(b^c)
-void Program::inToPost(string *exp) { // da bism ose otarasili mogucih zagrada i lakse sastavili sintaksno stablo
+void Program::inToPost(string *exp, int key) { // da bism ose otarasili mogucih zagrada i lakse sastavili sintaksno stablo
 	string postfix;
 	string infix = *exp;
 	stack <char> s; //na steku ce biti samo operacije i zagrade
 	int j = 0;
-	for (int i = 0; i < sizeof(exp); i++) {
+	int string_size = (*exp).length();
+	for (int i = 0; i < string_size; i++) {
+		if (infix[i] == ' ') continue;
 
 		if (isdigit(infix[i]) | isalpha(infix[i])) //ako je operand stavi na stek
-			s.push(infix[i]);
+			postfix += infix[i];
 		else if (infix[i] == '(') //oznacava pocetak deo izraza izdvojenog zagradom
 			s.push(infix[i]);
 		else if (infix[i] == ')') {
@@ -84,7 +72,9 @@ void Program::inToPost(string *exp) { // da bism ose otarasili mogucih zagrada i
 // empty() daje tacno ako je stek prazan
 
 		else if (infix[i] == '*') {
-			if ((s.top() != '^')&&(s.top() != '*')) //ako operator ima vecu prednost od onog na vrhu ili je na vrhu otovrena zagrada
+			if (s.empty())
+				s.push(infix[i]);
+			else if ((s.top() != '^')&&(s.top() != '*')) //ako operator ima vecu prednost od onog na vrhu ili je na vrhu otovrena zagrada
 				s.push(infix[i]);
 
 			else { //ovde ulece ako je na topu ^ , * levo asocijativna operacija
@@ -96,7 +86,9 @@ void Program::inToPost(string *exp) { // da bism ose otarasili mogucih zagrada i
 			}
 		}
 		else if (infix[i] == '+') { //on je slabiji od svih
-			if ((s.top() != '^') && (s.top() != '*') && (s.top() != '+'))
+			if (s.empty())
+				s.push(infix[i]);
+			else if ((s.top() != '^') && (s.top() != '*') && (s.top() != '+'))
 				s.push(infix[i]);
 			else {
 				while ((s.top() == '^') && (s.top() == '*') && (s.top() == '+')){
@@ -108,7 +100,9 @@ void Program::inToPost(string *exp) { // da bism ose otarasili mogucih zagrada i
 
 		}
 		else if (infix[i] == '=') {
-			if ((s.top() != '^') && (s.top() != '*') && (s.top() != '+'))
+			if(s.empty())
+				s.push(infix[i]);
+			else if ((s.top() != '^') && (s.top() != '*') && (s.top() != '+'))
 				s.push(infix[i]);
 			else {
 				while ((s.top() == '^') && (s.top() == '*') && (s.top() != '+')) {
@@ -121,14 +115,18 @@ void Program::inToPost(string *exp) { // da bism ose otarasili mogucih zagrada i
 		}
 
 	}
-	*exp = postfix;
+	int s_size = s.size();
+	for (int i = 0; i < s_size; i++) {
+		postfix += s.top();
+		s.pop();
+	}
+
+	this->var_name_expression[key] = postfix;
 }
 
-int Program::getExpNum(){
-	return this->expression_num;
-}
-
-string** Program::getVarNameExp(){
+map<int, string> Program::getVarNameExp(){
 	return this->var_name_expression;
 }
+
+
 

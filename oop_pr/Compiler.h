@@ -11,7 +11,7 @@
 class Compiler {
 public:
 	static Compiler* Instance(const string& filepath1, const string filepath2);
-	~Compiler();
+	~Compiler() {};
 	void catchOperation();
 	void compile();
 	void setRootsReady();

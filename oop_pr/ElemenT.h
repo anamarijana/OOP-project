@@ -42,6 +42,7 @@ public:
 	void setReady(bool);
 	void setDuration(int);
 	void setOutValue(int);// ispraviti sve na double
+	void setIn(Element*);
 	virtual void notify(ID id) override;
 
 

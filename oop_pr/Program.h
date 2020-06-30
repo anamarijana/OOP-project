@@ -2,6 +2,8 @@
 #define PROGRAM_H
 
 #include <iostream>
+#include<map>
+#include<string>
 
 using namespace std;
 
@@ -12,16 +14,15 @@ public:
 	
 	~Program();
 
-	void inToPost(string*);
-	int getExpNum();
-	string** getVarNameExp();
+	void inToPost(string*,int);
+	map<int, string> getVarNameExp();
 protected:
 	
 private:
 	static string filename_;
 	Program(const string&);
-	int expression_num;
-	string **var_name_expression = 0; //varijable i njihovi izrazi
+	
+	map <int,string> var_name_expression; //varijable i njihovi izrazi
 	
 };
 
