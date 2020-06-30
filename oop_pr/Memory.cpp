@@ -1,5 +1,4 @@
 #include "Memory.h"
-
 Memory* Memory::Instance(){
 	
 	static Memory instance;
@@ -7,7 +6,7 @@ Memory* Memory::Instance(){
 }
 
 void Memory::set(string varName, double val){
-	this->final_destination_.insert(varName, val);
+	this->final_destination_.insert({ varName, val });
 }
 
 double Memory::get(string varName)

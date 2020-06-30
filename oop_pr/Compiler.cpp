@@ -15,7 +15,7 @@ void Compiler::catchOperation(){
 void Compiler::compile(){
 	setRootsReady();
 	int id = 1;
-	string new_file_name = this->filename;
+	string new_file_name = this->filename + ".imf";
 	fstream outputFile(new_file_name, ios::out);
 	
 	while (this->roots_ready == 0) {
@@ -51,6 +51,10 @@ void Compiler::setRootsReady(){
 	for (int i = 0; i < forest_gump_.size(); i++) {
 		this-> roots_ready = this->roots_ready & this->forest_gump_[i]->getRoot()->getReady();
 	}
+}
+
+const string& Compiler::giveMachinaFile(){
+	return this->filename + ".imf";
 }
 
 Compiler::Compiler(const string& filepath1, const string filepath2){

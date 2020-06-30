@@ -6,7 +6,7 @@
 using namespace std;
 
 
-
+string Configuration::config_file_name = 0;//deklarisemo staticku varijablu
 Configuration* Configuration::Instance(const string& filepath){
 	static Configuration instance(filepath);
 	config_file_name = filepath;

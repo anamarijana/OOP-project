@@ -15,6 +15,7 @@ public:
 	void catchOperation();
 	void compile();
 	void setRootsReady();
+	const string& giveMachinaFile();
 protected:
 	Compiler(const string& filepath1,const string filepath2);
 private:

@@ -28,13 +28,13 @@ ExpressionTree::ExpressionTree(string *expression) {
 			curr->setDestination(destination);
 
 		}
-		else {
+		else {//CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT 
 			if (exp[i] == '+') {
 				curr = new Addition(ADDITION);
 				curr->setDuration(Configuration::returnInstance()->getAddTime());
 			}
 			else if (exp[i] == '*') {
-				curr = new Multiplication(MULTIPLICATION);
+				curr = new  Multiplication(MULTIPLICATION);
 				curr->setDuration(Configuration::returnInstance()->getMultiTime());
 			}
 			else if (exp[i] == '^') {

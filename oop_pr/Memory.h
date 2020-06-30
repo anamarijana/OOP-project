@@ -2,6 +2,7 @@
 #define MEMORY_H
 #include <map>
 #include <string>
+using namespace std;
 class Memory {
 public:
 
@@ -12,7 +13,7 @@ protected:
 	Memory() {};
 	
 private:
-	map<string, int> final_destination_;
+	map<string, double> final_destination_;
 };
 
 

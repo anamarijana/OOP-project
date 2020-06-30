@@ -66,21 +66,21 @@ void ExMachina::readCompilerFile(const string& filename){
 		}
 		inputFile >> buffer; //novi red
 		if (operation == '+') {
-			curr = new Addition(ADDITION);
+			curr = new Addition(ADDITION,stoi(id));
 			curr->setDuration(Configuration::returnInstance()->getAddTime());
 		}
 		else if (operation == '*') {
-			curr = new Multiplication(MULTIPLICATION);
+			curr = new Multiplication(MULTIPLICATION, stoi(id));
 			curr->setDuration(Configuration::returnInstance()->getMultiTime());
 
 		}
 		else if (operation == '^') {
-			curr = new Exponentiation(EXPONENTIATION);
+			curr = new Exponentiation(EXPONENTIATION,stoi(id));
 			curr->setDuration(Configuration::returnInstance()->getExpTime());
 
 		}
 		else {
-			curr = new Assignment(ASSIGNMENT);
+			curr = new Assignment(ASSIGNMENT, stoi(id));
 			curr->setDuration(Configuration::returnInstance()->getExpTime());
 
 		}
@@ -131,6 +131,7 @@ void ExMachina::readCompilerFile(const string& filename){
 	inputFile.close();
 }
 
+string ExMachina::compiler_filename = 0;
 
 ExMachina* ExMachina::Instance(const string& filename){
 		static ExMachina instance(filename);

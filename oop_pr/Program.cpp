@@ -10,7 +10,7 @@ using namespace std;
 
 Program::~Program() {
 }
-
+string Program::filename_ = 0;
 Program* Program::Instance(const string& filename) {
 	static Program instance(filename);
 	filename_ = filename;
@@ -59,7 +59,7 @@ Program::Program(const string &filename) {
 }
 
 // izraz a^b^c cita se kao a^(b^c)
-const string& Program::inToPost(string *exp) { // da bism ose otarasili mogucih zagrada i lakse sastavili sintaksno stablo
+void Program::inToPost(string *exp) { // da bism ose otarasili mogucih zagrada i lakse sastavili sintaksno stablo
 	string postfix;
 	string infix = *exp;
 	stack <char> s; //na steku ce biti samo operacije i zagrade
@@ -121,7 +121,7 @@ const string& Program::inToPost(string *exp) { // da bism ose otarasili mogucih 
 		}
 
 	}
-
+	*exp = postfix;
 }
 
 int Program::getExpNum(){

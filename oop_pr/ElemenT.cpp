@@ -56,9 +56,11 @@ void Element::notify(ID id){
 	ExMachina::returnInstance()->eventOccured(id,duration, Scheduler::Instance()->getCurTime());
 	in_from_childred_out();
 	in_to_out();
-	if(!isdigit(this->destination_[1])){
-		Memory::Instance()->set(destination_, out_value_);
-		
+	if (this->destination_[1]) {
+		if (!isdigit(this->destination_[1])) {
+			Memory::Instance()->set(destination_, out_value_);
+
+		}
 	}
 }
 void Element ::setDestination(string d) {

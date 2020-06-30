@@ -12,7 +12,7 @@ public:
 	
 	~Program();
 
-	const string& inToPost(string*);
+	void inToPost(string*);
 	int getExpNum();
 	string** getVarNameExp();
 protected:
@@ -21,7 +21,7 @@ private:
 	static string filename_;
 	Program(const string&);
 	int expression_num;
-	string **var_name_expression; //varijable i njihovi izrazi
+	string **var_name_expression = 0; //varijable i njihovi izrazi
 	
 };
 
