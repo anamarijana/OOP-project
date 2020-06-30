@@ -55,13 +55,13 @@ protected:
 	int id_; // stampanje
 	char operation;
 	string destination_; //token ili varijabla
-	int out_value_ = 0;
+	int out_value_ = 0; 
 
 	
 	vector<Element*> in_; // deca 
 	vector<bool> in_ready_; // spremnost ulaza 
 	vector<int> in_values_;
-	
+	s
 	
 };
 

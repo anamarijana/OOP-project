@@ -71,5 +71,6 @@ Compiler::Compiler(const string& filepath1, const string filepath2){
 		 this->forest_gump_.push_back(tree);
 	}
 	catchOperation();
+	compile();
 }
 
