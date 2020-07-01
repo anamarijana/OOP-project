@@ -16,6 +16,7 @@ const string& ExMachina::getCompFilename(){
 }
 
 void ExMachina::readCompilerFile(const string& filename){
+	/*
 	fstream inputFile(filename, ios::in);
 	string line;
 	while (inputFile.eof())
@@ -23,29 +24,30 @@ void ExMachina::readCompilerFile(const string& filename){
 		inputFile >> line;
 		cout << line << '\n';
 	}
-	inputFile.close();
+	inputFile.close();*/
 	
 	
-	/*
+	
 	fstream inputFile(filename, ios::in);
 	string operand1;
 	string operand2;
 	string destination;
 	string id;
 	
+	char buffer;
+	char operation;
+	char c;
+
 	//[2] = a t1
 	//[3] ^ t1 x 3
 
-	while (inputFile.peek() != EOF) {
+	while (!inputFile.eof()) {
 		operand1.clear();
 		operand2.clear();
 		destination.clear();
 		id.clear();
 		
-		char buffer;
-		char operation;
-		char assignment;
-		char c;
+		
 		
 		Element* curr = 0;
 		Operation* curr_op = 0;
@@ -63,7 +65,7 @@ void ExMachina::readCompilerFile(const string& filename){
 		inputFile >> operation; cout << operation<<endl;
 		inputFile >> destination; if (inputFile.peek() == EOF) break;
 		inputFile >> operand1;
-
+	
 		if (inputFile.peek() != '\n') inputFile >> operand2;
 	
 		if (operation == '+') {
@@ -145,7 +147,7 @@ void ExMachina::readCompilerFile(const string& filename){
 		
 	}
 	
-	inputFile.close();*/
+	inputFile.close();
 }
 
 string ExMachina::compiler_filename;
