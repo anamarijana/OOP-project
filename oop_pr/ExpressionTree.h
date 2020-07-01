@@ -14,6 +14,8 @@ public:
 	void calculate(const string& filepath);
 	vector <Operation*> getOps();
 	void removeChild(Operation* Child);
+	ff//treba povezati medjusobno izraze 
+	
 	
 	Element* getRoot();
 
