@@ -11,93 +11,108 @@ void ExMachina::eventOccured(int Id,int op_duration, int cur_shed_time){ //slusa
 	processingToCompleted(Id);
 }
 
-const string& ExMachina::getCompFilename()
-{
+const string& ExMachina::getCompFilename(){
 	return this->compiler_filename;
 }
 
 void ExMachina::readCompilerFile(const string& filename){
 	fstream inputFile(filename, ios::in);
-	char buffer;
-	Element* curr;
-
-	//[17]y = t1
-	//[23]r = t1*t2
+	string line;
+	while (inputFile.eof())
+	{
+		inputFile >> line;
+		cout << line << '\n';
+	}
+	inputFile.close();
+	
+	
+	/*
+	fstream inputFile(filename, ios::in);
+	string operand1;
+	string operand2;
+	string destination;
+	string id;
+	
+	//[2] = a t1
+	//[3] ^ t1 x 3
 
 	while (inputFile.peek() != EOF) {
-		string id;
-		char operation;
-		string operand1;
-		string operand2;
-		string destination;
-		char assignment;
+		operand1.clear();
+		operand2.clear();
+		destination.clear();
+		id.clear();
 		
+		char buffer;
+		char operation;
+		char assignment;
 		char c;
+		
+		Element* curr = 0;
+		Operation* curr_op = 0;
+
+
 		inputFile >> buffer;
-		while (inputFile.peek() != ']') {
+		while (1) {
 			inputFile >> c;
+			if (c == ']') break;
 			id += c;
 		}
-		inputFile >> buffer; // za ]
+		cout << buffer;
+		cout << c;
 		
-		
-		while (inputFile.peek() != '=') {
-			char c;
-			inputFile >> c;
-			destination += c;
-		}
+		inputFile >> operation; cout << operation<<endl;
+		inputFile >> destination; if (inputFile.peek() == EOF) break;
+		inputFile >> operand1;
 
-		inputFile >> assignment;
-		while (isalpha(inputFile.peek()) | isdigit(inputFile.peek())) {
-			char c;
-			inputFile >> c;
-			operand1 += c;
-		}
-		inputFile >> buffer;
-		if (buffer == '\n') {
-			operation = assignment;
-			continue;
-		}
-		operation = buffer;
-		while (isalpha(inputFile.peek()) | isdigit(inputFile.peek())) {
-			char c;
-			inputFile >> c;
-			destination += c;
-		}
-		inputFile >> buffer; //novi red
+		if (inputFile.peek() != '\n') inputFile >> operand2;
+	
 		if (operation == '+') {
-			curr = new Addition(ADDITION,stoi(id));
-			curr->setDuration(Configuration::returnInstance()->getAddTime());
+			curr_op = new Addition(ADDITION,stoi(id), Configuration::returnInstance()->getAddTime());
+			
 		}
 		else if (operation == '*') {
-			curr = new Multiplication(MULTIPLICATION, stoi(id));
-			curr->setDuration(Configuration::returnInstance()->getMultiTime());
+			curr_op = new Multiplication(MULTIPLICATION, stoi(id), Configuration::returnInstance()->getMultiTime());
 
 		}
 		else if (operation == '^') {
-			curr = new Exponentiation(EXPONENTIATION,stoi(id));
-			curr->setDuration(Configuration::returnInstance()->getExpTime());
+			curr_op = new Exponentiation(EXPONENTIATION,stoi(id), Configuration::returnInstance()->getExpTime());
 
 		}
-		else {
-			curr = new Assignment(ASSIGNMENT, stoi(id));
-			curr->setDuration(Configuration::returnInstance()->getExpTime());
+		else if (operation == '=') {
+			curr_op = new Assignment(ASSIGNMENT, stoi(id), Configuration::returnInstance()->getAssTime());
 
 		}
-		if (curr) curr->setDestination(destination);
+		if (curr_op) curr_op->setDestination(destination);
 		
-		this->everyone_.push_back(curr);
-		this->waiting_.push_back(curr);
+		this->everyone_.push_back(curr_op);
+		this->waiting_.push_back(curr_op);
 		bool has_operand1 = 0;
 		bool has_operand2 = 0;
 		for (int i = 0; i < everyone_.size(); i++) {
-			if (everyone_[i]->getDestination() == operand1) {
-				curr->getIn().push_back(everyone_[i]);
-				has_operand1 = 1;
+			if (isdigit(operand1[0])) {
+				if (everyone_[i]->getOutValue() == stoi(operand1)) {
+					curr_op->setIn(everyone_[i]);
+					has_operand1 = 1;
+				}
 			}
-			if (everyone_[i]->getDestination() == operand2) {
-				curr->getIn().push_back(everyone_[i]);
-				has_operand2 = 1;
+			else if (isalpha(operand1[0])) {
+				if (everyone_[i]->getDestination() == operand1) {
+					curr_op->setIn(everyone_[i]);
+					has_operand1 = 1;
+
+				}
+			}
+			if (isdigit(operand2[0])) {
+				if (everyone_[i]->getOutValue() == stoi(operand2)) {
+					curr_op->setIn(everyone_[i]);
+					has_operand2 = 1;
+				}
+			}
+			else if (isalpha(operand2[0])) {
+				if (everyone_[i]->getDestination() == operand2) {
+					curr_op->setIn(everyone_[i]);
+					has_operand2 = 1;
+				}
 			}
 		}
 
@@ -105,30 +120,32 @@ void ExMachina::readCompilerFile(const string& filename){
 			if (isdigit(operand2[0])) {
 				curr = new Constant(CONSTANT);
 				curr->setOutValue(stoi(operand2));
+				curr->setDestination(operand2);
 			}
 			else {
 				curr = new Variable(VARIABLE);
 				curr->setDestination(operand2);
 			}
-			this->waiting_.back()->getIn().push_back(curr);
+			this->waiting_.back()->setIn(curr);
 			this->everyone_.push_back(curr);
 		}
 		if (has_operand1 == 0) {
-			if (isdigit(operand2[0])) {
+			if (isdigit(operand1[0])) {
 				curr = new Constant(CONSTANT);
-				curr->setOutValue(stoi(operand2));
+				curr->setOutValue(stoi(operand1));
+				curr->setDestination(operand1);
 			}
 			else {
 				curr = new Variable(VARIABLE);
-				curr->setDestination(operand2);
+				curr->setDestination(operand1);
 			}
-			this->waiting_.back()->getIn().push_back(curr);
+			this->waiting_.back()->setIn(curr);
 			this->everyone_.push_back(curr);
 		}
 		
 	}
 	
-	inputFile.close();
+	inputFile.close();*/
 }
 
 string ExMachina::compiler_filename;

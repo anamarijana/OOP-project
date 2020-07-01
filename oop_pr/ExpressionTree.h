@@ -12,7 +12,7 @@ public:
 	void binaryToNary();
 	void birth(Element*); //cvor sa vise od dvoje dece se deli radja novi cvor istog znaka
 	void calculate(const string& filepath);
-	vector <Element*> getOp();
+	vector <Operation*> getOps();
 	
 	Element* getRoot();
 
@@ -20,7 +20,7 @@ protected:
 
 private:
 	Element* root_; // uvek bi trebalo da bude operacija dodele
-	vector<Element*> operations_; // ovde ce biti oznake za upisivanje i tokeni
+	vector<Operation*> operations_; // ovde ce biti oznake za upisivanje i tokeni
 };
 
 #endif

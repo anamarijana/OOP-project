@@ -22,9 +22,10 @@ protected:
 	ExMachina(const string&);
 private:
 	static string compiler_filename;
-	vector <Element*> waiting_; //ovde su svi na pocetku
-	vector <Element*> processing_; //odavde saljemo masini
-	vector <Element*> completed_;
+	vector <Operation*> waiting_; //ovde su svi na pocetku
+	vector <Operation*> processing_; //odavde saljemo masini
+	vector <Operation*> completed_;
+	
 	vector <Element*> everyone_;
 	
 };

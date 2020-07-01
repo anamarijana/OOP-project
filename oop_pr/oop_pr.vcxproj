@@ -34,10 +34,6 @@
       <Project>{78c16009-d62d-4075-ba76-acd25effd1f3}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="config.txt" />
-    <Text Include="test.txt" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{48E4B2ED-13A9-4109-9970-245408164D21}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

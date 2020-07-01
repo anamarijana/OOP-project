@@ -6,6 +6,7 @@ ExpressionTree::ExpressionTree(string *expression) {
 	//pravimo jednostavno binarno stablo od postorder izraza // simple compilation
 	stack <Element*> s;
 	Element* curr = 0;
+	Operation* curr_op = 0;
 	int children_number;
 	string exp = *expression;
 	
@@ -21,6 +22,8 @@ ExpressionTree::ExpressionTree(string *expression) {
 			s.push(curr);
 			constant = exp[i];
 			curr->setOutValue(constant);
+			destination = exp[i];
+			curr->setDestination(destination);
 		}
 		else if (isalpha(exp[i])) {
 			curr = new Variable(VARIABLE);
@@ -31,20 +34,20 @@ ExpressionTree::ExpressionTree(string *expression) {
 		}
 		else {//CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT 
 			if (exp[i] == '+') {
-				curr = new Addition(ADDITION);
-				curr->setDuration(Configuration::returnInstance()->getAddTime());
+				curr_op = new Addition(ADDITION);
+				curr_op->setDuration(Configuration::returnInstance()->getAddTime());
 			}
 			else if (exp[i] == '*') {
-				curr = new  Multiplication(MULTIPLICATION);
-				curr->setDuration(Configuration::returnInstance()->getMultiTime());
+				curr_op = new  Multiplication(MULTIPLICATION);
+				curr_op->setDuration(Configuration::returnInstance()->getMultiTime());
 			}
 			else if (exp[i] == '^') {
-				curr = new Exponentiation(EXPONENTIATION);
-				curr->setDuration(Configuration::returnInstance()->getExpTime());
+				curr_op = new Exponentiation(EXPONENTIATION);
+				curr_op->setDuration(Configuration::returnInstance()->getExpTime());
 			}
 			else {
-				curr = new Assignment(ASSIGNMENT);
-				curr->setDuration(Configuration::returnInstance()->getAssTime());
+				curr_op = new Assignment(ASSIGNMENT);
+				curr_op->setDuration(Configuration::returnInstance()->getAssTime());
 
 				
 			}
@@ -55,13 +58,13 @@ ExpressionTree::ExpressionTree(string *expression) {
 			for (int j = 0; j < children_number; j++) {
 				
 				child = s.top();
-				curr->setIn(child);
+				curr_op->setIn(child);
 				s.pop();
 				
 			}
-			s.push(curr);
+			s.push(curr_op);
 		
-			this->operations_.push_back(curr);
+			this->operations_.push_back(curr_op);
 		}
 
 
@@ -88,7 +91,7 @@ void ExpressionTree::birth(Element*){
 void ExpressionTree::calculate(const string& filepath){
 }
 
-vector<Element*> ExpressionTree::getOp(){
+vector<Operation*> ExpressionTree::getOps(){
 	return this->operations_;
 }
 

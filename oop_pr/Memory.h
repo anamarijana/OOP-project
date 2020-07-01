@@ -9,6 +9,7 @@ public:
 	static Memory* Instance();
 	void set(string varName, double val); 
 	double get(string varName);
+	void write();
 protected:
 	Memory() {};
 	

@@ -14,5 +14,10 @@ double Memory::get(string varName)
 	return this->final_destination_[varName];
 }
 
+void Memory::write(){
+
+
+}
+
 
 

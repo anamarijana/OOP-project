@@ -16,12 +16,13 @@ public:
 	void compile();
 	void setRootsReady();
 	const string& giveMachinaFile();
+	char defineMotherOp(Operation*);
 protected:
 	Compiler(const string& filepath1,const string filepath2);
 private:
 	string filename;
 	vector <ExpressionTree*> forest_gump_;
-	vector<Element*> all_operations;
+	vector<Operation*> all_operations;
 	bool roots_ready = 0;
 
 

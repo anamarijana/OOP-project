@@ -27,17 +27,17 @@ vector<bool> Element::getInReady() {
 	return this->in_ready_;
 }
 
-int Element::getDuration() {
-	return this->duration;
+int Operation::getDuration() {
+	return this->duration_;
 }
-int Element::getId(){
+int Operation::getId(){
 	return this->id_;
 }
 void Element::setReady(bool ready){
 	this->ready_ = ready;
 }
-void Element::setDuration(int dur){
-	this->duration = dur;
+void Operation::setDuration(int dur){
+	this->duration_ = dur;
 }
 void Element::setOutValue(int value){
 	this->out_value_ = value;
@@ -51,12 +51,9 @@ string Element::getDestination(){
 bool Element::getReady(){
 	return this->ready_;
 }
-char Element::getOp(){
-	return this->operation;
-}
-void Element::notify(ID id){
+void Operation::notify(ID id){
 	this->ready_ = 1;
-	ExMachina::returnInstance()->eventOccured(id,duration, Scheduler::Instance()->getCurTime());
+	ExMachina::returnInstance()->eventOccured(id,this->duration_, Scheduler::Instance()->getCurTime());
 	in_from_childred_out();
 	in_to_out();
 	if (this->destination_[1]) {
