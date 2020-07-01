@@ -17,6 +17,8 @@ public:
 	void setRootsReady();
 	const string& giveMachinaFile();
 	char defineMotherOp(Operation*);
+	void tieUp();
+	Operation* returnAss(string destination);
 protected:
 	Compiler(const string& filepath1,const string filepath2);
 private:
