@@ -82,6 +82,31 @@ ExpressionTree::~ExpressionTree(){
 //distributivnost!! samo ako imamo zagrade??
 void ExpressionTree::binaryToNary(){
 	
+
+	for (int i = 0; i<operations_.size();i++){
+		if((operations[i]->getType() != EXPONENTIATION) && (operations[i]->getType() != ASSIGNMENT)){
+			for (int j = 0; j<2;j++){
+				child = operations_[i]->getIn()[j];
+				if(operations_[i]->getType== child){
+					operations_[i]->setIn(child->getIn[0]);
+					operations_[i]->setIn(child->getIn[1]);
+					removeChild(child);
+				}
+			}
+				
+		
+		}
+	}
+}
+
+void ExpressionTree::removeChild(Operation* Child){
+	int i;
+	for (i =0; i<this->operations_.size();i++){
+		if(operations_[i]==Child) // brisemo 6 element operations_.begin() +5
+		this->operations_.erease(operations_.begin()+i);
+	}
+	
+
 }
 
 void ExpressionTree::birth(Element*){
