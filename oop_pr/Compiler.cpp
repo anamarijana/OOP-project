@@ -13,6 +13,29 @@ void Compiler::catchOperation(){
 		}
 	}
 }
+//ovde imamo narno stablo i ukoliko cvor zavisi od promenljive nju zamenjujemo cvorom dodele vrednosti toj promenljivoj
+void Compiler:: tieUp() {
+	Operation* Assing = 0;
+	for(int i=0 ; i<all_operations_.size();i++){
+		for (int j =0; i<all_operations_[i]->getIn().size(); i++){
+			child = all_operations_[i]->getIn()[j];
+			if (child->getType() == VARIABLE){
+				Assign = returnAss(child->getDestination());
+				all_operations_[i]->getIn()[j] = Assign; //ovo ispraviti na setIn
+				delete child; //ne bi trebalo da postoje viseci pokazivaci
+				
+			}
+		}
+		
+	}
+}
+
+Operation* Compiler:: returnAss(string destination){
+	for (int i = 0; i<all_operations_.size(); i++){
+		if (all_operations_[i]->getDestination() == destination)
+			return all_operations_[i];
+	}
+}
 
 void Compiler::compile(){
 	setRootsReady();
