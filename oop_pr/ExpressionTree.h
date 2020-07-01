@@ -13,6 +13,7 @@ public:
 	void birth(Element*); //cvor sa vise od dvoje dece se deli radja novi cvor istog znaka
 	void calculate(const string& filepath);
 	vector <Operation*> getOps();
+	void removeChild(Operation* Child);
 	
 	Element* getRoot();
 
