@@ -28,6 +28,49 @@ void Compiler:: tieUp() {
 		}
 		
 	}
+} //posle ove operacije ne bi trebalo da postoje cvorovi sa varijablama vec da je ceo fajl uvezan u stablo
+
+
+void Compiler:: birth(){ //fja koja treba da se poziva u okviru napredne kompilacije za cvorove od vise od troje dece
+	Element* operand;
+	stack <Element*> operands;
+	for (int i = 0; i<all_operations_.size(); i++){
+		if((all_operations_[i]->getReady() == 0) &&(all_operations_[i]->getIn().size()>2)){
+			for (int j = 0; i<all_operations_[i]->getIn().size();i++){
+				operand = all_operations_[i]->getIn()[j];
+				if((operand->getReady() == 1)&&(operands.size()<2))
+				operands.push(operand);
+			}
+			// ako ima vise od dvoje dece stvara se novi cvor sa to dvoje dece
+			
+		}
+	
+	}
+
+}
+
+void Compiler:: compileAdvanced(){
+	setRootsReady();
+	int id = 1;
+	int token_id = 1;
+	
+	string new_file_name = "glupi_pera.txt";
+	/*
+	unsigned int len_without_txt = new_file_name.length() - 4;
+	new_file_name.resize(len_without_txt);
+	new_file_name.insert(len_without_txt, ".imf");*/
+	this->filename = new_file_name;
+	fstream outputFile(new_file_name, ios::out);
+	
+	while (this->roots_ready == 0) {
+		for (int i = 0; i < all_operations.size(); i++) {
+		
+		}
+	}
+	
+	
+	
+
 }
 
 Operation* Compiler:: returnAss(string destination){
