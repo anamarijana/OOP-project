@@ -76,7 +76,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\38162\source\repos\anamarijana\oop-poj\SimulationEngine\Debug;..\source\include\util;..\source\include\concepts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\profe\source\repos\anamarijana\oop-poj\SimulationEngine;C:\Users\38162\source\repos\anamarijana\oop-poj\SimulationEngine\Debug;..\source\include\util;..\source\include\concepts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

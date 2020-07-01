@@ -3,6 +3,7 @@
 #include<vector>
 #include <fstream>
 #include <iostream>
+#include<stack>
 
 #include"ElemenT.h"
 #include"Configuration.h"
@@ -19,6 +20,9 @@ public:
 	char defineMotherOp(Operation*);
 	void tieUp();
 	Operation* returnAss(string destination);
+	Operation* birth(Operation*);
+	void compileAdvanced();
+	void compileOne(Operation*);
 protected:
 	Compiler(const string& filepath1,const string filepath2);
 private:

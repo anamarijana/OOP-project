@@ -82,14 +82,14 @@ ExpressionTree::~ExpressionTree(){
 //distributivnost!! samo ako imamo zagrade??
 void ExpressionTree::binaryToNary(){
 	
-
+	Element* child = 0;
 	for (int i = 0; i<operations_.size();i++){
-		if((operations[i]->getType() != EXPONENTIATION) && (operations[i]->getType() != ASSIGNMENT)){
+		if((operations_[i]->getType() != EXPONENTIATION) && (operations_[i]->getType() != ASSIGNMENT)){
 			for (int j = 0; j<2;j++){
 				child = operations_[i]->getIn()[j];
-				if(operations_[i]->getType== child){
-					operations_[i]->setIn(child->getIn[0]);
-					operations_[i]->setIn(child->getIn[1]);
+				if(operations_[i]->getType()== child->getType()){
+					operations_[i]->setIn(child->getIn()[0]);
+					operations_[i]->setIn(child->getIn()[1]);
 					removeChild(child);
 				}
 			}

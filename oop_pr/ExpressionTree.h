@@ -10,11 +10,10 @@ public:
 	ExpressionTree(string *var_name_expression);
 	~ExpressionTree();
 	void binaryToNary();
-	void birth(Element*); //cvor sa vise od dvoje dece se deli radja novi cvor istog znaka
 	void calculate(const string& filepath);
 	vector <Operation*> getOps();
 	void removeChild(Operation* Child);
-	ff//treba povezati medjusobno izraze 
+	//treba povezati medjusobno izraze 
 	
 	
 	Element* getRoot();

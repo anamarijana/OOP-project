@@ -45,6 +45,9 @@ void Element::setOutValue(int value){
 void Element::setIn(Element* child){
 	this->in_.push_back(child);
 }
+void Element::popIn(){
+	in_.pop_back();
+}
 string Element::getDestination(){
 	return this->destination_;
 }

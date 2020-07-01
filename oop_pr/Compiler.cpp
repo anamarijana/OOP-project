@@ -15,13 +15,14 @@ void Compiler::catchOperation(){
 }
 //ovde imamo narno stablo i ukoliko cvor zavisi od promenljive nju zamenjujemo cvorom dodele vrednosti toj promenljivoj
 void Compiler:: tieUp() {
-	Operation* Assing = 0;
-	for(int i=0 ; i<all_operations_.size();i++){
-		for (int j =0; i<all_operations_[i]->getIn().size(); i++){
-			child = all_operations_[i]->getIn()[j];
+	Operation* Assign = 0;
+	Element* child = 0;
+	for(int i=0 ; i<all_operations.size();i++){
+		for (int j =0; i<all_operations[i]->getIn().size(); i++){
+			child = all_operations[i]->getIn()[j];
 			if (child->getType() == VARIABLE){
 				Assign = returnAss(child->getDestination());
-				all_operations_[i]->getIn()[j] = Assign; //ovo ispraviti na setIn
+				all_operations[i]->getIn()[j] = Assign; //ovo ispraviti na setIn
 				delete child; //ne bi trebalo da postoje viseci pokazivaci
 				
 			}
@@ -31,41 +32,52 @@ void Compiler:: tieUp() {
 } //posle ove operacije ne bi trebalo da postoje cvorovi sa varijablama vec da je ceo fajl uvezan u stablo
 
 
-void Compiler:: birth(){ //fja koja treba da se poziva u okviru napredne kompilacije za cvorove od vise od troje dece
+Operation* Compiler:: birth(Operation* mother){ //fja koja treba da se poziva u okviru napredne kompilacije za cvorove od vise od troje dece
 	Element* operand;
 	stack <Element*> operands;
-	for (int i = 0; i<all_operations_.size(); i++){
-		if((all_operations_[i]->getReady() == 0) &&(all_operations_[i]->getIn().size()>2)){
-			for (int j = 0; i<all_operations_[i]->getIn().size();i++){
-				operand = all_operations_[i]->getIn()[j];
-				if((operand->getReady() == 1)&&(operands.size()<2))
-				operands.push(operand);
-			}
-			// ako ima vise od dvoje dece stvara se novi cvor sa to dvoje dece
-			
-		}
+	Operation* newMother;
 	
+	for (int j = 0; j<mother->getIn().size();j++){
+		operand = mother->getIn()[j];
+		if((operand->getReady() == 1)&&(operands.size()<2))
+		operands.push(operand);
 	}
+	switch (mother->getType())
+	{
+	case(ADDITION): 
+		newMother = new Addition(ADDITION); break; 
+	case(MULTIPLICATION):
+		newMother = new Multiplication(MULTIPLICATION); break;
+	}
+	newMother->setIn(operands.top());
+	operands.pop();
+	newMother->setIn(operands.top());
+	operands.pop();
+
+	mother->popIn();
+	mother->popIn();
+
+	mother->setIn(newMother);
+
+	return newMother;
 
 }
 
 void Compiler:: compileAdvanced(){
 	setRootsReady();
-	int id = 1;
-	int token_id = 1;
-	
-	string new_file_name = "glupi_pera.txt";
-	/*
-	unsigned int len_without_txt = new_file_name.length() - 4;
-	new_file_name.resize(len_without_txt);
-	new_file_name.insert(len_without_txt, ".imf");*/
-	this->filename = new_file_name;
-	fstream outputFile(new_file_name, ios::out);
+	Operation* soon_printed;
 	
 	while (this->roots_ready == 0) {
 		for (int i = 0; i < all_operations.size(); i++) {
-		
+
+			if (all_operations[i]->getIn().size() > 2) {
+				soon_printed = birth(all_operations[i]);
+			}
+			else soon_printed = all_operations[i];
+			
+			compileOne(soon_printed);
 		}
+		setRootsReady();
 	}
 	
 	
@@ -73,60 +85,67 @@ void Compiler:: compileAdvanced(){
 
 }
 
+void Compiler::compileOne(Operation* soon_printed){
+	string new_file_name = "glupi_pera.txt";
+	/*
+	unsigned int len_without_txt = new_file_name.length() - 4;
+	new_file_name.resize(len_without_txt);
+	new_file_name.insert(len_without_txt, ".imf");*/
+	this->filename = new_file_name;
+	fstream outputFile(new_file_name, ios::out);
+
+	int static id_ = 1;
+	int static token_id = 1;
+
+	Element* child1 = 0;
+	Element* child2 = 0;
+	child1  = soon_printed->getIn()[0];
+	if (soon_printed->getIn().size() == 2) child2 = soon_printed->getIn()[1];
+	string destination;
+	char mother_operation;
+	mother_operation = defineMotherOp(soon_printed);
+
+
+	if (child2) {
+		if (child1->getReady() & child2->getReady()) {
+			outputFile << "[" <<  id_ << "]" << " " << mother_operation << " " << "t" << token_id << " " <<
+				child2->getDestination() << " " << child1->getDestination() << endl;
+			soon_printed->setReady(1);
+			destination = 't' + to_string(token_id++);
+			soon_printed->setDestination(destination);
+			id_++;
+
+		}
+	}
+	else {
+		if (child1->getReady()) {
+			outputFile << "[" << id_ << "]" << " " << "=" << " " << soon_printed->getDestination() << " "
+				<< child1->getDestination() << endl;
+			soon_printed->setReady(1);
+			id_++;
+		}
+	}
+	outputFile.close();
+}
+
 Operation* Compiler:: returnAss(string destination){
-	for (int i = 0; i<all_operations_.size(); i++){
-		if (all_operations_[i]->getDestination() == destination)
-			return all_operations_[i];
+	for (int i = 0; i<all_operations.size(); i++){
+		if (all_operations[i]->getDestination() == destination)
+			return all_operations[i];
 	}
 }
 
 void Compiler::compile(){
 	setRootsReady();
-	int id = 1;
-	int token_id = 1;
 	
-	string new_file_name = "glupi_pera.txt";
-	/*
-	unsigned int len_without_txt = new_file_name.length() - 4;
-	new_file_name.resize(len_without_txt);
-	new_file_name.insert(len_without_txt, ".imf");*/
-	this->filename = new_file_name;
-	fstream outputFile(new_file_name, ios::out);
 	
 	while (this->roots_ready == 0) {
 		for (int i = 0; i < all_operations.size(); i++) {
-			Element* child1 = 0;
-			Element* child2 = 0;
-			child1 = all_operations[i]->getIn()[0];
-			if(all_operations[i]->getIn().size()==2) child2 = all_operations[i]->getIn()[1];
-			string destination;
-			char mother_operation;
-			mother_operation = defineMotherOp(all_operations[i]);
-			
-
-			if (child2) {
-				if (child1->getReady() & child2->getReady()) {
-					outputFile << "[" << id << "]" << " " << mother_operation << " " << "t" << token_id << " " <<
-						child2->getDestination() << " " << child1->getDestination()<< endl;
-					all_operations[i]->setReady(1);
-					destination = 't' + to_string(token_id++);
-					all_operations[i]->setDestination(destination);
-					id++;
-				
-				}
-			}
-			else {
-				if (child1->getReady()) {
-					outputFile << "[" << id << "]" << " " << "=" << " " << all_operations[i]->getDestination() << " "
-						 << child1->getDestination() << endl;
-					all_operations[i]->setReady(1);
-					id++;
-				}
-			}
+			compileOne(all_operations[i]);
 		}
 		setRootsReady();
 	}
-	outputFile.close();
+	
 }
 
 void Compiler::setRootsReady(){
