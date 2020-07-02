@@ -2,6 +2,7 @@
 #define MEMORY_H
 #include <map>
 #include <string>
+#include<fstream>
 using namespace std;
 class Memory {
 public:
@@ -9,7 +10,7 @@ public:
 	static Memory* Instance();
 	void set(string varName, double val); 
 	double get(string varName);
-	void write();
+	void write(string file);
 protected:
 	Memory() {};
 	

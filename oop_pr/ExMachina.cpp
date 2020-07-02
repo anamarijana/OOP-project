@@ -6,7 +6,7 @@
 
 
 void ExMachina::eventOccured(int Id,int op_duration, int cur_shed_time){ //slusa vesti od notify
-	writeOutput(Id, op_duration, cur_shed_time); 
+	writeOutputString(Id, op_duration, cur_shed_time); 
 	processingToCompleted(Id);
 	waitingtToProcessing();
 	
@@ -151,9 +151,14 @@ void ExMachina::exec(string file){
 	compiler_filename = file;
 	readCompilerFile(file);
 	waitingtToProcessing();
-	while (!(waiting_.empty())) {
+	while (!(waiting_.empty()) || !(processing_.empty())) {
 		dealWithProcessing();
 	}
+
+	//kada se sve zavrsi treba da se odstampa
+	writeOutput();
+	
+	
 }
 
 ExMachina* ExMachina::Instance(){
@@ -219,10 +224,22 @@ void ExMachina::dealWithProcessing(){
 	
 }
 
-void ExMachina::writeOutput(int id, int op_duration, int cur_shed_time){
-	string ex_m_filename = compiler_filename;
+void ExMachina::writeOutputString(int id, int op_duration, int cur_shed_time){
+	
+	string mica = "[" + to_string(id) + "]" + "     " + "(" + to_string(cur_shed_time - op_duration) + ":" + to_string(cur_shed_time) + ")" + "ns";
+	output_string.push_back(mica);
+}
+
+void ExMachina::writeOutput(){
+	//string ex_m_filename = compiler_filename;
+	string ex_m_filename = "pera_retard.txt";
 	fstream outputFile(ex_m_filename, ios::out);
-	outputFile << "[" << id << "]" << " " << "(" << cur_shed_time - op_duration << ":" << cur_shed_time << ")" << endl;
+
+	for (auto& segal : output_string){
+		outputFile << segal << endl;
+	
+	}
+
 	outputFile.close();
 }
 

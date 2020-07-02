@@ -3,6 +3,7 @@
 #include<vector>
 #include "ElemenT.h"
 #include"Configuration.h"
+#include<Memory.h>
 class ExMachina {
 public:
 	
@@ -15,15 +16,16 @@ public:
 	void waitingtToProcessing();
 	void dealWithProcessing();
 	void processingToCompleted(int id);
-	void writeOutput(int id, int op_duration, int cur_shed_time);
-	void eventOccured(int Id,int op_duration, int cur_shed_time);
+	void eventOccured(int Id, int op_duration, int cur_shed_time);
+	void writeOutputString(int id, int op_duration, int cur_shed_time);
+	void writeOutput();
 	
 
 	//void setWayStation(int, int);
 protected:
 	ExMachina();
 private:
-	
+	vector<string> output_string;
 	string compiler_filename;
 	vector <Operation*> waiting_; //ovde su svi na pocetku
 	vector <Operation*> processing_; //odavde saljemo masini

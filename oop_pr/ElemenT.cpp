@@ -59,12 +59,12 @@ void Operation::notify(ID id){
 	ExMachina::Instance()->eventOccured(id,this->duration_, Scheduler::Instance()->getCurTime());
 	in_from_childred_out();
 	in_to_out();
-	if (this->destination_[1]) {
-		if (!isdigit(this->destination_[1])) {
-			Memory::Instance()->set(destination_, out_value_);
 
-		}
+	if (!isdigit(this->destination_[0])) {
+		Memory::Instance()->set(destination_, out_value_);
+
 	}
+	
 }
 void Element ::setDestination(string d) {
 	this->destination_ = d;
