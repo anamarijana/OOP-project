@@ -12,7 +12,7 @@ public:
 	void binaryToNary();
 	void calculate(const string& filepath);
 	vector <Operation*> getOps();
-	void removeChild(Operation* Child);
+	void removeChild(Element* , Element*);
 	//treba povezati medjusobno izraze 
 	
 	

@@ -16,7 +16,7 @@ int main(){
 	}
 	inputFile.close();
 
-	ExMachina::Instance(ex_m_file);
+	ExMachina::Instance()-> exec(ex_m_file) ;
 
 
 	return 0;

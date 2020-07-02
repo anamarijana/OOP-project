@@ -56,7 +56,7 @@ bool Element::getReady(){
 }
 void Operation::notify(ID id){
 	this->ready_ = 1;
-	ExMachina::returnInstance()->eventOccured(id,this->duration_, Scheduler::Instance()->getCurTime());
+	ExMachina::Instance()->eventOccured(id,this->duration_, Scheduler::Instance()->getCurTime());
 	in_from_childred_out();
 	in_to_out();
 	if (this->destination_[1]) {
@@ -72,7 +72,7 @@ void Element ::setDestination(string d) {
 
 void Operation::in_from_childred_out() {
 	for (int i = 0; i < this->in_.size(); i++) {
-		in_values_[i] = in_[i]->getOutValue();
+		in_values_.push_back(in_[i]->getOutValue());
 	}
 }
 

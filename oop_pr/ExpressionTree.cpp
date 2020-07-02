@@ -83,14 +83,23 @@ ExpressionTree::~ExpressionTree(){
 void ExpressionTree::binaryToNary(){
 	
 	Element* child = 0;
+	Element* grand_child1 = 0;
+	Element* grand_child2 = 0;
 	for (int i = 0; i<operations_.size();i++){
 		if((operations_[i]->getType() != EXPONENTIATION) && (operations_[i]->getType() != ASSIGNMENT)){
 			for (int j = 0; j<2;j++){
 				child = operations_[i]->getIn()[j];
 				if(operations_[i]->getType()== child->getType()){
-					operations_[i]->setIn(child->getIn()[0]);
-					operations_[i]->setIn(child->getIn()[1]);
-					removeChild(child);
+					
+					//cuvamo decu te iste operacije
+					grand_child1 = child->getIn()[0];
+					grand_child2 = child->getIn()[1];
+					
+					removeChild(grand_child1, grand_child2);
+
+					operations_[i]->setIn(grand_child1);
+					operations_[i]->setIn(grand_child2);
+
 				}
 			}
 				
@@ -99,17 +108,18 @@ void ExpressionTree::binaryToNary(){
 	}
 }
 
-void ExpressionTree::removeChild(Operation* Child){
-	int i;
-	for (i =0; i<this->operations_.size();i++){
-		if(operations_[i]==Child) // brisemo 6 element operations_.begin() +5
-		this->operations_.erease(operations_.begin()+i);
+void ExpressionTree::removeChild(Element* GrandChild1, Element* GrandChild2){
+	for (auto& pointer : operations_)
+	{
+		if ((pointer->getIn()[0]==GrandChild1)&& (pointer->getIn()[1] == GrandChild2))
+		{
+			delete pointer;
+			pointer = nullptr;
+		}
 	}
+	operations_.erase(std::remove(operations_.begin(), operations_.end(), nullptr), operations_.end());
 	
 
-}
-
-void ExpressionTree::birth(Element*){
 }
 
 

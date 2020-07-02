@@ -22,7 +22,7 @@ public:
 	Operation* returnAss(string destination);
 	Operation* birth(Operation*);
 	void compileAdvanced();
-	void compileOne(Operation*);
+	void compileOne(Operation*, string&);
 protected:
 	Compiler(const string& filepath1,const string filepath2);
 private:

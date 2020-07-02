@@ -35,7 +35,7 @@ void Compiler:: tieUp() {
 Operation* Compiler:: birth(Operation* mother){ //fja koja treba da se poziva u okviru napredne kompilacije za cvorove od vise od troje dece
 	Element* operand;
 	stack <Element*> operands;
-	Operation* newMother;
+	Operation* newMother =0;
 	
 	for (int j = 0; j<mother->getIn().size();j++){
 		operand = mother->getIn()[j];
@@ -64,6 +64,18 @@ Operation* Compiler:: birth(Operation* mother){ //fja koja treba da se poziva u 
 }
 
 void Compiler:: compileAdvanced(){
+	string new_file_name = "glupi_pera.txt";
+	/*
+	unsigned int len_without_txt = new_file_name.length() - 4;
+	new_file_name.resize(len_without_txt);
+	new_file_name.insert(len_without_txt, ".imf");*/
+	this->filename = new_file_name;
+	fstream outputFile(new_file_name, ios::out);
+
+	
+	
+	string toOutput;
+	
 	setRootsReady();
 	Operation* soon_printed;
 	
@@ -75,28 +87,21 @@ void Compiler:: compileAdvanced(){
 			}
 			else soon_printed = all_operations[i];
 			
-			compileOne(soon_printed);
+			compileOne(soon_printed,toOutput);
+			outputFile << toOutput << endl;
 		}
 		setRootsReady();
 	}
 	
 	
-	
+	outputFile.close();
 
 }
 
-void Compiler::compileOne(Operation* soon_printed){
-	string new_file_name = "glupi_pera.txt";
-	/*
-	unsigned int len_without_txt = new_file_name.length() - 4;
-	new_file_name.resize(len_without_txt);
-	new_file_name.insert(len_without_txt, ".imf");*/
-	this->filename = new_file_name;
-	fstream outputFile(new_file_name, ios::out);
-
+void Compiler::compileOne(Operation* soon_printed, string& toOutput){
+	
 	int static id_ = 1;
 	int static token_id = 1;
-
 	Element* child1 = 0;
 	Element* child2 = 0;
 	child1  = soon_printed->getIn()[0];
@@ -108,8 +113,8 @@ void Compiler::compileOne(Operation* soon_printed){
 
 	if (child2) {
 		if (child1->getReady() & child2->getReady()) {
-			outputFile << "[" <<  id_ << "]" << " " << mother_operation << " " << "t" << token_id << " " <<
-				child2->getDestination() << " " << child1->getDestination() << endl;
+			toOutput = "[" + to_string(id_) + "]" + " " + mother_operation + " " + "t" + to_string(token_id) + " " +
+				child2->getDestination() + " " + child1->getDestination();
 			soon_printed->setReady(1);
 			destination = 't' + to_string(token_id++);
 			soon_printed->setDestination(destination);
@@ -119,13 +124,13 @@ void Compiler::compileOne(Operation* soon_printed){
 	}
 	else {
 		if (child1->getReady()) {
-			outputFile << "[" << id_ << "]" << " " << "=" << " " << soon_printed->getDestination() << " "
-				<< child1->getDestination() << endl;
+			toOutput = "[" + to_string(id_) + "]" + " " + "=" + " " + soon_printed->getDestination() + " "
+				+ child1->getDestination();
 			soon_printed->setReady(1);
 			id_++;
 		}
 	}
-	outputFile.close();
+	
 }
 
 Operation* Compiler:: returnAss(string destination){
@@ -136,16 +141,31 @@ Operation* Compiler:: returnAss(string destination){
 }
 
 void Compiler::compile(){
+	string new_file_name = "glupi_pera.txt";
+	/*
+	unsigned int len_without_txt = new_file_name.length() - 4;
+	new_file_name.resize(len_without_txt);
+	new_file_name.insert(len_without_txt, ".imf");*/
+	this->filename = new_file_name;
+	fstream outputFile(new_file_name, ios::out);
+
+	string toOutput;
+	//ofstream outputFile;// an output file stream object!
+	//outputFile.open("new_file_name");
+							 // open the file named "input_da
 	setRootsReady();
 	
 	
 	while (this->roots_ready == 0) {
 		for (int i = 0; i < all_operations.size(); i++) {
-			compileOne(all_operations[i]);
+			compileOne(all_operations[i],toOutput);
+			outputFile << toOutput << endl;
+			toOutput.clear();
 		}
 		setRootsReady();
 	}
 	
+	outputFile.close();
 }
 
 void Compiler::setRootsReady(){

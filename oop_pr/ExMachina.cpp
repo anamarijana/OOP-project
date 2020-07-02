@@ -6,14 +6,12 @@
 
 
 void ExMachina::eventOccured(int Id,int op_duration, int cur_shed_time){ //slusa vesti od notify
-	writeOutput(Id, op_duration, cur_shed_time);
-	waitingtToProcessing();
+	writeOutput(Id, op_duration, cur_shed_time); 
 	processingToCompleted(Id);
+	waitingtToProcessing();
+	
 }
 
-const string& ExMachina::getCompFilename(){
-	return this->compiler_filename;
-}
 
 void ExMachina::readCompilerFile(const string& filename){
 	/*
@@ -33,37 +31,33 @@ void ExMachina::readCompilerFile(const string& filename){
 	string operand2;
 	string destination;
 	string id;
-	
-	char buffer;
-	char operation;
-	char c;
 
+	char buffer = '\0';
+	char operation = '\0';
+	char c = '\0';
+	
 	//[2] = a t1
 	//[3] ^ t1 x 3
 
-	while (!inputFile.eof()) {
+	while (inputFile >> buffer) {
+		
 		operand1.clear();
 		operand2.clear();
 		destination.clear();
 		id.clear();
 		
-		
-		
 		Element* curr = 0;
 		Operation* curr_op = 0;
-
-
-		inputFile >> buffer;
+		
 		while (1) {
 			inputFile >> c;
 			if (c == ']') break;
 			id += c;
 		}
-		cout << buffer;
-		cout << c;
+	
 		
-		inputFile >> operation; cout << operation<<endl;
-		inputFile >> destination; if (inputFile.peek() == EOF) break;
+		inputFile >> operation; 
+		inputFile >> destination; 
 		inputFile >> operand1;
 	
 		if (inputFile.peek() != '\n') inputFile >> operand2;
@@ -150,45 +144,69 @@ void ExMachina::readCompilerFile(const string& filename){
 	inputFile.close();
 }
 
-string ExMachina::compiler_filename;
 
-ExMachina* ExMachina::Instance(const string& filename){
-		static ExMachina instance(filename);
-		compiler_filename = filename;
-		return &instance;
-		
-	}
 
-ExMachina* ExMachina::returnInstance(){
-	
-	return Instance(compiler_filename);
-}
 
-ExMachina::~ExMachina(){
-}
-
-ExMachina::ExMachina(const string& filename){
-	readCompilerFile(filename);
+void ExMachina::exec(string file){
+	compiler_filename = file;
+	readCompilerFile(file);
 	waitingtToProcessing();
 	while (!(waiting_.empty())) {
 		dealWithProcessing();
 	}
 }
 
+ExMachina* ExMachina::Instance(){
+	static ExMachina instance;
+	return &instance;
+}
+
+
+ExMachina::~ExMachina(){
+}
+
+ExMachina::ExMachina(){}
+
 //ispituje da li su nekoj operaciji obezbedjeni operandi
 
 void ExMachina::waitingtToProcessing(){ //ovde cemo zasigurno imati binarno stablo
-	
+	int nw = Configuration::returnInstance()->getMemoTime();
+	int cur_w = 0;
+	Element* child = 0;
+	for (int i = 0; i < processing_.size(); i++) {
+		if (processing_[i]->getType() == ASSIGNMENT)
+			cur_w++;
+	}
+
 	for (int j = 0; j < waiting_.size();j++) {
 		//proci kroz njegovu decu i utvditi da li su spremna za koriscenje
-		bool flag = waiting_[j]->getInReady()[0] && waiting_[j]->getInReady()[0];
-		if (flag) {
+
+
+		bool flag1 = 1;
+		for (int i = 0; i < waiting_[j]->getIn().size(); i++) {
+			child = waiting_[j]->getIn()[i];
+			flag1 = flag1 & child->getReady();
+		}
+		
+		
+		bool flag2 = waiting_[j]->getType() == ASSIGNMENT;
+		
+		
+		if (flag1 & !flag2) {
 			processing_.push_back(waiting_[j]);
-			waiting_.erase(waiting_.begin() + j);
+			waiting_[j] = nullptr;
+		}
+			
+		else if (flag1 && flag2 && (cur_w < nw)) {
+			processing_.push_back(waiting_[j]);
+			waiting_[j] = nullptr;
+			cur_w++;
+
 		}
 	
 	}
-
+	//kad obidjemo ceo waiting otklanjamo one operacije koje su presle u procesing
+	waiting_.erase(std::remove(waiting_.begin(), waiting_.end(), nullptr), waiting_.end());
 }
 
 void ExMachina::dealWithProcessing(){ 
@@ -209,7 +227,14 @@ void ExMachina::writeOutput(int id, int op_duration, int cur_shed_time){
 }
 
 void ExMachina::processingToCompleted(int id) {
-	this->completed_.push_back(processing_[id]);
-	this->processing_.erase(processing_.begin() + id);
+	for (int i = 0; i < processing_.size(); i++) {
+		if (processing_[i]->getId() == id) {
+			this->completed_.push_back(processing_[i]);
+			processing_[i] = nullptr;
+		}
+	}
+
+	
+	processing_.erase(std::remove(processing_.begin(), processing_.end(), nullptr), processing_.end());
 
 }
