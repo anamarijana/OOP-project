@@ -157,6 +157,7 @@ void ExMachina::exec(string file){
 
 	//kada se sve zavrsi treba da se odstampa
 	writeOutput();
+	Memory::Instance()->write(compiler_filename);
 	
 	
 }

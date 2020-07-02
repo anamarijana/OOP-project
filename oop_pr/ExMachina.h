@@ -3,7 +3,7 @@
 #include<vector>
 #include "ElemenT.h"
 #include"Configuration.h"
-#include<Memory.h>
+#include"Memory.h"
 class ExMachina {
 public:
 	

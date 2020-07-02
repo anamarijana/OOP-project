@@ -21,7 +21,7 @@ void Memory::write(string file){
 	map<string, double>::iterator mile;
 	for (mile = final_destination_.begin(); mile != final_destination_.end(); ++mile) {
 		outputFile << '\t' << mile->first
-			<< '=' << mile ->second << '\n';
+			<< '=' << mile ->second << endl;
 	}
 
 

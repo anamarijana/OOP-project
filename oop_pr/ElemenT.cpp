@@ -60,7 +60,7 @@ void Operation::notify(ID id){
 	in_from_childred_out();
 	in_to_out();
 
-	if (!isdigit(this->destination_[0])) {
+	if ((this->destination_).size()==1) {
 		Memory::Instance()->set(destination_, out_value_);
 
 	}
@@ -85,13 +85,13 @@ void Addition::in_to_out() {
 
 void Multiplication::in_to_out() {
 
-	this->out_value_ = in_values_[0] + in_values_[1];
+	this->out_value_ = in_values_[0] * in_values_[1];
 
 }
 
 
 void Exponentiation::in_to_out() {
-	this->out_value_ = in_values_[0] ^ (in_values_[1]); // proveriti koji se stepenuje kojim
+	this->out_value_ = pow(in_values_[1],in_values_[0]); // proveriti koji se stepenuje kojim
 }
 
 void Assignment::in_to_out() {

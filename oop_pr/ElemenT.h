@@ -3,6 +3,7 @@
 #include <vector>
 #include<string>
 #include<Interfaces.h>
+#include <math.h>
 //	AKO U SKEDZULERU POSTOJI VESI IVENTOVA I NEKI DUZE TRAJE OD OSTALIH OSTACE U SKEDZULERU NAKON PROCESS NOW
 
 
@@ -59,7 +60,7 @@ protected:
 	
 	vector<Element*> in_; // deca 
 	vector<bool> in_ready_; // spremnost ulaza 
-	vector<int> in_values_;
+	vector<double> in_values_;
 	
 	
 };
