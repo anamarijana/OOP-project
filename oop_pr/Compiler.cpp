@@ -115,7 +115,7 @@ void Compiler:: compileAdvanced(){
 	setRootsReady();
 	Element* soon_printed;
 	vector<Element*> compiled_elemets;
-	
+	vector<Element*> not_yet_compiled = all_operations;
 	while (this->roots_ready == 0) { //kada su sve promenljive upisane u memo
 		int i = 0;
 		while ( i < all_operations.size()) { // proci kroz sve koje su trenutno spremne da se izvrsavaju
