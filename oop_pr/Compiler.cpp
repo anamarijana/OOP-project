@@ -207,10 +207,14 @@ Compiler::Compiler(const string& filepath1, const string& filepath2){
 	map<int, string> help = Program::Instance()->getVarNameExp();
 	for (auto i = help.begin(); i != help.end(); i++) {
 		string* expres = &(i->second);
+		
 		 ExpressionTree* tree = new ExpressionTree();
+		 tree->inToPost(expres, i->first);
+		 tree->build();
 		 this->forest_gump_.push_back(tree);
 	}
 	catchOperation();
+	tieUp();
 	compile();
 }
 

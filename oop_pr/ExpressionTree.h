@@ -7,7 +7,7 @@ class ExpressionTree {
 public:
 
 
-	ExpressionTree();
+	ExpressionTree() {};
 	~ExpressionTree();
 	void binaryToNary();
 	void calculate(const string& filepath);
@@ -16,6 +16,7 @@ public:
 	//treba povezati medjusobno izraze 
 	void inToPost(string*, int);
 	void returnOp(char);
+	void build();
 	
 	
 	Element* getRoot();

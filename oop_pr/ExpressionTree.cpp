@@ -167,7 +167,7 @@ void ExpressionTree:: returnOp(char s_top) {
 		curr_op = new Assignment(ASSIGNMENT);
 		curr_op->setDuration(Configuration::Instance()->getAssTime());
 	}
-	postfix.push_back(curr_op);
+	this->postfix.push_back(curr_op);
 	
 
 
@@ -175,43 +175,40 @@ void ExpressionTree:: returnOp(char s_top) {
 
 }
 
-
-
-
-ExpressionTree::ExpressionTree() {
+void ExpressionTree::build(){
 	//pravimo jednostavno binarno stablo od postorder izraza // simple compilation
 	stack <Element*> s;
 	int children_number;
 	string destination;
 
-	
-	for (int i = 1; i < postfix.size(); i++) {
 
-		if (postfix[i]->getType()==CONSTANT) {
-						
+	for (int i = 0; i < postfix.size(); i++) {
+
+		if (postfix[i]->getType() == CONSTANT) {
+
 			s.push(postfix[i]);
-					}
+		}
 		else if (postfix[i]->getType() == VARIABLE) {
-			
+
 			s.push(postfix[i]);
-			
+
 
 		}
 		else {//CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT 
-		
+
 			Element* child = 0;
 
 			if (postfix[i]->getType() == ASSIGNMENT) children_number = 1;
 			else children_number = 2;
 			for (int j = 0; j < children_number; j++) {
-				
+
 				child = s.top();
 				postfix[i]->setIn(child);
 				s.pop();
-				
+
 			}
 			s.push(postfix[i]);
-		
+
 			this->operations_.push_back(postfix[i]);
 		}
 
@@ -220,8 +217,14 @@ ExpressionTree::ExpressionTree() {
 
 	this->root_ = s.top(); //na kraju na steku ostaje samo koreni cvor
 
-	this->root_->setDestination(this ->final_destination_);
+	this->root_->setDestination(this->final_destination_);
+
 }
+
+
+
+
+
 ExpressionTree::~ExpressionTree(){
 }
 //distributivnost
