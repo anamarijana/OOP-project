@@ -27,16 +27,16 @@ vector<bool> Element::getInReady() {
 	return this->in_ready_;
 }
 
-int Operation::getDuration() {
+int Element::getDuration() {
 	return this->duration_;
 }
-int Operation::getId(){
+int Element::getId(){
 	return this->id_;
 }
 void Element::setReady(bool ready){
 	this->ready_ = ready;
 }
-void Operation::setDuration(int dur){
+void Element::setDuration(int dur){
 	this->duration_ = dur;
 }
 void Element::setOutValue(int value){
@@ -54,7 +54,7 @@ string Element::getDestination(){
 bool Element::getReady(){
 	return this->ready_;
 }
-void Operation::notify(ID id){
+void Element::notify(ID id){
 	this->ready_ = 1;
 	ExMachina::Instance()->eventOccured(id,this->duration_, Scheduler::Instance()->getCurTime());
 	in_from_childred_out();
@@ -98,7 +98,6 @@ void Assignment::in_to_out() {
 	this->out_value_ = in_values_.front(); // samo ima jedno dete koje prisvaja
 }
 
-
-
-
-
+void Subtraction::in_to_out(){
+	this->out_value_ = this->in_values_[0] + this->in_values_[1]; // kada budemo vrsili operaciju imacemo binarno stablo
+}

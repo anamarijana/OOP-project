@@ -11,7 +11,7 @@
 #include"ExpressionTree.h"
 class Compiler {
 public:
-	static Compiler* Instance(const string& filepath1, const string filepath2);
+	static Compiler* Instance(const string& filepath1, const string& filepath2);
 	~Compiler() {};
 	void catchOperation();
 	void compile();
@@ -24,7 +24,7 @@ public:
 	void compileAdvanced();
 	void compileOne(Operation*, string&);
 protected:
-	Compiler(const string& filepath1,const string filepath2);
+	Compiler(const string& filepath1,const string& filepath2);
 private:
 	string filename;
 	

@@ -63,19 +63,19 @@ void ExMachina::readCompilerFile(const string& filename){
 		if (inputFile.peek() != '\n') inputFile >> operand2;
 	
 		if (operation == '+') {
-			curr_op = new Addition(ADDITION,stoi(id), Configuration::returnInstance()->getAddTime());
+			curr_op = new Addition(ADDITION,stoi(id), Configuration::Instance()->getAddTime());
 			
 		}
 		else if (operation == '*') {
-			curr_op = new Multiplication(MULTIPLICATION, stoi(id), Configuration::returnInstance()->getMultiTime());
+			curr_op = new Multiplication(MULTIPLICATION, stoi(id), Configuration::Instance()->getMultiTime());
 
 		}
 		else if (operation == '^') {
-			curr_op = new Exponentiation(EXPONENTIATION,stoi(id), Configuration::returnInstance()->getExpTime());
+			curr_op = new Exponentiation(EXPONENTIATION,stoi(id), Configuration::Instance()->getExpTime());
 
 		}
 		else if (operation == '=') {
-			curr_op = new Assignment(ASSIGNMENT, stoi(id), Configuration::returnInstance()->getAssTime());
+			curr_op = new Assignment(ASSIGNMENT, stoi(id), Configuration::Instance()->getAssTime());
 
 		}
 		if (curr_op) curr_op->setDestination(destination);
@@ -176,7 +176,7 @@ ExMachina::ExMachina(){}
 //ispituje da li su nekoj operaciji obezbedjeni operandi
 
 void ExMachina::waitingtToProcessing(){ //ovde cemo zasigurno imati binarno stablo
-	int nw = Configuration::returnInstance()->getMemoTime();
+	int nw = Configuration::Instance()->getMemoTime();
 	int cur_w = 0;
 	Element* child = 0;
 	for (int i = 0; i < processing_.size(); i++) {

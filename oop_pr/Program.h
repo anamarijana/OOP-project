@@ -9,18 +9,17 @@ using namespace std;
 
 class Program {
 public:
-	static Program* Instance(const string&);
-	static Program* returnInstance();
+	static Program* Instance();
+
 	
 	~Program();
-
-	void inToPost(string*,int);
+	void read(const string&);
 	map<int, string> getVarNameExp();
 protected:
 	
 private:
-	static string filename_;
-	Program(const string&);
+
+	Program();
 	
 	map <int,string> var_name_expression; //varijable i njihovi izrazi
 	

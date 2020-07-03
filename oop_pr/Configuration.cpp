@@ -7,40 +7,15 @@ using namespace std;
 
 
 string Configuration::config_file_name;//deklarisemo staticku varijablu
-Configuration* Configuration::Instance(const string& filepath){
-	static Configuration instance(filepath);
-	config_file_name = filepath;
+Configuration* Configuration::Instance(){
+	static Configuration instance;
 	return &instance;
 	
 }
 
-Configuration* Configuration::returnInstance(){
-	return Instance(config_file_name);
-}
-
-int Configuration::getMultiTime(){
-	return this->Tm;
-}
-int Configuration::getAddTime() {
-	return this->Ta;
-}
-int Configuration::getExpTime() {
-	return this->Te;
-}
-int Configuration::getAssTime() {
-	return this->Tw;
-}
-int Configuration::getMemoTime() {
-	return this->Nw;
-}
-bool Configuration::getCompTime() {
-	return this->compilation;
-}
-
-
-Configuration::Configuration(const string& filepath ) {
+void Configuration::read(const string& filepath){
 	fstream inputFile(filepath, ios::in);
-	
+
 	while (inputFile.peek() != EOF) {
 		int var_value = 0;
 		char buffer;
@@ -54,8 +29,8 @@ Configuration::Configuration(const string& filepath ) {
 			var_name += help;
 		}
 
-		
-		
+
+
 		if (!(var_name.compare("Ta"))) {
 			inputFile >> var_value;
 			this->Ta = var_value;
@@ -77,24 +52,48 @@ Configuration::Configuration(const string& filepath ) {
 			this->Nw = var_value;
 		}
 		else if (!var_name.compare("compilation")) {
-			while (inputFile.peek()!=EOF) {
+			while (inputFile.peek() != EOF) {
 				inputFile >> help;
 				comp_value += help;
 			}
-			
+
 			if (!comp_value.compare("simple")) {
 				this->compilation = 0;
 			}
 			else
 				this->compilation = 1;
 
-			
+
 		}
 
-		
+
 
 
 	}
 	// Na kraju je bitno da zatvorimo fajl kako bismo izbrisali sve res
 	inputFile.close();
 }
+
+
+int Configuration::getMultiTime(){
+	return this->Tm;
+}
+int Configuration::getAddTime() {
+	return this->Ta;
+}
+int Configuration::getExpTime() {
+	return this->Te;
+}
+int Configuration::getAssTime() {
+	return this->Tw;
+}
+int Configuration::getMemoTime() {
+	return this->Nw;
+}
+bool Configuration::getCompTime() {
+	return this->compilation;
+}
+
+
+Configuration::Configuration() {}
+	

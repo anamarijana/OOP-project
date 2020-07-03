@@ -8,7 +8,7 @@
 
 
 using namespace std;
-enum Element_Type { CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT }; //znaci ce kod treanformacije binarnog u n-arno stablo
+enum Element_Type { CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT,SUBTRACTION }; //znaci ce kod treanformacije binarnog u n-arno stablo
 
 //KLASA ELEMENT
 //sadrzi variablu u koju upisuje
@@ -20,7 +20,8 @@ class Element : public ITimedElement {
 
 public:
 
-	Element(const Element_Type& type, bool ready = 0) : type_(type),ready_(ready){}
+	Element(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : type_(type),
+		duration_(duration), id_(id),ready_(ready){}
 	
 	~Element();
 
@@ -44,10 +45,14 @@ public:
 	void setOutValue(int);// ispraviti sve na double
 	void setIn(Element*);
 	void popIn();
+	
+	int getDuration();
+	int getId();
+	void setDuration(int);
+	virtual void notify(ID id) override;
 
 
-	virtual void notify(ID id) override = 0;
-
+	
 
 protected:
 	Element_Type type_;
@@ -61,7 +66,8 @@ protected:
 	vector<Element*> in_; // deca 
 	vector<bool> in_ready_; // spremnost ulaza 
 	vector<double> in_values_;
-	
+	int duration_ = 0; //postavlja konfiguracija ///polje koje koristi samo operacija//exMachina
+	int id_; // stampanje // potrebno samo operacijama /exMachina
 	
 };
 
@@ -70,18 +76,15 @@ protected:
 class Operation : public Element {
 
 public:
-	Operation(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0): Element(type,ready) ,
-		duration_(duration), id_(id){};
+	Operation(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0): Element(type,id,duration,ready) 
+		{};
 	virtual void in_to_out() override = 0;
 	virtual void in_from_childred_out() override;
 
-	int getDuration();
-	int getId();
-	void setDuration(int);
-	virtual void notify(ID id) override;
-	protected:
-	int duration_ = 0; //postavlja konfiguracija ///polje koje koristi samo operacija//exMachina
-	int id_; // stampanje // potrebno samo operacijama /exMachina
+	
+
+protected:
+	
 private:
 };
 
@@ -91,6 +94,17 @@ class Addition : public Operation {
 public:
 	Addition(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : Operation(type,id,duration,ready) {} // treba da za podrazumevani broj pinova uzme 2
 	~Addition() {}; // destruktor osnovne klase se sam poziva a nemamo nova polja u odnosu a osnovnu klasu
+	virtual void in_to_out() override;
+protected:
+private:
+
+};
+
+class Subtraction : public Operation {
+
+public:
+	Subtraction(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : Operation(type, id, duration, ready) {} // treba da za podrazumevani broj pinova uzme 2
+	~Subtraction() {}; // destruktor osnovne klase se sam poziva a nemamo nova polja u odnosu a osnovnu klasu
 	virtual void in_to_out() override;
 protected:
 private:
@@ -139,7 +153,7 @@ public:
 	~Variable() {};
 	virtual void in_to_out() override {};
 	virtual void in_from_childred_out() override {};
-	virtual void notify(ID id) override {};
+	//virtual void notify(ID id) override {};
 protected:
 private:
 	
@@ -152,7 +166,7 @@ public:
 	~Constant() {};
 	virtual void in_to_out() override {};
 	virtual void in_from_childred_out() override {};
-	virtual void notify(ID id) override {};
+	//virtual void notify(ID id) override {};
 protected:
 private:
 

@@ -14,6 +14,8 @@ public:
 	vector <Operation*> getOps();
 	void removeChild(Element* , Element*);
 	//treba povezati medjusobno izraze 
+	void inToPost(string*, int);
+	void returnOp(char);
 	
 	
 	Element* getRoot();
@@ -23,6 +25,7 @@ protected:
 private:
 	Element* root_; // uvek bi trebalo da bude operacija dodele
 	vector<Operation*> operations_; // ovde ce biti oznake za upisivanje i tokeni
+	vector<Element*> postfix;
 };
 
 #endif

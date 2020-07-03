@@ -1,6 +1,6 @@
 #include "Compiler.h"
 
-Compiler* Compiler::Instance(const string& filepath1, const string filepath2){
+Compiler* Compiler::Instance(const string& filepath1, const string& filepath2){
 	static Compiler *instance = new Compiler(filepath1,filepath2);
 	return instance;
 }
@@ -199,12 +199,12 @@ char Compiler::defineMotherOp(Operation* mother){
 	
 }
 
-Compiler::Compiler(const string& filepath1, const string filepath2){
-	Configuration::Instance(filepath1);
-	Program::Instance(filepath2);
+Compiler::Compiler(const string& filepath1, const string& filepath2){
+	Configuration::Instance()->read(filepath1);
+	Program::Instance()->read(filepath2);
 	this->filename = filepath2;
 	int j = 0;
-	map<int, string> help = Program::returnInstance()->getVarNameExp();
+	map<int, string> help = Program::Instance()->getVarNameExp();
 	for (auto i = help.begin(); i != help.end(); i++) {
 		string* expres = &(i->second);
 		 ExpressionTree* tree = new ExpressionTree(expres);
