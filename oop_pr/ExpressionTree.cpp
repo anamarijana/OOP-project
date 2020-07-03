@@ -275,6 +275,9 @@ void ExpressionTree::removeChild(vector <Element*>& ){
 	for (auto& pointer : operations_)
 	{
 		if (pointer) {
+
+			bool blag;
+
 			if ((pointer->getIn()[0] == GrandChild1) && (pointer->getIn()[1] == GrandChild2))
 			{	
 				pointer->popIn();
