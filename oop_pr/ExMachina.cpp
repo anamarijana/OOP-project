@@ -86,7 +86,9 @@ void ExMachina::readCompilerFile(const string& filename){
 		bool has_operand2 = 0;
 		for (int i = 0; i < everyone_.size(); i++) {
 			if (isdigit(operand1[0])) {
-				if (everyone_[i]->getOutValue() == stoi(operand1)) {
+				char* cstr1 = new char[operand1.length() + 1];
+				strcpy(cstr1, operand1.c_str());
+				if (everyone_[i]->getOutValue() == atof(cstr1)) {
 					curr_op->setIn(everyone_[i]);
 					has_operand1 = 1;
 				}
@@ -99,7 +101,9 @@ void ExMachina::readCompilerFile(const string& filename){
 				}
 			}
 			if (isdigit(operand2[0])) {
-				if (everyone_[i]->getOutValue() == stoi(operand2)) {
+				char* cstr2 = new char[operand2.length() + 1];
+				strcpy(cstr2, operand2.c_str());
+				if (everyone_[i]->getOutValue() == atof(cstr2)) {
 					curr_op->setIn(everyone_[i]);
 					has_operand2 = 1;
 				}

@@ -8,6 +8,7 @@ int main(){
 
 	Compiler::Instance()->initiate("config.txt", "test.txt");
 	string ex_m_file = Compiler::Instance()->giveMachinaFile();
+	/*
 	fstream inputFile(ex_m_file, ios::in);
 	string line;
 	while (getline(inputFile, line))
@@ -15,7 +16,7 @@ int main(){
 		cout << line << '\n';
 	}
 	inputFile.close();
-
+	*/
 	ExMachina::Instance()-> exec(ex_m_file) ;
 
 
