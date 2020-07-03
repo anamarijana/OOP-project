@@ -17,19 +17,19 @@ public:
 	void compile();
 	void setRootsReady();
 	const string& giveMachinaFile();
-	char defineMotherOp(Operation*);
+	char defineMotherOp(Element*);
 	void tieUp();
-	Operation* returnAss(string destination);
-	Operation* birth(Operation*);
+	Element* returnAss(string destination);
+	Element* birth(Element*);
 	void compileAdvanced();
-	void compileOne(Operation*, string&);
+	void compileOne(Element*, string&);
 protected:
 	Compiler(const string& filepath1,const string& filepath2);
 private:
 	string filename;
 	
 	vector <ExpressionTree*> forest_gump_;
-	vector<Operation*> all_operations;
+	vector<Element*> all_operations;
 	bool roots_ready = 0;
 
 

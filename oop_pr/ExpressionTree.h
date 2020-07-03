@@ -7,11 +7,11 @@ class ExpressionTree {
 public:
 
 
-	ExpressionTree(string *var_name_expression);
+	ExpressionTree();
 	~ExpressionTree();
 	void binaryToNary();
 	void calculate(const string& filepath);
-	vector <Operation*> getOps();
+	vector <Element*> getOps();
 	void removeChild(Element* , Element*);
 	//treba povezati medjusobno izraze 
 	void inToPost(string*, int);
@@ -23,8 +23,9 @@ public:
 protected:
 
 private:
+	string final_destination_;
 	Element* root_; // uvek bi trebalo da bude operacija dodele
-	vector<Operation*> operations_; // ovde ce biti oznake za upisivanje i tokeni
+	vector<Element*> operations_; // ovde ce biti oznake za upisivanje i tokeni
 	vector<Element*> postfix;
 };
 

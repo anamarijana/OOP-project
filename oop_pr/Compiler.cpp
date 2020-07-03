@@ -15,7 +15,7 @@ void Compiler::catchOperation(){
 }
 //ovde imamo narno stablo i ukoliko cvor zavisi od promenljive nju zamenjujemo cvorom dodele vrednosti toj promenljivoj
 void Compiler:: tieUp() {
-	Operation* Assign = 0;
+	Element* Assign = 0;
 	Element* child = 0;
 	for(int i=0 ; i<all_operations.size();i++){
 		for (int j =0; i<all_operations[i]->getIn().size(); i++){
@@ -32,7 +32,7 @@ void Compiler:: tieUp() {
 } //posle ove operacije ne bi trebalo da postoje cvorovi sa varijablama vec da je ceo fajl uvezan u stablo
 
 
-Operation* Compiler:: birth(Operation* mother){ //fja koja treba da se poziva u okviru napredne kompilacije za cvorove od vise od troje dece
+Element* Compiler:: birth(Element* mother){ //fja koja treba da se poziva u okviru napredne kompilacije za cvorove od vise od troje dece
 	Element* operand;
 	stack <Element*> operands;
 	Operation* newMother =0;
@@ -77,7 +77,7 @@ void Compiler:: compileAdvanced(){
 	string toOutput;
 	
 	setRootsReady();
-	Operation* soon_printed;
+	Element* soon_printed;
 	
 	while (this->roots_ready == 0) {
 		for (int i = 0; i < all_operations.size(); i++) {
@@ -98,7 +98,7 @@ void Compiler:: compileAdvanced(){
 
 }
 
-void Compiler::compileOne(Operation* soon_printed, string& toOutput){
+void Compiler::compileOne(Element* soon_printed, string& toOutput){
 	
 	int static id_ = 1;
 	int static token_id = 1;
@@ -133,7 +133,7 @@ void Compiler::compileOne(Operation* soon_printed, string& toOutput){
 	
 }
 
-Operation* Compiler:: returnAss(string destination){
+Element* Compiler:: returnAss(string destination){
 	for (int i = 0; i<all_operations.size(); i++){
 		if (all_operations[i]->getDestination() == destination)
 			return all_operations[i];
@@ -179,7 +179,7 @@ const string& Compiler::giveMachinaFile(){
 	return this->filename;
 }
 
-char Compiler::defineMotherOp(Operation* mother){
+char Compiler::defineMotherOp(Element* mother){
 
 	Element_Type type = mother->getType();
 
@@ -207,7 +207,7 @@ Compiler::Compiler(const string& filepath1, const string& filepath2){
 	map<int, string> help = Program::Instance()->getVarNameExp();
 	for (auto i = help.begin(); i != help.end(); i++) {
 		string* expres = &(i->second);
-		 ExpressionTree* tree = new ExpressionTree(expres);
+		 ExpressionTree* tree = new ExpressionTree();
 		 this->forest_gump_.push_back(tree);
 	}
 	catchOperation();
