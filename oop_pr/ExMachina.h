@@ -25,6 +25,7 @@ public:
 protected:
 	ExMachina();
 private:
+	vector <int> created_event_id;
 	vector<string> output_string;
 	string compiler_filename;
 	vector <Operation*> waiting_; //ovde su svi na pocetku

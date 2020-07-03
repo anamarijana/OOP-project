@@ -85,7 +85,7 @@ void ExMachina::readCompilerFile(const string& filename){
 		bool has_operand1 = 0;
 		bool has_operand2 = 0;
 		for (int i = 0; i < everyone_.size(); i++) {
-			if (isdigit(operand1[0])) {
+			if (isdigit(operand1[0]) || (operand1[0]== '-')) {
 				char* cstr1 = new char[operand1.length() + 1];
 				strcpy(cstr1, operand1.c_str());
 				if (everyone_[i]->getOutValue() == atof(cstr1)) {
@@ -100,7 +100,7 @@ void ExMachina::readCompilerFile(const string& filename){
 
 				}
 			}
-			if (isdigit(operand2[0])) {
+			if (isdigit(operand2[0]) || (operand2[0] == '-')) {
 				char* cstr2 = new char[operand2.length() + 1];
 				strcpy(cstr2, operand2.c_str());
 				if (everyone_[i]->getOutValue() == atof(cstr2)) {
@@ -117,12 +117,14 @@ void ExMachina::readCompilerFile(const string& filename){
 		}
 
 		if (!operand2.empty() && has_operand2 == 0) {
-			if (isdigit(operand2[0])) {
+			if (isdigit(operand2[0]) || (operand2[0] == '-')) {
 				curr = new Constant(CONSTANT);
-				curr->setOutValue(stoi(operand2));
+				char* cstr3 = new char[operand2.length() + 1];
+				strcpy(cstr3, operand2.c_str());
+				curr->setOutValue(atof(cstr3));
 				curr->setDestination(operand2);
 			}
-			else {
+			else { //ne bi trebalo nikad da se napravi varijabla
 				curr = new Variable(VARIABLE);
 				curr->setDestination(operand2);
 			}
@@ -130,12 +132,15 @@ void ExMachina::readCompilerFile(const string& filename){
 			this->everyone_.push_back(curr);
 		}
 		if (has_operand1 == 0) {
-			if (isdigit(operand1[0])) {
+			if (isdigit(operand1[0]) || (operand1[0] == '-')) {
 				curr = new Constant(CONSTANT);
-				curr->setOutValue(stoi(operand1));
+				char* cstr4 = new char[operand1.length() + 1];
+				strcpy(cstr4, operand1.c_str());
+
+				curr->setOutValue(atof(cstr4));
 				curr->setDestination(operand1);
 			}
-			else {
+			else { //Takodje
 				curr = new Variable(VARIABLE);
 				curr->setDestination(operand1);
 			}
@@ -222,7 +227,14 @@ void ExMachina::waitingtToProcessing(){ //ovde cemo zasigurno imati binarno stab
 void ExMachina::dealWithProcessing(){ 
 
 	for (int i = 0; i < processing_.size(); i++) {
-		Event::create(processing_[i], processing_[i]->getDuration(), processing_[i]->getId());
+		bool created_event = false;
+		int id_size = created_event_id.size();
+		for (int j = 0; j < id_size; j++) {
+			if (processing_[i]->getId() == created_event_id[j]) created_event = true;
+			else created_event_id.push_back(processing_[i]->getId());
+		}
+		if (!created_event)
+			Event::create(processing_[i], processing_[i]->getDuration(), processing_[i]->getId());
 	}
 	//kada se napuni skedzuler pokrenuti ga
 	Scheduler::Instance()->processNow();
