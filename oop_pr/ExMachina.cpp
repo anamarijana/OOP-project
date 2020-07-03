@@ -84,8 +84,9 @@ void ExMachina::readCompilerFile(const string& filename){
 		this->waiting_.push_back(curr_op);
 		bool has_operand1 = 0;
 		bool has_operand2 = 0;
-		for (int i = 0; i < everyone_.size(); i++) {
-			if (isdigit(operand1[0]) || (operand1[0]== '-')) {
+		
+		if (isdigit(operand1[0]) || (operand1[0] == '-')) {
+			for (int i = 0; i < everyone_.size(); i++) {
 				char* cstr1 = new char[operand1.length() + 1];
 				strcpy(cstr1, operand1.c_str());
 				if (everyone_[i]->getOutValue() == atof(cstr1)) {
@@ -93,44 +94,39 @@ void ExMachina::readCompilerFile(const string& filename){
 					has_operand1 = 1;
 				}
 			}
-			else if (isalpha(operand1[0])) {
+		}
+		else if (isalpha(operand1[0])) {
+			for (int i = 0; i < everyone_.size(); i++) {
 				if (everyone_[i]->getDestination() == operand1) {
 					curr_op->setIn(everyone_[i]);
 					has_operand1 = 1;
 
 				}
 			}
-			if (isdigit(operand2[0]) || (operand2[0] == '-')) {
-				char* cstr2 = new char[operand2.length() + 1];
-				strcpy(cstr2, operand2.c_str());
+		}
+		if (isdigit(operand2[0]) || (operand2[0] == '-')) {
+			char* cstr2 = new char[operand2.length() + 1];
+			strcpy(cstr2, operand2.c_str());
+			for (int i = 0; i < everyone_.size(); i++) {
 				if (everyone_[i]->getOutValue() == atof(cstr2)) {
 					curr_op->setIn(everyone_[i]);
 					has_operand2 = 1;
 				}
 			}
-			else if (isalpha(operand2[0])) {
+		}
+		else if (isalpha(operand2[0])) {
+			for (int i = 0; i < everyone_.size(); i++) {
 				if (everyone_[i]->getDestination() == operand2) {
 					curr_op->setIn(everyone_[i]);
 					has_operand2 = 1;
 				}
 			}
 		}
+		
+			
+		
 
-		if (!operand2.empty() && has_operand2 == 0) {
-			if (isdigit(operand2[0]) || (operand2[0] == '-')) {
-				curr = new Constant(CONSTANT);
-				char* cstr3 = new char[operand2.length() + 1];
-				strcpy(cstr3, operand2.c_str());
-				curr->setOutValue(atof(cstr3));
-				curr->setDestination(operand2);
-			}
-			else { //ne bi trebalo nikad da se napravi varijabla
-				curr = new Variable(VARIABLE);
-				curr->setDestination(operand2);
-			}
-			this->waiting_.back()->setIn(curr);
-			this->everyone_.push_back(curr);
-		}
+	
 		if (has_operand1 == 0) {
 			if (isdigit(operand1[0]) || (operand1[0] == '-')) {
 				curr = new Constant(CONSTANT);
@@ -143,6 +139,21 @@ void ExMachina::readCompilerFile(const string& filename){
 			else { //Takodje
 				curr = new Variable(VARIABLE);
 				curr->setDestination(operand1);
+			}
+			this->waiting_.back()->setIn(curr);
+			this->everyone_.push_back(curr);
+		}
+		if (!operand2.empty() && has_operand2 == 0) {
+			if (isdigit(operand2[0]) || (operand2[0] == '-')) {
+				curr = new Constant(CONSTANT);
+				char* cstr3 = new char[operand2.length() + 1];
+				strcpy(cstr3, operand2.c_str());
+				curr->setOutValue(atof(cstr3));
+				curr->setDestination(operand2);
+			}
+			else { //ne bi trebalo nikad da se napravi varijabla
+				curr = new Variable(VARIABLE);
+				curr->setDestination(operand2);
 			}
 			this->waiting_.back()->setIn(curr);
 			this->everyone_.push_back(curr);
@@ -230,11 +241,16 @@ void ExMachina::dealWithProcessing(){
 		bool created_event = false;
 		int id_size = created_event_id.size();
 		for (int j = 0; j < id_size; j++) {
-			if (processing_[i]->getId() == created_event_id[j]) created_event = true;
-			else created_event_id.push_back(processing_[i]->getId());
+			if (processing_[i]->getId() == created_event_id[j]) {
+				created_event = true; break;
+			}
+			
 		}
-		if (!created_event)
+		if (!created_event){
 			Event::create(processing_[i], processing_[i]->getDuration(), processing_[i]->getId());
+			created_event_id.push_back(processing_[i]->getId());
+		}
+			
 	}
 	//kada se napuni skedzuler pokrenuti ga
 	Scheduler::Instance()->processNow();

@@ -66,7 +66,7 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 				s.push(infix[i]);
 
 			else { //ovde ulece ako je na topu ^ , * levo asocijativna operacija
-				while ((s.top() == '^') && (s.top() == '*')) {
+				while ((s.top() == '^') || (s.top() == '*')) {
 					returnOp(s.top());
 					s.pop();
 				}
@@ -79,7 +79,7 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 			else if ((s.top() != '^') && (s.top() != '*') && (s.top() != '+'))
 				s.push(infix[i]);
 			else {
-				while ((s.top() == '^') && (s.top() == '*') && (s.top() == '+')) {
+				while ((s.top() == '^') || (s.top() == '*') || (s.top() == '+')) {
 					returnOp( s.top());
 					s.pop();
 				}
@@ -110,7 +110,7 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 				else if ((s.top() != '^') && (s.top() != '*') && (s.top() != '+'))
 					s.push(infix[i]);
 				else {
-					while ((s.top() == '^') && (s.top() == '*') && (s.top() == '+')) {
+					while ((s.top() == '^') || (s.top() == '*') || (s.top() == '+')) {
 						returnOp(s.top());
 						s.pop();
 					}
@@ -125,7 +125,7 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 			else if ((s.top() != '^') && (s.top() != '*') && (s.top() != '+'))
 				s.push(infix[i]);
 			else {
-				while ((s.top() == '^') && (s.top() == '*') && (s.top() != '+')) {
+				while ((s.top() == '^') || (s.top() == '*') || (s.top() == '+')) {
 					returnOp(s.top());
 					s.pop();
 				}

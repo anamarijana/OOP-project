@@ -91,7 +91,7 @@ void Multiplication::in_to_out() {
 
 
 void Exponentiation::in_to_out() {
-	this->out_value_ = pow(in_values_[1],in_values_[0]); // proveriti koji se stepenuje kojim
+	this->out_value_ = pow(in_values_[0],in_values_[1]); // proveriti koji se stepenuje kojim
 }
 
 void Assignment::in_to_out() {
