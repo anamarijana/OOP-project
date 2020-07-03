@@ -17,6 +17,7 @@ public:
 	void catchOperation();
 	void compile();
 	void setRootsReady();
+	void setElementsReady(vector<Element*>& compiled_elements);
 	const string& giveMachinaFile();
 	char defineMotherOp(Element*);
 	void tieUp();

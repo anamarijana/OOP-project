@@ -44,6 +44,8 @@ public:
 	
 	void setOutValue(double);// ispraviti sve na double
 	void setIn(Element*);
+	void setInByIndex(int index, Element* insert_el);
+
 	void popIn();
 	void kickTheBaby(int); // izbacuje odredjeno dete (ulaz)
 	

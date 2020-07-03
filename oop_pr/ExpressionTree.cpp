@@ -244,10 +244,11 @@ void ExpressionTree::binaryToNary(){
 				int children_number = operations_[i]->getIn().size(); //uvek biti 2
 				for (int j = 0; j < children_number; j++) {
 					child = operations_[i]->getIn()[j];
-					int grand_children_number = operations_[i]->getIn().size();
+					int grand_children_number = child->getIn().size();
 						if (operations_[i]->getType() == child->getType()) {
 
 							//cuvamo decu te iste operacije // moze da ima vise dece
+							grand_children.clear();
 							for (int k = 0; k < grand_children_number; k++)
 								grand_children.push_back(child->getIn()[k]);
 							
@@ -271,19 +272,31 @@ void ExpressionTree::binaryToNary(){
 }
 
 //unutar pretvaranja binarnog u narno
-void ExpressionTree::removeChild(vector <Element*>& ){
-	for (auto& pointer : operations_)
-	{
+void ExpressionTree::removeChild(vector <Element*>& grand_children ){
+	bool blagoje = 0;
+	for (auto& pointer : operations_){
+		
 		if (pointer) {
 
-			bool blag;
+			if (grand_children.size() == pointer->getIn().size()) {
+				blagoje = 1;
+				for (int m = 0; m < grand_children.size(); m++) {
+					if (grand_children[m] != pointer->getIn()[m])
+						blagoje = 0;
 
-			if ((pointer->getIn()[0] == GrandChild1) && (pointer->getIn()[1] == GrandChild2))
-			{	
-				pointer->popIn();
-				pointer->popIn();
+				}
+
+
+			}
+
+			if (blagoje){	
+				int bound = pointer->getIn().size();
+				for(int m =0; m<bound ; m++)
+					pointer->popIn();
+			
 				delete pointer;
 				pointer = nullptr;
+				return;
 			}
 		}
 	}

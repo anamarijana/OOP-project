@@ -43,12 +43,15 @@ void Compiler::catchOperation(){
 void Compiler:: tieUp() {
 	Element* Assign = 0;
 	Element* child = 0;
-	for(int i=0 ; i<all_operations.size();i++){
-		for (int j =0; i<all_operations[i]->getIn().size(); i++){
+	int all_op_size = all_operations.size();
+	
+	for(int i=0 ; i<all_op_size;i++){
+		int child_size = all_operations[i]->getIn().size();
+		for (int j =0; j<child_size; j++){
 			child = all_operations[i]->getIn()[j];
 			if (child->getType() == VARIABLE){
 				Assign = returnAss(child->getDestination());
-				all_operations[i]->getIn()[j] = Assign; //ovo ispraviti na setIn
+				all_operations[i]->setInByIndex(j, Assign); //ovo ispraviti na setIn
 				delete child; //ne bi trebalo da postoje viseci pokazivaci
 				
 			}
@@ -62,12 +65,18 @@ Element* Compiler:: birth(Element* mother){ //fja koja treba da se poziva u okvi
 	Element* operand;
 	stack <Element*> operands;
 	Operation* newMother =0;
+	vector <int> index;
 	
+
 	for (int j = 0; j<mother->getIn().size();j++){
 		operand = mother->getIn()[j];
-		if((operand->getReady() == 1)&&(operands.size()<2))
-		operands.push(operand);
+		if ((operand->getReady() == 1) && (operands.size() < 2)) {
+			operands.push(operand);
+			index.push_back(j);
+		}
 	}
+	//ako je bila neuspesna misija, tj nije spremno par deteta
+	if (operands.size() < 2) return newMother;;
 	switch (mother->getType())
 	{
 	case(ADDITION): 
@@ -75,14 +84,17 @@ Element* Compiler:: birth(Element* mother){ //fja koja treba da se poziva u okvi
 	case(MULTIPLICATION):
 		newMother = new Multiplication(MULTIPLICATION); break;
 	}
-	newMother->setIn(operands.top());
+	newMother->setIn(operands.top()); //menja se redosled bolje que
 	operands.pop();
 	newMother->setIn(operands.top());
 	operands.pop();
 
-	mother->popIn();
-	mother->popIn();
 
+	for (int i = 0; i < index.size(); i++) {
+		mother->kickTheBaby(index[i]);// ne moraju biti na kraju
+
+	}
+		
 	mother->setIn(newMother);
 
 	return newMother;
@@ -98,25 +110,29 @@ void Compiler:: compileAdvanced(){
 	this->filename = new_file_name;
 	fstream outputFile(new_file_name, ios::out);
 
-	
-	
 	string toOutput;
 	
 	setRootsReady();
 	Element* soon_printed;
+	vector<Element*> compiled_elemets;
 	
-	while (this->roots_ready == 0) {
-		for (int i = 0; i < all_operations.size(); i++) {
+	while (this->roots_ready == 0) { //kada su sve promenljive upisane u memo
+		int i = 0;
+		while ( i < all_operations.size()) { // proci kroz sve koje su trenutno spremne da se izvrsavaju
 
 			if (all_operations[i]->getIn().size() > 2) {
 				soon_printed = birth(all_operations[i]);
 			}
-			else soon_printed = all_operations[i];
+			else soon_printed = all_operations[i++];
 			
+			if (soon_printed == nullptr) { i++; continue; }
 			compileOne(soon_printed,toOutput);
+			compiled_elemets.push_back(soon_printed);
 			outputFile << toOutput << endl;
 		}
 		setRootsReady();
+		setElementsReady(compiled_elemets);
+		compiled_elemets.clear();
 	}
 	
 	
@@ -141,7 +157,7 @@ void Compiler::compileOne(Element* soon_printed, string& toOutput){
 		if (child1->getReady() & child2->getReady()) {
 			toOutput = "[" + to_string(id_) + "]" + " " + mother_operation + " " + "t" + to_string(token_id) + " " +
 				child2->getDestination() + " " + child1->getDestination();
-			soon_printed->setReady(1);
+			if(Configuration::Instance()->getComp() !=1 )soon_printed->setReady(1);
 			destination = 't' + to_string(token_id++);
 			soon_printed->setDestination(destination);
 			id_++;
@@ -152,7 +168,7 @@ void Compiler::compileOne(Element* soon_printed, string& toOutput){
 		if (child1->getReady()) {
 			toOutput = "[" + to_string(id_) + "]" + " " + "=" + " " + soon_printed->getDestination() + " "
 				+ child1->getDestination();
-			soon_printed->setReady(1);
+			if (Configuration::Instance()->getComp() != 1)soon_printed->setReady(1);
 			id_++;
 		}
 	}
@@ -199,6 +215,12 @@ void Compiler::setRootsReady(){
 	for (int i = 0; i < forest_gump_.size(); i++) {
 		this-> roots_ready = this->roots_ready & this->forest_gump_[i]->getRoot()->getReady();
 	}
+}
+
+void Compiler::setElementsReady(vector<Element*>& compiled_elements){
+	for (int i = 0; i < compiled_elements.size(); i++)
+		compiled_elements[i]->setReady(1);
+
 }
 
 const string& Compiler::giveMachinaFile(){

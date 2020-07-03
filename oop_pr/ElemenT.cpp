@@ -45,6 +45,15 @@ void Element::setOutValue(double value){
 void Element::setIn(Element* child){
 	this->in_.push_back(child);
 }
+void Element::setInByIndex(int index, Element* insert_el){
+	int child_size = this->in_.size();
+	for (int i = 0; i < child_size; i++) {
+		if (i == index) {
+			in_[i] = insert_el; // on sad treba da pokazuje na ono na sta pokazuje el
+		}
+	}
+
+}
 void Element::popIn(){
 	in_.pop_back();
 }
