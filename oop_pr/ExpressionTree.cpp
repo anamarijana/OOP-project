@@ -253,7 +253,7 @@ void ExpressionTree::binaryToNary(){
 							
 
 							
-							operations_[i]->popIn(); // ne mora ta operacija da bude na poslednjem mestu
+							operations_[i]->kickTheBaby(j); // ne mora ta operacija da bude na poslednjem mestu
 							for (int k = 0; k < grand_children_number; k++)
 								operations_[i]->setIn(grand_children[k]);
 

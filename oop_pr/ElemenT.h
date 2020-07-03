@@ -45,7 +45,7 @@ public:
 	void setOutValue(double);// ispraviti sve na double
 	void setIn(Element*);
 	void popIn();
-	void kickTheBaby(Element*); // izbacuje odredjeno dete (ulaz)
+	void kickTheBaby(int); // izbacuje odredjeno dete (ulaz)
 	
 	double getDuration();
 	int getId();
