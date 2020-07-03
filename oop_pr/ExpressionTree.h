@@ -10,9 +10,9 @@ public:
 	ExpressionTree() {};
 	~ExpressionTree();
 	void binaryToNary();
-	void calculate(const string& filepath);
+	
 	vector <Element*> getOps();
-	void removeChild(Element* , Element*);
+	void removeChild(vector <Element*> &);
 	//treba povezati medjusobno izraze 
 	void inToPost(string*, int);
 	void returnOp(char);
@@ -25,7 +25,7 @@ protected:
 
 private:
 	string final_destination_;
-	Element* root_; // uvek bi trebalo da bude operacija dodele
+	Element* root_ =0; // uvek bi trebalo da bude operacija dodele
 	vector<Element*> operations_; // ovde ce biti oznake za upisivanje i tokeni
 	vector<Element*> postfix;
 };

@@ -90,7 +90,7 @@ int Configuration::getAssTime() {
 int Configuration::getMemoTime() {
 	return this->Nw;
 }
-bool Configuration::getCompTime() {
+bool Configuration::getComp() {
 	return this->compilation;
 }
 

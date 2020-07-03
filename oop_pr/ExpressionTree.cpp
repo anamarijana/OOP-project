@@ -235,48 +235,62 @@ ExpressionTree::~ExpressionTree(){
 void ExpressionTree::binaryToNary(){
 	
 	Element* child = 0;
-	Element* grand_child1 = 0;
-	Element* grand_child2 = 0;
-	for (int i = 0; i<operations_.size();i++){
-		if((operations_[i]->getType() != EXPONENTIATION) && (operations_[i]->getType() != ASSIGNMENT)){
-			for (int j = 0; j<2;j++){
-				child = operations_[i]->getIn()[j];
-				if(operations_[i]->getType()== child->getType()){
-					
-					//cuvamo decu te iste operacije
-					grand_child1 = child->getIn()[0];
-					grand_child2 = child->getIn()[1];
-					
-					removeChild(grand_child1, grand_child2);
+	
+	vector<Element*> grand_children;
+	for (int i = 0; i < operations_.size(); i++) {
+		// dali smo ga vec izbrisali 
+		if (operations_[i]) {
+			if ((operations_[i]->getType() != EXPONENTIATION) && (operations_[i]->getType() != ASSIGNMENT)) {
+				int children_number = operations_[i]->getIn().size(); //uvek biti 2
+				for (int j = 0; j < children_number; j++) {
+					child = operations_[i]->getIn()[j];
+					int grand_children_number = operations_[i]->getIn().size();
+						if (operations_[i]->getType() == child->getType()) {
 
-					operations_[i]->setIn(grand_child1);
-					operations_[i]->setIn(grand_child2);
+							//cuvamo decu te iste operacije // moze da ima vise dece
+							for (int k = 0; k < grand_children_number; k++)
+								grand_children.push_back(child->getIn()[k]);
+							
 
+							
+							operations_[i]->popIn(); // ne mora ta operacija da bude na poslednjem mestu
+							for (int k = 0; k < grand_children_number; k++)
+								operations_[i]->setIn(grand_children[k]);
+
+							removeChild(grand_children);
+
+						}
 				}
+
+
 			}
-				
-		
 		}
 	}
+	// na kraju sve uzemljene obrisemo
+	operations_.erase(std::remove(operations_.begin(), operations_.end(), nullptr), operations_.end());
 }
 
-void ExpressionTree::removeChild(Element* GrandChild1, Element* GrandChild2){
+//unutar pretvaranja binarnog u narno
+void ExpressionTree::removeChild(vector <Element*>& ){
 	for (auto& pointer : operations_)
 	{
-		if ((pointer->getIn()[0]==GrandChild1)&& (pointer->getIn()[1] == GrandChild2))
-		{
-			delete pointer;
-			pointer = nullptr;
+		if (pointer) {
+			if ((pointer->getIn()[0] == GrandChild1) && (pointer->getIn()[1] == GrandChild2))
+			{	
+				pointer->popIn();
+				pointer->popIn();
+				delete pointer;
+				pointer = nullptr;
+			}
 		}
 	}
-	operations_.erase(std::remove(operations_.begin(), operations_.end(), nullptr), operations_.end());
+	
 	
 
 }
 
 
-void ExpressionTree::calculate(const string& filepath){
-}
+
 
 vector<Element*> ExpressionTree::getOps(){
 	return this->operations_;

@@ -4,6 +4,10 @@
 #include<iostream>
 #include<string>
 
+//NAPOMENA
+//sortirati strignove za vremena
+
+
 int main(){
 
 	Compiler::Instance()->initiate("config.txt", "test.txt");

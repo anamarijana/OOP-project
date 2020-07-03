@@ -17,11 +17,18 @@ void Compiler::initiate(const string& filepath1, const string& filepath2){
 		ExpressionTree* tree = new ExpressionTree();
 		tree->inToPost(expres, i->first);
 		tree->build();
+		if (Configuration::Instance()->getComp() == true)
+			tree->binaryToNary();
+
 		this->forest_gump_.push_back(tree);
 	}
 	catchOperation();
 	tieUp();
-	compile();
+	if (Configuration::Instance()->getComp() == true)
+		compileAdvanced();
+	else { 
+		compile();
+	}
 }
 
 void Compiler::catchOperation(){

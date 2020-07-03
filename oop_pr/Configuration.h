@@ -15,7 +15,7 @@ public:
 	int getExpTime();
 	int getAssTime();
 	int getMemoTime();
-	bool getCompTime();
+	bool getComp();
 protected:
 	
 private:

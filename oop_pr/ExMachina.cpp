@@ -259,7 +259,7 @@ void ExMachina::dealWithProcessing(){
 
 void ExMachina::writeOutputString(int id, int op_duration, int cur_shed_time){
 	
-	string mica = "[" + to_string(id) + "]" + "     " + "(" + to_string(cur_shed_time - op_duration) + ":" + to_string(cur_shed_time) + ")" + "ns";
+	string mica = "[" + to_string(id) + "]" + "     " + "(" + to_string(cur_shed_time - op_duration) + "-" + to_string(cur_shed_time) + ")" + "ns";
 	output_string.push_back(mica);
 }
 

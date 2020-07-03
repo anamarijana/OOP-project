@@ -48,6 +48,14 @@ void Element::setIn(Element* child){
 void Element::popIn(){
 	in_.pop_back();
 }
+void Element::kickTheBaby(Element*){
+
+	void moveItemToBack(std::vector<T> & v, size_t itemIndex)
+	{
+		auto it = v.begin() + itemIndex;
+		std::rotate(it, it + 1, v.end());
+	}
+}
 string Element::getDestination(){
 	return this->destination_;
 }
