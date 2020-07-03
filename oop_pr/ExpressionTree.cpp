@@ -30,6 +30,7 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 
 		}
 		if (isdigit(infix[i])) {
+			pos_double.clear();
 			while ((infix[i] == '.') || isdigit(infix[i]))
 				pos_double += infix[i++];
 			char* cstr = new char[pos_double.length() + 1];

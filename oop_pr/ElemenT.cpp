@@ -99,5 +99,5 @@ void Assignment::in_to_out() {
 }
 
 void Subtraction::in_to_out(){
-	this->out_value_ = this->in_values_[0] + this->in_values_[1]; // kada budemo vrsili operaciju imacemo binarno stablo
+	this->out_value_ = this->in_values_[0] - this->in_values_[1]; // kada budemo vrsili operaciju imacemo binarno stablo
 }

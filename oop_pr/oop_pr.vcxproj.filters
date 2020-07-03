@@ -63,4 +63,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="config.txt">
+      <Filter>Source Files\Resource Files</Filter>
+    </Text>
+    <Text Include="test.txt">
+      <Filter>Source Files\Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

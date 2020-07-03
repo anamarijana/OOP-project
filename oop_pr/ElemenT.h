@@ -149,7 +149,7 @@ private:
 class Variable : public Element {
 
 public:
-	Variable(const Element_Type& type, bool ready = 1) : Element(type,ready) {}
+	Variable(const Element_Type& type, int id = 0, int duration = 0, bool ready = 1) : Element(type, id, duration, ready) {}
 	~Variable() {};
 	virtual void in_to_out() override {};
 	virtual void in_from_childred_out() override {};
@@ -162,7 +162,7 @@ private:
 class Constant : public Element {
 
 public:
-	Constant(const Element_Type& type, bool ready = 1) : Element(type,ready) {}
+	Constant(const Element_Type& type, int id = 0, int duration = 0, bool ready = 1) : Element(type, id, duration, ready) {}
 	~Constant() {};
 	virtual void in_to_out() override {};
 	virtual void in_from_childred_out() override {};
