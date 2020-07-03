@@ -88,7 +88,7 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 
 		}
 		else if (infix[i] == '-') { 
-			if ((infix[i-1] == '=')|| (infix[i-1] == '(') ) { //ispitujemo da li je minus unaran
+			if ((infix[i-1] == '=')|| (infix[i-1] == '(') || (infix[i - 2] == '=')) { //ispitujemo da li je minus unaran
 				pos_double += infix[i++];
 
 				while ((infix[i] == '.') || isdigit(infix[i]))

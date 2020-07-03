@@ -6,8 +6,8 @@
 
 int main(){
 
-	Compiler::Instance("config.txt", "test.txt");
-	string ex_m_file = Compiler::Instance("config.txt", "test.txt")->giveMachinaFile();
+	Compiler::Instance()->initiate("config.txt", "test.txt");
+	string ex_m_file = Compiler::Instance()->giveMachinaFile();
 	fstream inputFile(ex_m_file, ios::in);
 	string line;
 	while (getline(inputFile, line))

@@ -20,7 +20,7 @@ class Element : public ITimedElement {
 
 public:
 
-	Element(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : type_(type),
+	Element(const Element_Type& type, int id = 0, double duration = 0, bool ready = 0) : type_(type),
 		duration_(duration), id_(id),ready_(ready){}
 	
 	~Element();
@@ -30,7 +30,7 @@ public:
 	virtual void in_from_childred_out() = 0;
 	
 	virtual vector<Element*> getIn(); // treba videti da li vracati po referenci ili ne
-	int getOutValue();		
+	double getOutValue();		
 	Element_Type getType();
 	vector<bool> getInReady();
 	
@@ -42,13 +42,13 @@ public:
 
 	void setReady(bool);
 	
-	void setOutValue(int);// ispraviti sve na double
+	void setOutValue(double);// ispraviti sve na double
 	void setIn(Element*);
 	void popIn();
 	
-	int getDuration();
+	double getDuration();
 	int getId();
-	void setDuration(int);
+	void setDuration(double);
 	virtual void notify(ID id) override;
 
 
@@ -66,7 +66,7 @@ protected:
 	vector<Element*> in_; // deca 
 	vector<bool> in_ready_; // spremnost ulaza 
 	vector<double> in_values_;
-	int duration_ = 0; //postavlja konfiguracija ///polje koje koristi samo operacija//exMachina
+	double duration_ = 0; //postavlja konfiguracija ///polje koje koristi samo operacija//exMachina
 	int id_; // stampanje // potrebno samo operacijama /exMachina
 	
 };

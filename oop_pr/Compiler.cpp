@@ -1,8 +1,27 @@
 #include "Compiler.h"
 
-Compiler* Compiler::Instance(const string& filepath1, const string& filepath2){
-	static Compiler *instance = new Compiler(filepath1,filepath2);
-	return instance;
+Compiler* Compiler::Instance(){
+	static Compiler instance;
+	return &instance;
+}
+
+void Compiler::initiate(const string& filepath1, const string& filepath2){
+	Configuration::Instance()->read(filepath1);
+	Program::Instance()->read(filepath2);
+	this->filename = filepath2;
+	int j = 0;
+	map<int, string> help = Program::Instance()->getVarNameExp();
+	for (auto i = help.begin(); i != help.end(); i++) {
+		string* expres = &(i->second);
+
+		ExpressionTree* tree = new ExpressionTree();
+		tree->inToPost(expres, i->first);
+		tree->build();
+		this->forest_gump_.push_back(tree);
+	}
+	catchOperation();
+	tieUp();
+	compile();
 }
 
 void Compiler::catchOperation(){
@@ -199,22 +218,5 @@ char Compiler::defineMotherOp(Element* mother){
 	
 }
 
-Compiler::Compiler(const string& filepath1, const string& filepath2){
-	Configuration::Instance()->read(filepath1);
-	Program::Instance()->read(filepath2);
-	this->filename = filepath2;
-	int j = 0;
-	map<int, string> help = Program::Instance()->getVarNameExp();
-	for (auto i = help.begin(); i != help.end(); i++) {
-		string* expres = &(i->second);
-		
-		 ExpressionTree* tree = new ExpressionTree();
-		 tree->inToPost(expres, i->first);
-		 tree->build();
-		 this->forest_gump_.push_back(tree);
-	}
-	catchOperation();
-	tieUp();
-	compile();
-}
+
 

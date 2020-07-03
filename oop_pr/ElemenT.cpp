@@ -15,7 +15,7 @@ vector<Element*> Element::getIn(){
 	return this->in_;
 }
 
-int Element::getOutValue(){
+double Element::getOutValue(){
 	return this->out_value_;
 }
 
@@ -27,7 +27,7 @@ vector<bool> Element::getInReady() {
 	return this->in_ready_;
 }
 
-int Element::getDuration() {
+double Element::getDuration() {
 	return this->duration_;
 }
 int Element::getId(){
@@ -36,10 +36,10 @@ int Element::getId(){
 void Element::setReady(bool ready){
 	this->ready_ = ready;
 }
-void Element::setDuration(int dur){
+void Element::setDuration(double dur){
 	this->duration_ = dur;
 }
-void Element::setOutValue(int value){
+void Element::setOutValue(double value){
 	this->out_value_ = value;
 }
 void Element::setIn(Element* child){
