@@ -33,6 +33,7 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 			pos_double.clear();
 			while ((infix[i] == '.') || isdigit(infix[i]))
 				pos_double += infix[i++];
+			i--;
 			char* cstr = new char[pos_double.length() + 1];
 			strcpy(cstr, pos_double.c_str());
 			value = atof(cstr);
@@ -93,6 +94,7 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 
 				while ((infix[i] == '.') || isdigit(infix[i]))
 					pos_double += infix[i++];
+				i--;
 				char* cstr = new char[pos_double.length() + 1];
 				strcpy(cstr, pos_double.c_str());
 				value = atof(cstr);
