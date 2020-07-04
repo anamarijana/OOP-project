@@ -4,6 +4,7 @@
 #include<string>
 #include<Interfaces.h>
 #include <math.h>
+#include <algorithm>  
 //	AKO U SKEDZULERU POSTOJI VESI IVENTOVA I NEKI DUZE TRAJE OD OSTALIH OSTACE U SKEDZULERU NAKON PROCESS NOW
 
 
@@ -48,6 +49,7 @@ public:
 
 	void popIn();
 	void kickTheBaby(int); // izbacuje odredjeno dete (ulaz)
+	void kickTheBabys(vector <int>&); // izbacuje odredjeno dete (ulaz)
 	
 	double getDuration();
 	int getId();

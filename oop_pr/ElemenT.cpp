@@ -57,6 +57,11 @@ void Element::setInByIndex(int index, Element* insert_el){
 void Element::popIn(){
 	in_.pop_back();
 }
+
+// 1 2 3 4 5 6 7 8 9
+//std::rotate(myvector.begin(),myvector.begin()+3,myvector.end());
+// 4 5 6 7 8 9 1 2 3*/
+
 void Element::kickTheBaby(int index){
 
 	
@@ -64,6 +69,17 @@ void Element::kickTheBaby(int index){
 	rotate(it, it + 1, in_.end());
 	in_.pop_back();
 	
+}
+void Element::kickTheBabys(vector<int>& index){
+	sort(index.begin(), index.end(), greater<int>());
+	for (auto id : index) {
+		auto it = in_.begin() + id;
+		rotate(it, it + 1, in_.end());
+	}
+	for (int i= 0; i< index.size();i++)
+		in_.pop_back();
+
+
 }
 string Element::getDestination(){
 	return this->destination_;

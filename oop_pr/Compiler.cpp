@@ -90,10 +90,10 @@ Element* Compiler:: birth(Element* mother){ //fja koja treba da se poziva u okvi
 	operands.pop();
 
 
-	for (int i = 0; i < index.size(); i++) {
-		mother->kickTheBaby(index[i]);// ne moraju biti na kraju
+	
+	mother->kickTheBabys(index);// ne moraju biti na kraju
 
-	}
+	
 		
 	mother->setIn(newMother);
 
@@ -111,27 +111,46 @@ void Compiler:: compileAdvanced(){
 	fstream outputFile(new_file_name, ios::out);
 
 	string toOutput;
-	
+	Element* pos_child;
 	setRootsReady();
-	Element* soon_printed;
 	vector<Element*> compiled_elemets;
-	vector<Element*> not_yet_compiled = all_operations;
-	while (this->roots_ready == 0) { //kada su sve promenljive upisane u memo
-		int i = 0;
-		while ( i < all_operations.size()) { // proci kroz sve koje su trenutno spremne da se izvrsavaju
+	vector<Element*> pos_children;
 
-			if (all_operations[i]->getIn().size() > 2) {
-				soon_printed = birth(all_operations[i]);
+	while (this->roots_ready == 0) { //dok nisu sve promenljive upisane
+
+		for (auto& pointer : all_operations) {
+			//svaki put prolazi kroz operacije i upisuje one koje su
+		   // trennutno spremni za izvrsavanje
+
+			if (pointer->getIn().size() > 2) {
+				pos_child = birth(pointer);
+				while ((pos_child) && (pointer->getIn().size() > 2)) {
+					pos_children.push_back(pos_child);
+					pos_child = birth(pointer);
+				}
+
 			}
-			else soon_printed = all_operations[i++];
+			else pos_children.push_back(pointer);
+			//if (pos_child == nullptr)  continue;
+			for (int k = 0; k < pos_children.size(); k++) {
+				if (pos_children[k]->getReady() == 0) {
+					toOutput.clear();
+					compileOne(pos_children[k], toOutput);
+					if (!toOutput.empty()) {
+						compiled_elemets.push_back(pos_children[k]);
+						outputFile << toOutput << endl;
+
+					}
+				}
+
+			}
+			pos_children.clear();
 			
-			if (soon_printed == nullptr) { i++; continue; }
-			compileOne(soon_printed,toOutput);
-			compiled_elemets.push_back(soon_printed);
-			outputFile << toOutput << endl;
 		}
-		setRootsReady();
+	
+		
 		setElementsReady(compiled_elemets);
+		setRootsReady();
 		compiled_elemets.clear();
 	}
 	
@@ -141,6 +160,7 @@ void Compiler:: compileAdvanced(){
 }
 
 void Compiler::compileOne(Element* soon_printed, string& toOutput){
+	
 	
 	int static id_ = 1;
 	int static token_id = 1;
