@@ -125,12 +125,15 @@ void Compiler:: compileAdvanced(){
 
 			if (pointer->getIn().size() > 2) {
 				pos_child = birth(pointer);
+				if(pos_child)pos_children.push_back(pos_child);
 				while ((pos_child) && (pointer->getIn().size() > 2)) {
-					pos_children.push_back(pos_child);
 					pos_child = birth(pointer);
+					if (pos_child) pos_children.push_back(pos_child);
 				}
 
 			}
+
+
 			else pos_children.push_back(pointer);
 			//if (pos_child == nullptr)  continue;
 			for (int k = 0; k < pos_children.size(); k++) {

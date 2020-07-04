@@ -4,4 +4,4 @@ c = a + b
 d = b * b
 e = 2.5
 f = e^d^c
-g = a + b + a + b + f
+g = a + a + a + a + f
