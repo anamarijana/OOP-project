@@ -25,6 +25,7 @@ public:
 	Element* birth(Element*);
 	void compileAdvanced();
 	void compileOne(Element*, string&);
+	void kickTheOp(Element*, vector<Element*>&); 
 protected:
 	Compiler() {};
 private:

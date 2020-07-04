@@ -115,10 +115,11 @@ void Compiler:: compileAdvanced(){
 	setRootsReady();
 	vector<Element*> compiled_elemets;
 	vector<Element*> pos_children;
+	vector <Element*> not_yet = all_operations;
 
 	while (this->roots_ready == 0) { //dok nisu sve promenljive upisane
 
-		for (auto& pointer : all_operations) {
+		for (auto& pointer : not_yet) {
 			//svaki put prolazi kroz operacije i upisuje one koje su
 		   // trennutno spremni za izvrsavanje
 
@@ -192,6 +193,22 @@ void Compiler::compileOne(Element* soon_printed, string& toOutput){
 			id_++;
 		}
 	}
+	
+}
+
+void Compiler::kickTheOp ( Element* op, vector<Element*>& not_yet){
+
+	
+		for (int i = 0; i < not_yet.size(); i++) {
+
+			if (not_yet[i] == op) {
+				rotate(not_yet.begin(), not_yet.begin() + i, not_yet.end());
+				not_yet.pop_back();
+				return;
+			}
+		}
+
+		
 	
 }
 
