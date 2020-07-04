@@ -2,7 +2,10 @@
 #define CALC_TREE_H
 #include "ElemenT.h"
 #include <vector>
-#include"Configuration.h"
+
+
+
+
 class ExpressionTree {
 public:
 

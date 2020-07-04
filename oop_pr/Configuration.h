@@ -1,7 +1,7 @@
 #ifndef KONFIGURACIJA_H
 #define KONFIGURACIJA_H
 
-#include <iostream>
+
 
 using namespace std;
 

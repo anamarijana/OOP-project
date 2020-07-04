@@ -6,9 +6,8 @@
 #include<stack>
 
 #include"ElemenT.h"
-#include"Configuration.h"
-#include"Program.h"
 #include"ExpressionTree.h"
+
 class Compiler {
 public:
 	static Compiler* Instance();

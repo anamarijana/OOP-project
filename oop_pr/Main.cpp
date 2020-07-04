@@ -4,8 +4,9 @@
 #include<iostream>
 #include<string>
 
-//NAPOMENA
+//NAPOMENE
 //sortirati strignove za vremena
+// sortirati kompajler fajl * kojino unapredjenje
 
 
 int main(){

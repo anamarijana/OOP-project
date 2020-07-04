@@ -2,8 +2,9 @@
 #define MEMORY_H
 #include <map>
 #include <string>
-#include<fstream>
+
 using namespace std;
+
 class Memory {
 public:
 

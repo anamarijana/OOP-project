@@ -2,13 +2,11 @@
 #define ELEMENT_H
 #include <vector>
 #include<string>
-#include<Interfaces.h>
-#include <math.h>
-#include <algorithm>  
+
+ 
 //	AKO U SKEDZULERU POSTOJI VESI IVENTOVA I NEKI DUZE TRAJE OD OSTALIH OSTACE U SKEDZULERU NAKON PROCESS NOW
 
-
-using namespace std;
+using namespace std; // ovo ako imas vremena rucno dodaj svima
 enum Element_Type { CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT,SUBTRACTION }; //znaci ce kod treanformacije binarnog u n-arno stablo
 
 //KLASA ELEMENT

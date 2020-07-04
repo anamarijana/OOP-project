@@ -1,8 +1,15 @@
+
+#include<Sched.h>
+#include <math.h>
+#include <algorithm> 
+#include<Interfaces.h>
+
 #include"ElemenT.h"
 #include"ExMachina.h"
 #include"Memory.h"
-#include<Sched.h>
 
+
+using namespace std;
 
 Element::~Element() {
 

@@ -1,4 +1,8 @@
 #include "Memory.h"
+#include<fstream>
+
+
+using namespace std;
 Memory* Memory::Instance(){
 	
 	static Memory instance;
