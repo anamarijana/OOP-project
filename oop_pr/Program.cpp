@@ -7,8 +7,7 @@
 
 using namespace std;
 
-Program::~Program() {
-}
+
 void Program::read(const string& filename){
 	fstream inputFile(filename, ios::in);
 	int row_num = 0;

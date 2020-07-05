@@ -12,10 +12,13 @@ public:
 
 	ExpressionTree() {};
 	~ExpressionTree();
+	ExpressionTree(const ExpressionTree&) = delete;
+	ExpressionTree(ExpressionTree&&) = delete;
 	void binaryToNary();
 	
 	vector <Element*> getOps();
 	void removeChild(vector <Element*> &);
+	
 	//treba povezati medjusobno izraze 
 	void inToPost(string*, int);
 	void returnOp(char);

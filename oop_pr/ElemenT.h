@@ -3,10 +3,12 @@
 #include <vector>
 #include<string>
 
+#include"Interfaces.h"
+
  
 //	AKO U SKEDZULERU POSTOJI VESI IVENTOVA I NEKI DUZE TRAJE OD OSTALIH OSTACE U SKEDZULERU NAKON PROCESS NOW
 
-using namespace std; // ovo ako imas vremena rucno dodaj svima
+using namespace std; // ovo ako imas vremena rucno dodaj svima jer nije dobra praksa
 enum Element_Type { CONSTANT, VARIABLE, ADDITION, MULTIPLICATION, EXPONENTIATION, ASSIGNMENT,SUBTRACTION }; //znaci ce kod treanformacije binarnog u n-arno stablo
 
 //KLASA ELEMENT
@@ -19,12 +21,14 @@ class Element : public ITimedElement {
 
 public:
 
-	Element(const Element_Type& type, int id = 0, double duration = 0, bool ready = 0) : type_(type),
-		duration_(duration), id_(id),ready_(ready){}
+	Element(const Element_Type& type, int id = 0, double duration = 0, bool ready = 0, double out_value = 0) : type_(type),
+		duration_(duration), id_(id),ready_(ready), out_value_(out_value){}
 	
+	Element(const Element&) = delete;
+	Element(Element&&) = delete;
+	//nema pokazivackih polja 
+
 	~Element();
-
-
 	virtual void in_to_out() = 0;
 	virtual void in_from_childred_out() = 0;
 	
@@ -63,13 +67,14 @@ protected:
 	
 	
 	string destination_; //token ili varijabla
-	double out_value_ = 0; //vrednost tog cvora
+	double out_value_ ; //vrednost tog cvora
 
 	
 	vector<Element*> in_; // deca 
+	
 	vector<bool> in_ready_; // spremnost ulaza 
 	vector<double> in_values_;
-	double duration_ = 0; //postavlja konfiguracija ///polje koje koristi samo operacija//exMachina
+	double duration_; //postavlja konfiguracija ///polje koje koristi samo operacija//exMachina
 	int id_; // stampanje // potrebno samo operacijama /exMachina
 	
 };
@@ -79,7 +84,7 @@ protected:
 class Operation : public Element {
 
 public:
-	Operation(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0): Element(type,id,duration,ready) 
+	Operation(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0, double out_value = 0): Element(type,id,duration,ready,out_value)
 		{};
 	virtual void in_to_out() override = 0;
 	virtual void in_from_childred_out() override;
@@ -95,7 +100,7 @@ private:
 class Addition : public Operation {
 
 public:
-	Addition(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : Operation(type,id,duration,ready) {} // treba da za podrazumevani broj pinova uzme 2
+	Addition(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0, double out_value = 0) : Operation(type,id,duration,ready,out_value) {} // treba da za podrazumevani broj pinova uzme 2
 	~Addition() {}; // destruktor osnovne klase se sam poziva a nemamo nova polja u odnosu a osnovnu klasu
 	virtual void in_to_out() override;
 protected:
@@ -106,7 +111,7 @@ private:
 class Subtraction : public Operation {
 
 public:
-	Subtraction(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : Operation(type, id, duration, ready) {} // treba da za podrazumevani broj pinova uzme 2
+	Subtraction(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0, double out_value = 0) : Operation(type, id, duration, ready,out_value) {} // treba da za podrazumevani broj pinova uzme 2
 	~Subtraction() {}; // destruktor osnovne klase se sam poziva a nemamo nova polja u odnosu a osnovnu klasu
 	virtual void in_to_out() override;
 protected:
@@ -118,7 +123,7 @@ class Multiplication : public Operation {
 
 public:
 
-	Multiplication(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : Operation(type, id, duration, ready) {} // treba da za podrazumevani broj pinova uzme 2
+	Multiplication(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0,  double out_value = 0) : Operation(type, id, duration, ready,out_value) {} // treba da za podrazumevani broj pinova uzme 2
 	~Multiplication() {};
 	virtual void in_to_out() override;
 protected:
@@ -130,7 +135,7 @@ private:
 class Exponentiation : public Operation {
 
 public:
-	Exponentiation(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : Operation(type, id, duration, ready) {} // treba da za podrazumevani broj pinova uzme 2
+	Exponentiation(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0, double out_value = 0) : Operation(type, id, duration, ready,out_value) {} // treba da za podrazumevani broj pinova uzme 2
 	~Exponentiation() {};
 	virtual void in_to_out() override;
 protected:
@@ -140,7 +145,7 @@ private:
 class Assignment : public Operation {
 
 public:
-	Assignment(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0) : Operation(type, id, duration, ready) {} // treba da za podrazumevani broj pinova uzme 2
+	Assignment(const Element_Type& type, int id = 0, int duration = 0, bool ready = 0, double out_value = 0) : Operation(type, id, duration, ready,out_value) {} // treba da za podrazumevani broj pinova uzme 2
 	~Assignment() {};
 	virtual void in_to_out() override;
 protected:
@@ -152,7 +157,7 @@ private:
 class Variable : public Element {
 
 public:
-	Variable(const Element_Type& type, int id = 0, int duration = 0, bool ready = 1) : Element(type, id, duration, ready) {}
+	Variable(const Element_Type& type, int id = 0, int duration = 0, bool ready = 1, double out_value = 0) : Element(type, id, duration, ready,out_value) {}
 	~Variable() {};
 	virtual void in_to_out() override {};
 	virtual void in_from_childred_out() override {};
@@ -165,7 +170,7 @@ private:
 class Constant : public Element {
 
 public:
-	Constant(const Element_Type& type, int id = 0, int duration = 0, bool ready = 1) : Element(type, id, duration, ready) {}
+	Constant(const Element_Type& type, int id = 0, int duration = 0, bool ready = 1, double out_value = 0) : Element(type, id, duration, ready,out_value) {}
 	~Constant() {};
 	virtual void in_to_out() override {};
 	virtual void in_from_childred_out() override {};

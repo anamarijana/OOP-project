@@ -13,9 +13,9 @@ using namespace std;
 
 Element::~Element() {
 
-	for (Element* element : in_) {      // U svakoj iteraciji iz vektora 'in_' dohvata se jedan element (Element*) i dodeljuje iteratoru petlje 'element'
-		delete element;
-	} // vector<bool> in_values ima automatski destruktor
+	int in_size = in_.size();
+	for (int i = 0; i < in_size; i++)
+		in_.pop_back();
 }
 
 vector<Element*> Element::getIn(){

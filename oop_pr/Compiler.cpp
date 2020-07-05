@@ -1,4 +1,6 @@
 #include "Compiler.h"
+#include"Configuration.h"
+#include"Program.h"
 
 Compiler* Compiler::Instance(){
 	static Compiler instance;
@@ -29,6 +31,26 @@ void Compiler::initiate(const string& filepath1, const string& filepath2){
 	else { 
 		compile();
 	}
+}
+
+Compiler::~Compiler(){
+
+	int elem_size = forest_gump_.size();
+	for (int i = 0; i < elem_size; i++) {
+		delete forest_gump_[i]; // za  svako drvo se poziva destruktor za drvo
+	}
+
+	for (int i = 0; i < elem_size; i++) {
+		forest_gump_.pop_back();
+	}
+	elem_size = all_operations.size();
+
+	//kada unistimo drvece unisticemo i operacije
+
+	for (int i = 0; i < elem_size; i++) {
+		all_operations.pop_back();
+	}
+
 }
 
 void Compiler::catchOperation(){
@@ -68,7 +90,7 @@ Element* Compiler:: birth(Element* mother){ //fja koja treba da se poziva u okvi
 	vector <int> index;
 	
 
-	for (int j = 0; j<mother->getIn().size();j++){
+	for (int j = 0; j <mother->getIn().size();j++){
 		operand = mother->getIn()[j];
 		if ((operand->getReady() == 1) && (operands.size() < 2)) {
 			operands.push(operand);

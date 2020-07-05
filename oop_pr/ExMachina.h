@@ -29,11 +29,12 @@ private:
 	vector <int> created_event_id;
 	vector<string> output_string;
 	string compiler_filename;
-	vector <Operation*> waiting_; //ovde su svi na pocetku
-	vector <Operation*> processing_; //odavde saljemo masini
+	
+	vector <Operation*> waiting_; //ovde se nalaze sve operacije na pocetku
+	vector <Operation*> processing_; //odavde saljemo Schedu
 	vector <Operation*> completed_;
 	
-	vector <Element*> everyone_;
+	vector <Element*> everyone_; // ovde se nalaze apsolutno svi elementi
 	
 };
 

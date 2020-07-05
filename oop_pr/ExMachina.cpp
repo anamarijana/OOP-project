@@ -1,8 +1,14 @@
-#include "ExMachina.h"
-#include "Event.h"
-#include "Sched.h"
 #include <fstream>
 #include<iostream>
+
+#include "Event.h"
+#include "Sched.h"
+
+#include "ExMachina.h"
+#include"Configuration.h"
+#include"Memory.h"
+
+
 
 
 void ExMachina::eventOccured(int Id,int op_duration, int cur_shed_time){ //slusa vesti od notify
@@ -189,6 +195,32 @@ ExMachina* ExMachina::Instance(){
 
 
 ExMachina::~ExMachina(){
+	
+	int elem_size = everyone_.size();
+	for (int i = 0; i < elem_size; i++) {
+		delete everyone_[i];
+	}
+	for (int i = 0; i < elem_size; i++) {
+		everyone_.pop_back();
+	}
+	elem_size = completed_.size();
+	for (int i = 0; i < elem_size; i++) {
+		completed_.pop_back();
+	}
+	if (!processing_.empty()) {
+		elem_size = processing_.size(); // ovo vi vec trebalo da je prazno ali za svaki slucaj
+		for (int i = 0; i < elem_size; i++) {
+			processing_.pop_back();
+		}
+	}
+	if (!waiting_.empty()) {
+		elem_size = waiting_.size();
+		for (int i = 0; i < elem_size; i++) {
+			waiting_.pop_back();
+		}
+	}
+
+
 }
 
 ExMachina::ExMachina(){}

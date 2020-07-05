@@ -12,7 +12,9 @@ class Compiler {
 public:
 	static Compiler* Instance();
 	void initiate(const string& filepath1, const string& filepath2);
-	~Compiler() {};
+	~Compiler();
+	Compiler(const Compiler&) = delete;
+	Compiler(Compiler&&) = delete;
 	void catchOperation();
 	void compile();
 	void setRootsReady();

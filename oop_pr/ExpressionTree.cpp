@@ -1,4 +1,5 @@
 #include"ExpressionTree.h"
+#include"Configuration.h"
 #include <stack>
 
 
@@ -229,6 +230,22 @@ void ExpressionTree::build(){
 
 
 ExpressionTree::~ExpressionTree(){
+	//postfiks sadrzi sve elemente dovoljno je da njih unistimo
+
+	int elem_size = postfix.size();
+	for (int i = 0; i < elem_size; i++) {
+		delete postfix[i];
+	}
+	for (int i = 0; i < elem_size; i++) {
+		postfix.pop_back();
+	}
+	elem_size = operations_.size();
+	for (int i = 0; i < elem_size; i++) {
+		operations_.pop_back();
+	}
+	root_ = nullptr;
+
+
 }
 //distributivnost
 //samo operacije koje imaju asocijativnost +* smemo da grupisemo u narno stablo
