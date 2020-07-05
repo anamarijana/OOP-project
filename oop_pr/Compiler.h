@@ -32,10 +32,14 @@ protected:
 private:
 	string filename;
 	
-	vector <ExpressionTree*> forest_gump_;
+	vector <ExpressionTree*> forest_gump_; // nije dobro brisati odavde jer su operacije medjusobno ispovezane
 	vector<Element*> all_operations;
 	bool roots_ready = 0;
 
+
+	//destruktor 
+	// da se ne bi operacije brisale dva puta teba obrisati vektor svih operacija
+	//onda uci u stabla i obrisati samo konstante  jer su varijable vec obrisane 
 
 
 };

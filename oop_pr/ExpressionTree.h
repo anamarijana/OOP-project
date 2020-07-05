@@ -34,6 +34,7 @@ private:
 	Element* root_ =0; // uvek bi trebalo da bude operacija dodele
 	vector<Element*> operations_; // ovde ce biti oznake za upisivanje i tokeni
 	vector<Element*> postfix;
+	vector<Element*> constants_;
 };
 
 #endif

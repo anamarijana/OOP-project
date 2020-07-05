@@ -35,21 +35,25 @@ void Compiler::initiate(const string& filepath1, const string& filepath2){
 
 Compiler::~Compiler(){
 
-	int elem_size = forest_gump_.size();
+	int elem_size = all_operations.size();
+	
 	for (int i = 0; i < elem_size; i++) {
-		delete forest_gump_[i]; // za  svako drvo se poziva destruktor za drvo
+		delete all_operations[i]; // izmeniti destruktor
+	}
+
+	for (int i = 0; i < elem_size; i++) {
+		all_operations.pop_back();
+	}
+
+	elem_size = forest_gump_.size();
+	for (int i = 0; i < elem_size; i++) {
+		delete forest_gump_[i]; // izmeniti destruktor
 	}
 
 	for (int i = 0; i < elem_size; i++) {
 		forest_gump_.pop_back();
 	}
-	elem_size = all_operations.size();
-
-	//kada unistimo drvece unisticemo i operacije
-
-	for (int i = 0; i < elem_size; i++) {
-		all_operations.pop_back();
-	}
+	
 
 }
 
