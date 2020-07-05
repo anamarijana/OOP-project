@@ -128,12 +128,13 @@ Element* Compiler:: birth(Element* mother){ //fja koja treba da se poziva u okvi
 }
 
 void Compiler:: compileAdvanced(){
-	string new_file_name = "glupi_pera.txt";
-	/*
+	string new_file_name = filename;
+	
 	unsigned int len_without_txt = new_file_name.length() - 4;
 	new_file_name.resize(len_without_txt);
-	new_file_name.insert(len_without_txt, ".imf");*/
+	new_file_name.insert(len_without_txt, ".imf");
 	this->filename = new_file_name;
+	
 	fstream outputFile(new_file_name, ios::out);
 
 	string toOutput;
@@ -249,11 +250,11 @@ Element* Compiler:: returnAss(string destination){
 }
 
 void Compiler::compile(){
-	string new_file_name = "glupi_pera.txt";
-	/*
+	string new_file_name = filename;
+
 	unsigned int len_without_txt = new_file_name.length() - 4;
 	new_file_name.resize(len_without_txt);
-	new_file_name.insert(len_without_txt, ".imf");*/
+	new_file_name.insert(len_without_txt, ".imf");
 	this->filename = new_file_name;
 	fstream outputFile(new_file_name, ios::out);
 

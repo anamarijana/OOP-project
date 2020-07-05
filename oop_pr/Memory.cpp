@@ -19,7 +19,7 @@ double Memory::get(string varName)
 }
 
 void Memory::write(string file){
-	//string ex_m_filename = file;
+	
 	string ex_m_filename = "pera_memorise.txt";
 	fstream outputFile(ex_m_filename, ios::out);
 	map<string, double>::iterator mile;
