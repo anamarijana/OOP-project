@@ -3,11 +3,12 @@
 #include <map>
 #include <string>
 
+
 using namespace std;
 
 class Memory {
 public:
-	~Memory() = default;
+	~Memory();
 	Memory(const Memory&) = delete;
 	Memory(Memory&&) = delete;
 	

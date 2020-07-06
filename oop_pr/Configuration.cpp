@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stack>
 #include"Configuration.h"
+#include"Exception.h"
 using namespace std;
 
 
@@ -33,22 +34,27 @@ void Configuration::read(const string& filepath){
 
 		if (!(var_name.compare("Ta"))) {
 			inputFile >> var_value;
+			if (var_value < 0) throw NegativeTime("Negativno vreme");
 			this->Ta = var_value;
 		}
 		else if (!var_name.compare("Tm")) {
 			inputFile >> var_value;
+			if (var_value < 0) throw NegativeTime("Negativno vreme");
 			this->Tm = var_value;
 		}
 		else if (!var_name.compare("Te")) {
 			inputFile >> var_value;
+			if (var_value < 0) throw NegativeTime("Negativno vreme");
 			this->Te = var_value;
 		}
 		else if (!var_name.compare("Tw")) {
 			inputFile >> var_value;
+			if (var_value < 0) throw NegativeTime("Negativno vreme");
 			this->Tw = var_value;
 		}
 		else if (!var_name.compare("Nw")) {
 			inputFile >> var_value;
+			if (var_value < 0) throw UnexpectedNegativeNumber("Negativno broj upisa u memoriju");
 			this->Nw = var_value;
 		}
 		else if (!var_name.compare("compilation")) {

@@ -14,6 +14,7 @@
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="ElemenT.h" />
+    <ClInclude Include="Exception.h" />
     <ClInclude Include="ExMachina.h" />
     <ClInclude Include="ExpressionTree.h" />
     <ClInclude Include="Memory.h" />

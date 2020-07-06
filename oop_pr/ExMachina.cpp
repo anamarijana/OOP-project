@@ -168,6 +168,7 @@ void ExMachina::readCompilerFile(const string& filename){
 	}
 	
 	inputFile.close();
+
 }
 
 
@@ -183,7 +184,7 @@ void ExMachina::exec(string file){
 
 	//kada se sve zavrsi treba da se odstampa
 	writeOutput();
-	Memory::Instance()->write(compiler_filename);
+	Memory::Instance()->write(compiler_filename); // ona njoj daje imf fajl
 	
 	
 }
@@ -296,9 +297,15 @@ void ExMachina::writeOutputString(int id, int op_duration, int cur_shed_time){
 }
 
 void ExMachina::writeOutput(){
-	//string ex_m_filename = compiler_filename;
-	string ex_m_filename = "pera_retard.txt";
-	fstream outputFile(ex_m_filename, ios::out);
+
+
+	string new_file_name = compiler_filename;
+	unsigned int len_without_txt = new_file_name.length() - 4;
+	new_file_name.resize(len_without_txt);
+	new_file_name.insert(len_without_txt, ".log");
+
+
+	fstream outputFile(new_file_name, ios::out);
 
 	for (auto& segal : output_string){
 		outputFile << segal << endl;

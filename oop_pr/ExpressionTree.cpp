@@ -169,7 +169,7 @@ void ExpressionTree:: returnOp(char s_top) {
 		//curr_op->setDuration(Configuration::Instance()->getMultiTime());
 	}
 
-	else {
+	else if (s_top == '='){
 		curr_op = new Assignment(ASSIGNMENT);
 		curr_op->setDuration(Configuration::Instance()->getAssTime());
 	}

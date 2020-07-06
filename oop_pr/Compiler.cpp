@@ -1,6 +1,7 @@
 #include "Compiler.h"
 #include"Configuration.h"
 #include"Program.h"
+#include"Exception.h"
 
 Compiler* Compiler::Instance(){
 	static Compiler instance;
@@ -9,7 +10,15 @@ Compiler* Compiler::Instance(){
 
 void Compiler::initiate(const string& filepath1, const string& filepath2){
 	Configuration::Instance()->read(filepath1);
-	Program::Instance()->read(filepath2);
+	try {
+		Program::Instance()->read(filepath2);
+	}
+	catch (NegativeTime& e) {
+		cout << e.what() << endl;
+	}
+	catch (UnexpectedNegativeNumber& e) {
+		cout << e.what() << endl;
+	}
 	this->filename = filepath2;
 	int j = 0;
 	map<int, string> help = Program::Instance()->getVarNameExp();
