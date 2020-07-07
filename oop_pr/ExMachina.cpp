@@ -99,7 +99,7 @@ void ExMachina::readCompilerFile(const string& filename){
 					curr_op->setIn(everyone_[i]);
 					has_operand1 = 1;
 				}
-				delete cstr1;
+				delete[] cstr1;
 				cstr1 = nullptr;
 			}
 		}
@@ -121,7 +121,7 @@ void ExMachina::readCompilerFile(const string& filename){
 					has_operand2 = 1;
 				}
 			}
-			delete cstr2;
+			delete[] cstr2;
 			cstr2 = nullptr;
 		}
 		else if (isalpha(operand2[0])) {
@@ -145,7 +145,7 @@ void ExMachina::readCompilerFile(const string& filename){
 
 				curr->setOutValue(atof(cstr4));
 				curr->setDestination(operand1);
-				delete cstr4;
+				delete[] cstr4;
 				cstr4 = nullptr;
 			}
 			else { //Takodje
@@ -163,7 +163,7 @@ void ExMachina::readCompilerFile(const string& filename){
 				curr->setOutValue(atof(cstr3));
 				curr->setDestination(operand2);
 
-				delete cstr3;
+				delete[] cstr3;
 				cstr3 = nullptr;
 			}
 			else { //ne bi trebalo nikad da se napravi varijabla
@@ -199,19 +199,22 @@ void ExMachina::exec(string file){
 }
 
 ExMachina* ExMachina::Instance(){
-	static ExMachina instance;
-	return &instance;
+	static ExMachina* instance = new ExMachina();
+	return instance;
 }
 
 
 ExMachina::~ExMachina(){
-	
-	int elem_size = everyone_.size();
-	for (int i = 0; i < elem_size; i++) {
-		delete everyone_[i];
-	}
-	for (int i = 0; i < elem_size; i++) {
-		everyone_.pop_back();
+	/*
+	int elem_size;
+	if (!everyone_.empty()) {
+		elem_size = everyone_.size();
+		for (int i = 0; i < elem_size; i++) {
+			delete everyone_[i];
+		}
+		for (int i = 0; i < elem_size; i++) {
+			everyone_.pop_back();
+		}
 	}
 	elem_size = completed_.size();
 	for (int i = 0; i < elem_size; i++) {
@@ -229,11 +232,30 @@ ExMachina::~ExMachina(){
 			waiting_.pop_back();
 		}
 	}
-
+	*/
 
 }
 
-ExMachina::ExMachina(){}
+void ExMachina::deleteFieldsForCheck(){
+	int elem_size;
+	if (!everyone_.empty()) {
+		elem_size = everyone_.size();
+		for (int i = 0; i < elem_size; i++) {
+			delete everyone_[i];
+		}
+		everyone_.clear();
+	}
+	if (!completed_.empty()) {
+		completed_.clear();
+	if (!processing_.empty()) {
+		processing_.clear();
+	}
+	if (!waiting_.empty()) {
+		waiting_.clear();
+	}
+}
+
+	
 
 //ispituje da li su nekoj operaciji obezbedjeni operandi
 

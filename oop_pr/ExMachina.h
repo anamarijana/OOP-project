@@ -8,10 +8,13 @@
 class ExMachina {
 public:
 	
+	
+
 	static ExMachina* Instance();
 	
 	~ExMachina();
-
+	void deleteFieldsForCheck();
+	
 	void exec(string file);
 	void readCompilerFile(const string&);
 	void waitingtToProcessing();
@@ -24,7 +27,7 @@ public:
 
 	//void setWayStation(int, int);
 protected:
-	ExMachina();
+	ExMachina() {};
 private:
 	vector <int> created_event_id;
 	vector<string> output_string;

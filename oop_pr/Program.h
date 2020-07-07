@@ -9,6 +9,9 @@ using namespace std;
 
 class Program {
 public:
+
+	
+
 	static Program* Instance();
 	
 	Program(const Program&) = delete;

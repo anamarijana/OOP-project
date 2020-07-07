@@ -10,6 +10,7 @@
 
 class Compiler {
 public:
+	void deleteForCheck();
 	static Compiler* Instance();
 	void initiate(const string& filepath1, const string& filepath2);
 	~Compiler();

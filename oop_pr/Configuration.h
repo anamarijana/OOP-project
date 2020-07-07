@@ -7,8 +7,10 @@ using namespace std;
 
 class Configuration {
 public:
-	static Configuration* Instance();
+	
 
+	static Configuration* Instance();
+	~Configuration() {};
 	void read(const string& filepath);
 	int getMultiTime();
 	int getAddTime();

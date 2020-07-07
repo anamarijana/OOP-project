@@ -1,5 +1,6 @@
 #include "ExMachina.h"
 #include "Compiler.h"
+#include"Memory.h"
 #include<fstream>
 #include<iostream>
 #include<string>
@@ -7,6 +8,8 @@
 //NAPOMENE
 //sortirati strignove za vremena
 // sortirati kompajler fajl * kojino unapredjenje
+
+
 
 
 int main(){
@@ -23,6 +26,9 @@ int main(){
 	inputFile.close();
 	*/
 	ExMachina::Instance()-> exec(ex_m_file) ;
+	Memory::Instance()->deleteForCheck();
+	ExMachina::Instance()->deleteFieldsForCheck();
+	Compiler::Instance()->deleteForCheck();
 
 
 	return 0;

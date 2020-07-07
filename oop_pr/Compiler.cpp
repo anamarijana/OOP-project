@@ -3,9 +3,32 @@
 #include"Program.h"
 #include"Exception.h"
 
+void Compiler::deleteForCheck(){
+
+	int elem_size = all_operations.size();
+
+	for (int i = 0; i < elem_size; i++) {
+		delete all_operations[i]; 
+	}
+
+	for (int i = 0; i < elem_size; i++) {
+		all_operations.pop_back();
+	}
+
+	elem_size = forest_gump_.size();
+	for (int i = 0; i < elem_size; i++) {
+		delete forest_gump_[i]; 
+	}
+
+	for (int i = 0; i < elem_size; i++) {
+		forest_gump_.pop_back();
+	}
+
+}
+
 Compiler* Compiler::Instance(){
-	static Compiler instance;
-	return &instance;
+	static Compiler* instance = new Compiler();
+	return instance;
 }
 
 void Compiler::initiate(const string& filepath1, const string& filepath2){
@@ -43,7 +66,7 @@ void Compiler::initiate(const string& filepath1, const string& filepath2){
 }
 
 Compiler::~Compiler(){
-
+/*
 	int elem_size = all_operations.size();
 	
 	for (int i = 0; i < elem_size; i++) {
@@ -62,7 +85,7 @@ Compiler::~Compiler(){
 	for (int i = 0; i < elem_size; i++) {
 		forest_gump_.pop_back();
 	}
-	
+*/	
 
 }
 

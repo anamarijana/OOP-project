@@ -9,8 +9,8 @@ using namespace std;
 
 string Configuration::config_file_name;//deklarisemo staticku varijablu
 Configuration* Configuration::Instance(){
-	static Configuration instance;
-	return &instance;
+	static Configuration* instance = new Configuration();
+	return instance;
 	
 }
 

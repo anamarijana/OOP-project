@@ -44,6 +44,9 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 			curr->setOutValue(value);
 			destination = pos_double;
 			curr->setDestination(destination);
+
+			delete[] cstr;
+			cstr = 0;
 		}
 
 
@@ -106,6 +109,9 @@ void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili m
 				curr->setOutValue(value);
 				destination = pos_double;
 				curr->setDestination(destination);
+
+				delete[] cstr;
+				cstr = 0;
 
 			}
 
@@ -233,15 +239,16 @@ void ExpressionTree::build(){
 
 ExpressionTree::~ExpressionTree(){
 	//postfiks sadrzi sve elemente dovoljno je da njih unistimo
-
-	int elem_size = constants_.size();
-	for (int i = 0; i < elem_size; i++) {
-		delete constants_[i];
+	int elem_size;
+	if (constants_.size()) {
+		elem_size = constants_.size();
+		for (int i = 0; i < elem_size; i++) {
+			delete constants_[i];
+		}
+		for (int i = 0; i < elem_size; i++) {
+			constants_.pop_back();
+		}
 	}
-	for (int i = 0; i < elem_size; i++) {
-		constants_.pop_back();
-	}
-
 	elem_size = postfix.size();
 	for (int i = 0; i < elem_size; i++) {
 		postfix.pop_back();

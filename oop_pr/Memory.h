@@ -8,6 +8,8 @@ using namespace std;
 
 class Memory {
 public:
+
+	void deleteForCheck();
 	~Memory();
 	Memory(const Memory&) = delete;
 	Memory(Memory&&) = delete;

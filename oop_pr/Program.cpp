@@ -24,8 +24,8 @@ void Program::read(const string& filename){
 }
 
 Program* Program::Instance() {
-	static Program instance;
-	return &instance;
+	static Program* instance = new Program();
+	return instance;
 }
 
 

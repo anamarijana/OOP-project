@@ -4,13 +4,21 @@
 
 
 using namespace std;
+void Memory::deleteForCheck(){
+	if (!final_destination_.empty())
+		final_destination_.clear();
+
+}
 Memory::~Memory(){
+	/*
+	if(!final_destination_.empty())
 	final_destination_.clear();
+	*/
 }
 Memory* Memory::Instance(){
 	
-	static Memory instance;
-	return &instance;
+	static Memory* instance = new Memory();
+	return instance;
 }
 
 void Memory::set(string varName, double val){
