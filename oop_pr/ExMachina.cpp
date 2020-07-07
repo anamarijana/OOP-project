@@ -99,6 +99,8 @@ void ExMachina::readCompilerFile(const string& filename){
 					curr_op->setIn(everyone_[i]);
 					has_operand1 = 1;
 				}
+				delete cstr1;
+				cstr1 = nullptr;
 			}
 		}
 		else if (isalpha(operand1[0])) {
@@ -119,6 +121,8 @@ void ExMachina::readCompilerFile(const string& filename){
 					has_operand2 = 1;
 				}
 			}
+			delete cstr2;
+			cstr2 = nullptr;
 		}
 		else if (isalpha(operand2[0])) {
 			for (int i = 0; i < everyone_.size(); i++) {
@@ -141,6 +145,8 @@ void ExMachina::readCompilerFile(const string& filename){
 
 				curr->setOutValue(atof(cstr4));
 				curr->setDestination(operand1);
+				delete cstr4;
+				cstr4 = nullptr;
 			}
 			else { //Takodje
 				curr = new Variable(VARIABLE);
@@ -156,6 +162,9 @@ void ExMachina::readCompilerFile(const string& filename){
 				strcpy(cstr3, operand2.c_str());
 				curr->setOutValue(atof(cstr3));
 				curr->setDestination(operand2);
+
+				delete cstr3;
+				cstr3 = nullptr;
 			}
 			else { //ne bi trebalo nikad da se napravi varijabla
 				curr = new Variable(VARIABLE);
