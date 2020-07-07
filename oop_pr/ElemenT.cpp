@@ -16,6 +16,9 @@ Element::~Element() {
 	int in_size = in_.size();
 	for (int i = 0; i < in_size; i++)
 		in_.pop_back();
+	in_ready_.clear();
+	destination_.clear();
+	in_values_.clear();
 }
 
 vector<Element*> Element::getIn(){

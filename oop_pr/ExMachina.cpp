@@ -236,7 +236,7 @@ ExMachina::~ExMachina(){
 
 }
 
-void ExMachina::deleteFieldsForCheck(){
+void ExMachina::deleteFieldsForCheckEM() {
 	int elem_size;
 	if (!everyone_.empty()) {
 		elem_size = everyone_.size();
@@ -247,12 +247,18 @@ void ExMachina::deleteFieldsForCheck(){
 	}
 	if (!completed_.empty()) {
 		completed_.clear();
-	if (!processing_.empty()) {
-		processing_.clear();
+		if (!processing_.empty()) {
+			processing_.clear();
+		}
+		if (!waiting_.empty()) {
+			waiting_.clear();
+		}
+
 	}
-	if (!waiting_.empty()) {
-		waiting_.clear();
-	}
+
+	created_event_id.clear();
+	output_string.clear();
+	compiler_filename.clear();
 }
 
 	
@@ -312,6 +318,7 @@ void ExMachina::dealWithProcessing(){
 		}
 		if (!created_event){
 			Event::create(processing_[i], processing_[i]->getDuration(), processing_[i]->getId());
+			
 			created_event_id.push_back(processing_[i]->getId());
 		}
 			

@@ -13,7 +13,7 @@ public:
 	static ExMachina* Instance();
 	
 	~ExMachina();
-	void deleteFieldsForCheck();
+	void deleteFieldsForCheckEM();
 	
 	void exec(string file);
 	void readCompilerFile(const string&);
@@ -30,7 +30,7 @@ protected:
 	ExMachina() {};
 private:
 	vector <int> created_event_id;
-	vector<string> output_string;
+	vector<string>	output_string;
 	string compiler_filename;
 	
 	vector <Operation*> waiting_; //ovde se nalaze sve operacije na pocetku

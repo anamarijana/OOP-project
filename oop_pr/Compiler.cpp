@@ -11,18 +11,14 @@ void Compiler::deleteForCheck(){
 		delete all_operations[i]; 
 	}
 
-	for (int i = 0; i < elem_size; i++) {
-		all_operations.pop_back();
-	}
+	all_operations.clear();
 
 	elem_size = forest_gump_.size();
 	for (int i = 0; i < elem_size; i++) {
 		delete forest_gump_[i]; 
 	}
-
-	for (int i = 0; i < elem_size; i++) {
-		forest_gump_.pop_back();
-	}
+	forest_gump_.clear();
+	filename.clear();
 
 }
 
@@ -216,7 +212,8 @@ void Compiler:: compileAdvanced(){
 		setRootsReady();
 		compiled_elemets.clear();
 	}
-	
+	pos_children.clear();
+	not_yet.clear();
 	
 	outputFile.close();
 

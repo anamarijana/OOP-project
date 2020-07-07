@@ -8,6 +8,11 @@
 using namespace std;
 
 
+Program::~Program(){
+	
+
+}
+
 void Program::read(const string& filename){
 	fstream inputFile(filename, ios::in);
 	int row_num = 0;
@@ -21,6 +26,11 @@ void Program::read(const string& filename){
 
 	inputFile.close();
 
+}
+
+void Program::deleteForCheck(){
+	if (!var_name_expression.empty())
+		var_name_expression.clear();
 }
 
 Program* Program::Instance() {

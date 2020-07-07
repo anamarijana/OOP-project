@@ -11,13 +11,13 @@ class Program {
 public:
 
 	
-
+	void deleteForCheck();
 	static Program* Instance();
 	
 	Program(const Program&) = delete;
 	Program(Program&&) = delete;
 	
-	~Program() = default;
+	~Program();
 	void read(const string&);
 	map<int, string> getVarNameExp();
 protected:

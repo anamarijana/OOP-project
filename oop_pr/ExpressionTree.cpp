@@ -260,6 +260,8 @@ ExpressionTree::~ExpressionTree(){
 	}
 	root_ = nullptr;
 
+	final_destination_.clear();
+
 
 }
 //distributivnost

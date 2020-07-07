@@ -1,6 +1,7 @@
 #include "ExMachina.h"
 #include "Compiler.h"
 #include"Memory.h"
+#include"Program.h"
 #include<fstream>
 #include<iostream>
 #include<string>
@@ -27,7 +28,8 @@ int main(){
 	*/
 	ExMachina::Instance()-> exec(ex_m_file) ;
 	Memory::Instance()->deleteForCheck();
-	ExMachina::Instance()->deleteFieldsForCheck();
+	ExMachina::Instance()->deleteFieldsForCheckEM();
+	Program::Instance()->deleteForCheck();
 	Compiler::Instance()->deleteForCheck();
 
 
