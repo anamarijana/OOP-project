@@ -20,7 +20,7 @@ public:
 	void removeChild(vector <Element*> &);
 	
 	//treba povezati medjusobno izraze 
-	void inToPost(string*, int);
+	void inToPost(string*);
 	void returnOp(char);
 	void build();
 	

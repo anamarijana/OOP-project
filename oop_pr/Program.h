@@ -4,6 +4,7 @@
 
 #include<map>
 #include<string>
+#include<vector>
 
 using namespace std;
 
@@ -19,14 +20,14 @@ public:
 	
 	~Program();
 	void read(const string&);
-	map<int, string> getVarNameExp();
+	vector<string> getVarNameExp();
 protected:
 	
 private:
 
 	Program();
-	
-	map <int,string> var_name_expression; 
+	vector<string> var_name_expression;
+	//map <int,string> var_name_expression; 
 	
 };
 

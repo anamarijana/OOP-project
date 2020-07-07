@@ -8,19 +8,22 @@ using namespace std;
 
 class Memory {
 public:
-
+	
+	
+	Memory() {};
 	void deleteForCheck();
 	~Memory();
 	Memory(const Memory&) = delete;
 	Memory(Memory&&) = delete;
 	
-	static Memory* Instance();
-	void set(string varName, double val); 
+	//static Memory* Instance();
+	friend void setM(string varName, double val, Memory* mem); 
+	void set(string varName, double val);
 	double get(string varName);
 	void write(string file);
 
 protected:
-	Memory() {};
+
 	
 private:
 	map<string, double> final_destination_; // podrazumevani destruktor

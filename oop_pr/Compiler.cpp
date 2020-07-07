@@ -40,12 +40,12 @@ void Compiler::initiate(const string& filepath1, const string& filepath2){
 	}
 	this->filename = filepath2;
 	int j = 0;
-	map<int, string> help = Program::Instance()->getVarNameExp();
-	for (auto i = help.begin(); i != help.end(); i++) {
-		string* expres = &(i->second);
+	vector<string> help = Program::Instance()->getVarNameExp();
+	for (int i = 0; i < help.size(); i++) {
+		string* expres = &help[i];
 
 		ExpressionTree* tree = new ExpressionTree();
-		tree->inToPost(expres, i->first);
+		tree->inToPost(expres);
 		tree->build();
 		if (Configuration::Instance()->getComp() == true)
 			tree->binaryToNary();

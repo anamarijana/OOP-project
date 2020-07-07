@@ -15,13 +15,13 @@ Program::~Program(){
 
 void Program::read(const string& filename){
 	fstream inputFile(filename, ios::in);
-	int row_num = 0;
+	
 
 	string expression;
 
 	while (getline(inputFile, expression)) {
-		row_num++;
-		var_name_expression.insert({ row_num, expression });
+		
+		var_name_expression.push_back(expression);
 	}
 
 	inputFile.close();
@@ -31,6 +31,7 @@ void Program::read(const string& filename){
 void Program::deleteForCheck(){
 	if (!var_name_expression.empty())
 		var_name_expression.clear();
+
 }
 
 Program* Program::Instance() {
@@ -44,7 +45,7 @@ Program::Program() {
 }
 
 
-map<int, string> Program::getVarNameExp(){
+vector<string> Program::getVarNameExp(){
 	return this->var_name_expression;
 }
 

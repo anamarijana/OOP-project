@@ -2,6 +2,7 @@
 #define EXMACHINA_H
 #include<vector>
 #include "ElemenT.h"
+#include"Memory.h"
 
 
 
@@ -23,12 +24,16 @@ public:
 	void eventOccured(int Id, int op_duration, int cur_shed_time);
 	void writeOutputString(int id, int op_duration, int cur_shed_time);
 	void writeOutput();
+	void setMem(string varName, double val);
 	
 
 	//void setWayStation(int, int);
 protected:
-	ExMachina() {};
+	ExMachina():mem(0){};
 private:
+	
+	Memory* mem;
+	
 	vector <int> created_event_id;
 	vector<string>	output_string;
 	string compiler_filename;

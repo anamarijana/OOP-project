@@ -7,7 +7,7 @@
 //ako je char pre minusa bila operacija onda unaran
 
 // izraz a^b^c cita se kao a^(b^c)
-void ExpressionTree::inToPost(string* exp, int key) { // da bism ose otarasili mogucih zagrada i lakse sastavili sintaksno stablo
+void ExpressionTree::inToPost(string* exp) { // da bism ose otarasili mogucih zagrada i lakse sastavili sintaksno stablo
 	
 	string infix = *exp;
 	stack <char> s; //na steku ce biti samo operacije i zagrade

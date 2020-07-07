@@ -184,6 +184,7 @@ void ExMachina::readCompilerFile(const string& filename){
 
 
 void ExMachina::exec(string file){
+	mem = new Memory();
 	compiler_filename = file;
 	readCompilerFile(file);
 	waitingtToProcessing();
@@ -193,7 +194,7 @@ void ExMachina::exec(string file){
 
 	//kada se sve zavrsi treba da se odstampa
 	writeOutput();
-	Memory::Instance()->write(compiler_filename); // ona njoj daje imf fajl
+	mem->write(compiler_filename); // ona njoj daje imf fajl
 	
 	
 }
@@ -259,6 +260,9 @@ void ExMachina::deleteFieldsForCheckEM() {
 	created_event_id.clear();
 	output_string.clear();
 	compiler_filename.clear();
+
+	delete mem;
+	mem = nullptr;
 }
 
 	
@@ -351,6 +355,10 @@ void ExMachina::writeOutput(){
 	}
 
 	outputFile.close();
+}
+
+void ExMachina::setMem(string varName, double val){
+	setM(varName, val,mem);
 }
 
 void ExMachina::processingToCompleted(int id) {

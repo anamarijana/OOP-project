@@ -26,8 +26,7 @@ int main(){
 	}
 	inputFile.close();
 	*/
-	ExMachina::Instance()-> exec(ex_m_file) ;
-	Memory::Instance()->deleteForCheck();
+	ExMachina::Instance()-> exec(ex_m_file);
 	ExMachina::Instance()->deleteFieldsForCheckEM();
 	Program::Instance()->deleteForCheck();
 	Compiler::Instance()->deleteForCheck();

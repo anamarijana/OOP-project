@@ -10,15 +10,16 @@ void Memory::deleteForCheck(){
 
 }
 Memory::~Memory(){
-	/*
+	
 	if(!final_destination_.empty())
 	final_destination_.clear();
-	*/
+
 }
-Memory* Memory::Instance(){
-	
-	static Memory* instance = new Memory();
-	return instance;
+
+
+void setM(string varName, double val, Memory* mem){
+
+	mem->set(varName, val);
 }
 
 void Memory::set(string varName, double val){
@@ -51,6 +52,12 @@ void Memory::write(string file){
 
 
 }
+
+/*Memory* Memory::Instance(){
+	
+	static Memory* instance = new Memory();
+	return instance;
+}*/
 
 
 

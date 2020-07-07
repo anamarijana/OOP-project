@@ -104,7 +104,7 @@ void Element::notify(ID id){
 	in_to_out();
 
 	if ((this->destination_).size()==1) {
-		Memory::Instance()->set(destination_, out_value_);
+		ExMachina::Instance()->setMem(destination_, out_value_);
 
 	}
 	
